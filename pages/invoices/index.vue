@@ -71,7 +71,7 @@
 					<!-- Start The data table -->
 					<v-data-table
 						:headers="header"
-						:items="invoicesItem"
+						:items="invoices"
 						:search="search"
 						class="elevation-1"
 						@click:row="handleClick"
@@ -124,48 +124,7 @@ export default {
 				{ text: "Delivery  date", value: "userid" }
 			],
 			invoices: [],
-			invoicesItem: [
-        {
-          __v: 0,
-          _id: "5eb6810640e692325ce5b8f1",
-          createdate: "2020-05-09",
-          extra_info: "",
-          invoicepaid: false,
-          leveransmetod: "pdf",
-          pdf_link: "",
-          published: true,
-          salarypaid: false,
-          summa: 0,
-          userid: "5e9edbb41122c0297c06ccff"
-        },
-        {
-          __v: 0,
-          _id: "5eb6810640e692325ce5b8f1",
-          createdate: "2020-05-09",
-          extra_info: "",
-          invoicepaid: false,
-          leveransmetod: "pdf",
-          pdf_link: "",
-          published: false,
-          salarypaid: false,
-          summa: 0,
-          userid: "5e9edbb41122c0297c06ccff"
-        },
-        {
-          __v: 0,
-          _id: "5eb6810640e692325ce5b8f1",
-          createdate: "2020-05-09",
-          extra_info: "",
-          invoicepaid: false,
-          leveransmetod: "pdf",
-          pdf_link: "",
-          published: true,
-          salarypaid: true,
-          summa: 0,
-          userid: "5e9edbb41122c0297c06ccff"
-        },
-
-      ]
+			invoicesItem: []
 		};
 	},
 	methods: {
@@ -209,7 +168,7 @@ export default {
 		}
 	},
 	created() {
-    /*this.$axios.$get('/invoices')
+    this.$axios.$get('/invoices')
       .then(res => {
         res.forEach(invoice => {
           invoice.createdate = new Date(invoice.createdate).toISOString().substring(0, 10)
@@ -218,7 +177,7 @@ export default {
         console.log(res);
       })
       .catch(err => console.log(err));
-		this.activeinvoices(); */
+		this.activeinvoices(); 
 	}
 };
 </script>
