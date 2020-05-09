@@ -384,7 +384,7 @@ export default {
 
 			this.$axios.setToken(this.$auth.getToken("local"));
 			this.downloedPDF();
-			
+
 			this.$axios
 				.$post("/invoices", {
 					...this.customer,
@@ -399,14 +399,15 @@ export default {
 					salarypaid: false
 				})
 				.then(res => {
-          let articles = this.draggableItems;
-          
-          articles.forEach(item => {
-            item.invoiceId = invoce_number;
-          });
-          
-          this.$axios.$post('/articles',articles)
-            .then(res => console.log(res));
+					let articles = this.draggableItems;
+
+					articles.forEach(item => {
+						item.invoiceId = invoce_number;
+					});
+
+					this.$axios
+						.$post("/articles", articles)
+						.then(res => console.log(res));
 				})
 				.catch(err => console.log(err));
 

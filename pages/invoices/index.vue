@@ -27,9 +27,9 @@
 				</div>
 			</v-col>
 			<v-col cols="12" sm="12">
+					<v-btn text small :color="activeclass" @click="activeinvoices">Active invoices</v-btn>
+					<v-btn text small :color="allclass" @click="allinvoices">All invoices</v-btn>
 				<v-card class="pa-8">
-					<v-btn small :color="activeclass" @click="activeinvoices">Active invoices</v-btn>
-					<v-btn small :color="allclass" @click="allinvoices">All invoices</v-btn>
 
 					<v-row class="pa-4">
 						<!-- Start Search input -->
@@ -76,8 +76,8 @@
 						class="elevation-1"
 						@click:row="handleClick"
 					>
-						<template v-slot:item.Status="{ item }">
-							<v-chip :color="getColor(item.Status)" dark>{{ item.Status }}</v-chip>
+						<template v-slot:item.status="{ item }">
+							<v-chip :color="getColor(item.status)" dark>{{ item.status }}</v-chip>
 						</template>
 					</v-data-table>
 					<!-- Start The data table -->
@@ -118,74 +118,35 @@ export default {
 				},
 				{ text: "Customer", value: "userid" },
 				{ text: "Invoice amount (inc VAT)", value: "summa" },
-				{ text: "Status", value: "published" },
+				{ text: "status", value: "status" },
 				{ text: "Date of invoice", value: "createdate" },
 				{ text: "Due date", value: "userid" },
 				{ text: "Delivery  date", value: "userid" }
 			],
 			invoices: [],
-			invoicesItem: [
-        {
-          __v: 0,
-          _id: "5eb6810640e692325ce5b8f1",
-          createdate: "2020-05-09",
-          extra_info: "",
-          invoicepaid: false,
-          leveransmetod: "pdf",
-          pdf_link: "",
-          published: true,
-          salarypaid: false,
-          summa: 0,
-          userid: "5e9edbb41122c0297c06ccff"
-        },
-        {
-          __v: 0,
-          _id: "5eb6810640e692325ce5b8f1",
-          createdate: "2020-05-09",
-          extra_info: "",
-          invoicepaid: false,
-          leveransmetod: "pdf",
-          pdf_link: "",
-          published: false,
-          salarypaid: false,
-          summa: 0,
-          userid: "5e9edbb41122c0297c06ccff"
-        },
-        {
-          __v: 0,
-          _id: "5eb6810640e692325ce5b8f1",
-          createdate: "2020-05-09",
-          extra_info: "",
-          invoicepaid: false,
-          leveransmetod: "pdf",
-          pdf_link: "",
-          published: true,
-          salarypaid: true,
-          summa: 0,
-          userid: "5e9edbb41122c0297c06ccff"
-        },
-
-      ]
+			invoicesItem: []
 		};
 	},
 	methods: {
-		getColor(Status) {
-			if (Status == "paid") return "green";
-			else if (Status == "overdue") return "red";
+		getColor(status) {
+			if (status == "paid") return "green";
+			else if (status == "overdue") return "red";
+			else if (status == "draft") return "red";
+			else if (status == "publihsed") return "red";
 		},
 		filterstate(a) {
 			if (a == "All") {
 				this.invoicesItem = this.invoices;
 			} else {
 				this.invoicesItem = this.invoices.filter(
-					invoice => invoice.Status == a
+					invoice => invoice.status == a
 				);
 			}
 		},
 		activeinvoices() {
 			this.invoicesItem = this.invoices;
 			this.invoicesItem = this.invoices.filter(
-				invoice => invoice.Status != "paid"
+				invoice => invoice.status != "paid"
 			);
 			this.activeclass = "primary";
 			this.allclass = "normal";
@@ -193,15 +154,15 @@ export default {
 		allinvoices() {
 			this.invoicesItem = this.invoices;
 			this.invoicesItem = this.invoices.filter(
-				invoice => invoice.Status != "draft"
+				invoice => invoice.status != "draft"
 			);
 			this.allclass = "primary";
 			this.activeclass = "normal";
 		},
 		handleClick(a) {
-			if (a.Status == "draft") {
-				this.$router.push("/invoices/draft/" + a.id);
-			} else if (a.Status == "overdue") {
+			if (a.status == "Draft") {
+				this.$router.push("/invoices/draft/" + a._id);
+			} else if (a.status == "overdue") {
 				this.$router.push("/invoices/overdue/" + a.id);
 			} else {
 				this.$router.push("/invoices/paid" + a.id);
@@ -209,16 +170,42 @@ export default {
 		}
 	},
 	created() {
-    /*this.$axios.$get('/invoices')
-      .then(res => {
-        res.forEach(invoice => {
-          invoice.createdate = new Date(invoice.createdate).toISOString().substring(0, 10)
-        });
-        this.invoices = res;
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-		this.activeinvoices(); */
+		this.$axios
+			.$get("/invoices")
+			.then(res => {
+				res.forEach(invoice => {
+					invoice.createdate = new Date(invoice.createdate)
+						.toISOString()
+						.substring(0, 10);
+				});
+				this.invoices = res;
+				this.invoices.forEach(inv => {
+					/* published: true, salarypaid: false,*/
+					if (!inv.published) {
+						inv.status = "Draft";
+						console.log("Draft");
+					} else if (inv.published && !inv.invoicepaid && inv.dueDate) {
+						inv.status = "Published";
+						console.log("Published");
+					} /** TODO: Add due date */ else if (
+						inv.published &&
+						!inv.invoicepaid &&
+						inv.dueDate
+					) {
+						inv.status = "Overdue";
+						console.log("Overdue");
+					} /** TODO: Add Overdue */ else if (
+						inv.published &&
+						inv.invoicepaid
+					) {
+						inv.status = "Paid";
+						console.log("Paid");
+					}
+				});
+				this.activeinvoices();
+				console.log(res);
+			})
+			.catch(err => console.log(err));
 	}
 };
 </script>

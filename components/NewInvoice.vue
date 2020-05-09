@@ -303,7 +303,7 @@
 					<!-- Start Draggable -->
 					<v-row>
 						<!-- Start Draggable header -->
-						<v-row>
+						<v-row v-if="draggableItems.length > 0">
 							<v-col cols="4" md="4">
 								<span class="item" style="padding-left: 15px">artikelnamn</span>
 							</v-col>
@@ -331,7 +331,7 @@
 								v-for="(element, index) in draggableItems"
 								:key="index"
 							>
-								<v-row>
+								<v-row >
 									<v-col cols="4">
 										<v-btn icon>
 											<v-icon>mdi-menu</v-icon>
@@ -509,7 +509,7 @@
 						</v-dialog>
 
 						<!-- Start Draggable Footer -->
-						<v-row class="flex-wrap">
+						<v-row class="flex-wrap" v-if="draggableItems.length > 0">
 							<v-col class="align-center d-flex">
 								<div class="d-inline-block">
 									<p class="my-0 py-0 caption">Total sum to pay</p>
@@ -661,6 +661,7 @@ export default {
 		dividerySection,
 		draggable
 	},
+	props: ['draft'],
 	computed: {
 		saveAsItemBtnState() {
 			if (this.selection_value && this.createNewModal == true)
@@ -680,6 +681,9 @@ export default {
 
 	created() {
 		this.getArticles();
+		if(this.draft) {
+			this.selection_value == draft
+		}
 	},
 
 	methods: {
