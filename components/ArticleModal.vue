@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn class="mx-2" fab small dark color="rgba(0,88,124)" v-on="on"><v-icon dark>mdi-plus</v-icon></v-btn>
+        <v-btn color="success" v-on="on">Add new</v-btn>
       </template>
       <v-card>
         <v-card-title>
