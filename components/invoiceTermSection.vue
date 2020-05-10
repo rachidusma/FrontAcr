@@ -1,12 +1,13 @@
 <template>
+    <v-col cols="12">
+	<div class="overline mb-4">Term</div>
 	<v-card tile width="100%" class="pa-8">
 		<v-card-title class="justify-space-between">
-			<p>Terms</p>
 			<v-dialog v-model="dialog" width="500">
 				<template v-slot:activator="{ on }">
-					<v-btn outlined v-on="on">Edit</v-btn>
+					<v-spacer></v-spacer>
+					<v-btn color="success" dark right v-on="on">Edit</v-btn>
 				</template>
-
 				<v-card>
 					<v-card-title class="headline white lighten-2" primary-title >Terms</v-card-title>
                     <v-divider></v-divider>
@@ -99,6 +100,7 @@
 			</v-col>
 		</v-row>
 	</v-card>
+    </v-col>
 </template>
 
 <script>

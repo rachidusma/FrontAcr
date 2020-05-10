@@ -71,7 +71,7 @@
 					<!-- Start The data table -->
 					<v-data-table
 						:headers="header"
-						:items="invoicesItem"
+						:items="invoices"
 						:search="search"
 						class="elevation-1"
 						@click:row="handleClick"
@@ -206,6 +206,7 @@ export default {
 				console.log(res);
 			})
 			.catch(err => console.log(err));
+
 	}
 };
 </script>

@@ -2,15 +2,14 @@
 	<v-layout>
 		<v-row>
 			<v-col cols="12">
-				<v-card tile width="100%" class="pa-8">
-					<h1 class="main">Skapa en faktura</h1>
-				</v-card>
+					<h1 class="title">Skapa en faktura</h1>
 			</v-col>
 
 			<!-- Start Customer -->
 			<v-col cols="12">
+				<div class="overline mb-4">Your customer:</div>
 				<v-card width="100%" class="pa-8">
-					<div class="overline mb-4">Your customer:</div>
+					<h3 class="text--primary pb-3">Customer:</h3>
 					<v-row>
 						<customerSection />
 					</v-row>
@@ -20,9 +19,10 @@
 
 			<!-- Start Product -->
 			<v-col cols="12">
+				<div class="overline mb-4">Articles :</div>
 				<v-card width="100%" class="pa-8">
-					<div class="overline mb-4">Product</div>
-
+					
+                    <v-divider class="mb-4"></v-divider>
 					<!-- Start Add row MODAL -->
 					<v-dialog v-model="dialog" persistent scrollable max-width="600px">
 						<!-- Start Open Dialog button -->
@@ -59,7 +59,7 @@
 														:return-object="true"
 													>
 														<!-- Start The Selected Value -->
-														<template v-slot:selection="data">
+														<template v-slot:selection="data" class="pa-8">
 															<span class="black--text">{{ data.item.artikelnamn }}</span>
 														</template>
 														<!-- End The Selected Value -->
@@ -872,6 +872,6 @@ export default {
 	width: 100%;
 }
 .item {
-	font-size: 0.7rem;
+	font-size: 0.8rem;
 }
 </style>

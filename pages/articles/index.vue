@@ -2,26 +2,21 @@
   <v-layout>
     <v-row>
        <v-col cols="12" md="12">
-       <v-card
-          shaped
-          width="100%"
-          class="pa-8"
-          >
-        <v-row>
-       <h1 class="heading">All Articles</h1>
+        <v-row class="pa-4">
+       <h1 class="title">Articles</h1>
        <v-spacer></v-spacer>
-       <ArticleModal />
-        </v-row>
-       </v-card>
+       <ArticleModal/>
+         </v-row>
        </v-col>
        <v-col cols="12" md="12">
+         <p class="overline"> All Articles</p>
           <v-card
-          shaped
+          tile
           width="100%"
           class="pa-8"
           >
           <v-row>
-           <p class="overline"> All Articles</p>
+           
            <v-spacer></v-spacer>
              <v-text-field
                v-model="search"
@@ -29,7 +24,8 @@
                label="Search"
                single-line
                hide-details
-               outlined=""
+               solo
+               dense
                class="mb-4 pa-4"
                color="#336882"
                 ></v-text-field>
