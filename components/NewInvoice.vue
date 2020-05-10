@@ -2,32 +2,65 @@
 	<v-layout>
 		<v-row>
 			<v-col cols="12">
-					<h1 class="title">Skapa en faktura</h1>
+				<h1>Skapa en faktura</h1>
 			</v-col>
 
 			<!-- Start Customer -->
 			<v-col cols="12">
-				<div class="overline mb-4">Your customer:</div>
-				<v-card width="100%" class="pa-8">
+				<!-- <div class="overline mb-4">Your customer:</div> -->
+				<v-card outlined class="pa-3">
 					<h3 class="text--primary pb-3">Customer:</h3>
-					<v-row>
-						<customerSection />
-					</v-row>
+					<customerSection />
 				</v-card>
 			</v-col>
 			<!-- End Customer -->
 
 			<!-- Start Product -->
 			<v-col cols="12">
-				<div class="overline mb-4">Articles :</div>
-				<v-card width="100%" class="pa-8">
-					
-                    <v-divider class="mb-4"></v-divider>
+				<!-- <div class="overline mb-4">Articles :</div> -->
+				<v-card class="pa-3">
+					<h3 class="mb-3">Items/services:</h3>
+					<!-- <v-divider class="mb-4"></v-divider> -->
 					<!-- Start Add row MODAL -->
+
 					<v-dialog v-model="dialog" persistent scrollable max-width="600px">
 						<!-- Start Open Dialog button -->
 						<template v-slot:activator="{ on }">
-							<v-btn dark v-on="on">Add new row</v-btn>
+							<div style="border: 1px dashed #aaa;" class="pa-3 mt-3">
+								<v-btn dark v-on="on">Add new row</v-btn>
+
+								<!-- Start Add Text -->
+								<v-dialog v-model="addTextDialog" v-if="!hideAddText" width="500">
+									<template v-slot:activator="{ on }">
+										<v-btn color="red lighten-2" dark v-on="on">Add text</v-btn>
+									</template>
+
+									<v-card>
+										<v-card-title class="headline grey lighten-2" primary-title>Add new row</v-card-title>
+
+										<v-card-text>
+											<v-row>
+												<v-col cols="12">
+													<v-textarea outlined name="add-text" label="Description" v-model="addTextVal"></v-textarea>
+												</v-col>
+											</v-row>
+										</v-card-text>
+
+										<v-divider></v-divider>
+
+										<v-card-actions>
+											<v-btn @click="addTextDialog = false">Close</v-btn>
+											<v-spacer></v-spacer>
+											<v-btn
+												color="primary"
+												text
+												@click="selection_value = {artikelnamn: addTextVal};addToInvoice();addTextDialog = false; hideAddText = true"
+											>Add to invoice</v-btn>
+										</v-card-actions>
+									</v-card>
+								</v-dialog>
+								<!-- End Add Text -->
+							</div>
 						</template>
 						<!-- End Open Dialog button -->
 
@@ -291,7 +324,12 @@
 								</div>
 								<v-spacer></v-spacer>
 								<div>
-									<v-btn class="mt-2" @click="addToInvoice" color="success">Add to invoice</v-btn>
+									<v-btn
+										class="mt-2"
+										:disabled="!(!!selection_value)"
+										@click="addToInvoice"
+										color="success"
+									>Add to invoice</v-btn>
 								</div>
 								<!-- End For Add New Customar  -->
 							</v-card-actions>
@@ -303,55 +341,65 @@
 					<!-- Start Draggable -->
 					<v-row>
 						<!-- Start Draggable header -->
-						<v-row v-if="draggableItems.length > 0">
-							<v-col cols="4" md="4">
-								<span class="item" style="padding-left: 15px">artikelnamn</span>
-							</v-col>
-							<v-col cols="2" md="2">
-								<span class="item">moms</span>
-							</v-col>
-							<v-col cols="2" md="2">
-								<span class="item">Quantity</span>
-							</v-col>
-							<v-col cols="2" md="2">
-								<span class="item">Unit price</span>
-							</v-col>
-							<v-col cols="2" md="2">
-								<span class="item">Total (ex tax)</span>
-							</v-col>
-						</v-row>
+						<v-col cols="12" v-if="draggableItems.length > 0">
+							<v-row>
+								<v-col cols="4" md="4">
+									<span class="item" style="padding-left: 15px">artikelnamn</span>
+								</v-col>
+								<v-col cols="2" md="2">
+									<span class="item">moms</span>
+								</v-col>
+								<v-col cols="2" md="2">
+									<span class="item">Quantity</span>
+								</v-col>
+								<v-col cols="2" md="2">
+									<span class="item">Unit price</span>
+								</v-col>
+								<v-col cols="2" md="2">
+									<span class="item">Total (ex tax)</span>
+								</v-col>
+							</v-row>
+						</v-col>
 						<!-- End Draggable header -->
 
 						<!-- Start Draggable Content -->
-						<draggable v-model="draggableItems" ghost-class="ghost" @end="onEnd" class="items">
-							<div
-								@click.stop="editDraggable(element)"
-								class="sortable"
-								:id="index"
-								v-for="(element, index) in draggableItems"
-								:key="index"
-							>
-								<v-row >
-									<v-col cols="4">
-										<v-btn icon>
-											<v-icon>mdi-menu</v-icon>
-										</v-btn>
-										<strong class="item">{{ element.artikelnamn }}</strong>
-									</v-col>
-									<v-col cols="2" md="2">
-										<span class="item">{{ element.moms }}</span>
-									</v-col>
-									<v-col cols="2" md="2">
-										<span class="item">{{ element.Quantity }}</span>
-									</v-col>
-									<v-col cols="2" md="2">
-										<span class="item">{{ element.pris_enhet }} Kr</span>
-									</v-col>
-									<v-col cols="2" md="2">
-										<span class="item">{{ element.total }} Kr</span>
-									</v-col>
-								</v-row>
-							</div>
+						<draggable
+							v-model="draggableItems"
+							v-bind="dragOptions"
+							ghost-class="ghost"
+							@end="onEnd"
+							class="items"
+						>
+							<transition-group type="transition" :name="!drag ? 'flip-list' : null">
+								<div
+									@click.stop="editDraggable(element)"
+									class="sortable mx-3"
+									:id="index"
+									v-for="(element, index) in draggableItems"
+									:key="`${index}-${element.artikelnamn}`"
+								>
+									<v-row>
+										<v-col cols="4">
+											<v-btn icon>
+												<v-icon>mdi-menu</v-icon>
+											</v-btn>
+											<strong class="item">{{ element.artikelnamn }}</strong>
+										</v-col>
+										<v-col cols="2" md="2">
+											<span class="item">{{ element.moms }}</span>
+										</v-col>
+										<v-col cols="2" md="2">
+											<span class="item">{{ element.Quantity }}</span>
+										</v-col>
+										<v-col cols="2" md="2">
+											<span class="item">{{ element.pris_enhet }} Kr</span>
+										</v-col>
+										<v-col cols="2" md="2">
+											<span class="item">{{ element.total }} Kr</span>
+										</v-col>
+									</v-row>
+								</div>
+							</transition-group>
 						</draggable>
 						<!-- End Draggable Content -->
 
@@ -509,59 +557,61 @@
 						</v-dialog>
 
 						<!-- Start Draggable Footer -->
-						<v-row class="flex-wrap" v-if="draggableItems.length > 0">
-							<v-col class="align-center d-flex">
-								<div class="d-inline-block">
-									<p class="my-0 py-0 caption">Total sum to pay</p>
-									<b>{{ calculations.RoundedSumState ? Math.round(calculations.totalSumToPay.toFixed(2)) : calculations.totalSumToPay.toFixed(2) }} kr</b>
-								</div>
-								<v-divider class="mx-4" vertical></v-divider>
-							</v-col>
+						<v-col cols="12" class="flex-wrap" v-if="draggableItems.length > 0">
+							<v-row>
+								<v-col class="align-center d-flex">
+									<div class="d-inline-block">
+										<p class="my-0 py-0 caption">Total sum to pay</p>
+										<b>{{ calculations.RoundedSumState ? Math.round(calculations.totalSumToPay.toFixed(2)) : calculations.totalSumToPay.toFixed(2) }} kr</b>
+									</div>
+									<v-divider class="mx-4" vertical></v-divider>
+								</v-col>
 
-							<v-col class="align-center d-flex">
-								<div class="d-inline-block">
-									<p class="my-0 py-0 caption">Amount ex VAT</p>
-									<b>{{ calculations.amountExVAT.toFixed(2) }} kr</b>
-								</div>
-							</v-col>
+								<v-col class="align-center d-flex">
+									<div class="d-inline-block">
+										<p class="my-0 py-0 caption">Amount ex VAT</p>
+										<b>{{ calculations.amountExVAT.toFixed(2) }} kr</b>
+									</div>
+								</v-col>
 
-							<!-- Add VAT Calculation here -->
-							<v-col class="align-center d-flex" v-if="calculations.vat6 != 0">
-								<div class="d-inline-block">
-									<p class="my-0 py-0 caption">VAT 6%</p>
-									<b>{{ calculations.vat6.toFixed(2) }} Kr</b>
-								</div>
-							</v-col>
+								<!-- Add VAT Calculation here -->
+								<v-col class="align-center d-flex" v-if="calculations.vat6 != 0">
+									<div class="d-inline-block">
+										<p class="my-0 py-0 caption">VAT 6%</p>
+										<b>{{ calculations.vat6.toFixed(2) }} Kr</b>
+									</div>
+								</v-col>
 
-							<v-col class="align-center d-flex" v-if="calculations.vat12 != 0">
-								<div class="d-inline-block">
-									<p class="my-0 py-0 caption">VAT 12%</p>
-									<b>{{ calculations.vat12.toFixed(2) }} Kr</b>
-								</div>
-							</v-col>
+								<v-col class="align-center d-flex" v-if="calculations.vat12 != 0">
+									<div class="d-inline-block">
+										<p class="my-0 py-0 caption">VAT 12%</p>
+										<b>{{ calculations.vat12.toFixed(2) }} Kr</b>
+									</div>
+								</v-col>
 
-							<v-col class="align-center d-flex" v-if="calculations.vat25 != 0">
-								<div class="d-inline-block">
-									<p class="my-0 py-0 caption">VAT 25%</p>
-									<b>{{ calculations.vat25.toFixed(2) }} Kr</b>
-								</div>
-							</v-col>
-							<!-- Add VAT Calculation here -->
+								<v-col class="align-center d-flex" v-if="calculations.vat25 != 0">
+									<div class="d-inline-block">
+										<p class="my-0 py-0 caption">VAT 25%</p>
+										<b>{{ calculations.vat25.toFixed(2) }} Kr</b>
+									</div>
+								</v-col>
+								<!-- Add VAT Calculation here -->
 
-							<v-col class="align-end d-flex">
-								<div class="d-inline-block">
-									<p class="my-0 py-0 caption">Enable rounded sum</p>
-									<v-switch class="my-1 py-0" v-model="calculations.RoundedSumState" inset></v-switch>
-								</div>
-							</v-col>
+								<v-col class="align-end d-flex">
+									<div class="d-inline-block">
+										<p class="my-0 py-0 caption">Enable rounded sum</p>
+										<v-switch class="my-1 py-0" v-model="calculations.RoundedSumState" inset></v-switch>
+									</div>
+								</v-col>
 
-							<v-col v-if="calculations.RoundedSumState" class="align-center d-flex">
-								<div class="d-inline-block">
-									<p class="my-0 py-0 caption">Rounded sum</p>
-									<b>{{ calculations.RoundedSum.toFixed(2) }} kr</b>
-								</div>
-							</v-col>
-						</v-row>
+								<v-col v-if="calculations.RoundedSumState" class="align-center d-flex">
+									<div class="d-inline-block">
+										<p class="my-0 py-0 caption">Rounded sum</p>
+										<b>{{ calculations.RoundedSum.toFixed(2) }} kr</b>
+									</div>
+								</v-col>
+							</v-row>
+						</v-col>
 						<!-- End Draggable Footer -->
 					</v-row>
 					<!-- End Draggable -->
@@ -586,10 +636,14 @@ import { mapState } from "vuex";
 
 export default {
 	data: vm => ({
+		drag: false,
 		createNewModal: false,
 		dialog: false,
 		articles: [],
 		selection_value: null,
+		addTextDialog: false,
+		addTextVal: null,
+		hideAddText: false,
 		/** Selection Options */
 		Vat: ["0%", "6%", "12%", "25%"],
 		Unit: [
@@ -661,8 +715,17 @@ export default {
 		dividerySection,
 		draggable
 	},
-	props: ['draft'],
+	props: ["draft"],
 	computed: {
+		dragOptions() {
+			return {
+				animation: 200,
+				group: "description",
+				disabled: false,
+				ghostClass: "ghost"
+			};
+		},
+
 		saveAsItemBtnState() {
 			if (this.selection_value && this.createNewModal == true)
 				return (
@@ -681,12 +744,15 @@ export default {
 
 	created() {
 		this.getArticles();
-		if(this.draft) {
-			this.selection_value == draft
+		if (this.draft) {
+			this.selection_value == this.draft;
 		}
 	},
 
 	methods: {
+		sort() {
+			this.list = this.list.sort((a, b) => a.order - b.order);
+		},
 		resetDraggableModal() {
 			this.editDraggableDialog = false;
 			this.edit = false;
@@ -812,7 +878,6 @@ export default {
 				calcs.totalSumToPay = Math.round(calcs.totalSumToPay);
 		},
 		doCalculations(arr) {
-			console.log(arr);
 			let calcs = this.calculations;
 			calcs.amountExVAT = 0;
 			calcs.vat6 = 0;
@@ -834,6 +899,10 @@ export default {
 				calcs.RoundedSum =
 					Math.round(calcs.totalSumToPay) - calcs.totalSumToPay;
 			});
+
+			if (isNaN(calcs.RoundedSum)) calcs.RoundedSum = 0;
+			if (isNaN(calcs.totalSumToPa)) calcs.totalSumToPay = 0;
+			if (isNaN(calcs.amountExVAT)) calcs.amountExVAT = 0;
 		},
 
 		onEnd: function(evt) {
@@ -846,10 +915,15 @@ export default {
 		return {
 			script: [
 				{
-					src: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js", async: true, defer: true 
+					src:
+						"https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js",
+					async: true,
+					defer: true
 				},
 				{
-					src: "https://unpkg.com/jspdf-autotable@2.3.2", async: true, defer: true 
+					src: "https://unpkg.com/jspdf-autotable@2.3.2",
+					async: true,
+					defer: true
 				}
 			]
 		};
@@ -873,5 +947,25 @@ export default {
 }
 .item {
 	font-size: 0.8rem;
+}
+
+.flip-list-move {
+	transition: transform 0.5s;
+}
+.no-move {
+	transition: transform 0s;
+}
+.ghost {
+	opacity: 0.5;
+	background: #c8ebfb;
+}
+.list-group {
+	min-height: 20px;
+}
+.list-group-item {
+	cursor: move;
+}
+.list-group-item i {
+	cursor: pointer;
 }
 </style>
