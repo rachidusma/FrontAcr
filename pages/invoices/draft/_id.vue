@@ -18,10 +18,10 @@ export default {
     components: {
         newInvoice
     },
-	created() {
-		this.$axios.$get(`/invoices/${this.$route.params.id}`).then(res => {
+	async created() {
+		await this.$axios.$get(`/invoices/${this.$route.params.id}`).then(async res => {
             this.draft = res[0];
-            this.$axios.$get(`/customers/${res[0].userid}`).then(res => {
+            await this.$axios.$get(`/customers/${res[0].userid}`).then(res => {
                 console.log(res)
             }).catch(err => console.log(err))
             this.$store.commit('setCustomer', res)

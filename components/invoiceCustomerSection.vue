@@ -339,10 +339,10 @@ export default {
 		}
 	},
 	methods: {
-		getUsers() {
-			this.$axios.setToken(this.$auth.getToken("local"));
+		async getUsers() {
+			await this.$axios.setToken(this.$auth.getToken("local"));
 
-			this.$axios
+			await this.$axios
 				.$get("/customers")
 				.then(res => this.items = res)
 				.catch(err => console.log(err));
@@ -374,10 +374,10 @@ export default {
 			this.dialog = false;
 			this.editUserModal = false;
 		},
-		saveUser() {
-			this.$axios.setToken(this.$auth.getToken("local"));
+		async saveUser() {
+			await this.$axios.setToken(this.$auth.getToken("local"));
 			console.log(this.customer);
-			this.$axios
+			await this.$axios
 				.$post("/customers", this.customer)
 				.then(res => {
 					this.resetModal();
@@ -400,11 +400,11 @@ export default {
 				})
 				.catch(err => console.log(err));
 		},
-		editUser() {
-			this.$axios.setToken(this.$auth.getToken("local"));
+		async editUser() {
+			await this.$axios.setToken(this.$auth.getToken("local"));
 			let customer = this.customer;
 
-			this.$axios
+			await this.$axios
 				.$patch(`/customers/${customer._id}`, customer)
 				.then(res => {
 					console.log(customer);

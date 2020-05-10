@@ -371,7 +371,7 @@ export default {
 			}
 		},
 
-		saveInvoice(draft) {
+		async saveInvoice(draft) {
 			this.saveInvoiceBtnloading = true; /** Loading */
 
 			let published = !!draft /** Published? */,
@@ -382,10 +382,10 @@ export default {
 			delete this.customer.__v;
 			delete this.customer._id;
 
-			this.$axios.setToken(this.$auth.getToken("local"));
+			await this.$axios.setToken(this.$auth.getToken("local"));
 			this.downloedPDF();
 
-			this.$axios
+			await this.$axios
 				.$post("/invoices", {
 					...this.customer,
 					id: invoce_number,
@@ -398,14 +398,14 @@ export default {
 					invoicepaid: false,
 					salarypaid: false
 				})
-				.then(res => {
+				.then(async res => {
 					let articles = this.draggableItems;
 
 					articles.forEach(item => {
 						item.invoiceId = invoce_number;
 					});
 
-					this.$axios
+					await this.$axios
 						.$post("/articles", articles)
 						.then(res => console.log(res));
 				})

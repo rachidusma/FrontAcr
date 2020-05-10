@@ -742,14 +742,14 @@ export default {
 			}
 			this.resetModal();
 		},
-		saveAsItem() {
-			this.$axios.setToken(this.$auth.getToken("local"));
+		async saveAsItem() {
+			await this.$axios.setToken(this.$auth.getToken("local"));
 
 			let x = this.selection_value.moms.slice(
 				0,
 				this.selection_value.moms.length - 1
 			);
-			this.$axios
+			await this.$axios
 				.$post("/articlepatterns", {
 					artikelnamn: this.selection_value.artikelnamn,
 					produktkod: this.selection_value.produktkod,
@@ -790,10 +790,10 @@ export default {
 			}
 		},
 
-		getArticles() {
-			this.$axios.setToken(this.$auth.getToken("local"));
+		async getArticles() {
+			await this.$axios.setToken(this.$auth.getToken("local"));
 
-			this.$axios
+			await this.$axios
 				.$get("/articlepatterns")
 				.then(res => {
 					this.articles = res;
@@ -846,11 +846,10 @@ export default {
 		return {
 			script: [
 				{
-					src:
-						"https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"
+					src: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js", async: true, defer: true 
 				},
 				{
-					src: "https://unpkg.com/jspdf-autotable@2.3.2"
+					src: "https://unpkg.com/jspdf-autotable@2.3.2", async: true, defer: true 
 				}
 			]
 		};

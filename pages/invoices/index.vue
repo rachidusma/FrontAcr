@@ -169,8 +169,8 @@ export default {
 			}
 		}
 	},
-	created() {
-		this.$axios
+	async created() {
+		await this.$axios
 			.$get("/invoices")
 			.then(res => {
 				res.forEach(invoice => {
