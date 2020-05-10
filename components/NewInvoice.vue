@@ -49,13 +49,10 @@
 										<v-divider></v-divider>
 
 										<v-card-actions>
+											<v-btn color="error" v-if="edit" @click="deleteText">Delet</v-btn>
 											<v-btn @click="addTextDialog = false">Close</v-btn>
 											<v-spacer></v-spacer>
-											<v-btn
-												color="primary"
-												text
-												@click="selection_value = {artikelnamn: addTextVal};addToInvoice();addTextDialog = false; hideAddText = true"
-											>Add to invoice</v-btn>
+											<v-btn color="primary" text @click="addText()">Add to invoice</v-btn>
 										</v-card-actions>
 									</v-card>
 								</v-dialog>
@@ -392,10 +389,13 @@
 											<span class="item">{{ element.Quantity }}</span>
 										</v-col>
 										<v-col cols="2" md="2">
-											<span class="item">{{ element.pris_enhet }} Kr</span>
+											<span class="item" v-if="!element.text">{{ element.pris_enhet }} Kr</span>
+											<span class="item" v-if="element.text"></span>
 										</v-col>
 										<v-col cols="2" md="2">
-											<span class="item">{{ element.total }} Kr</span>
+											<span class="item" v-if="!element.text">{{ element.total }} Kr</span>
+											<span class="item" v-if="element.text"></span>
+
 										</v-col>
 									</v-row>
 								</div>
@@ -597,10 +597,10 @@
 								</v-col>
 								<!-- Add VAT Calculation here -->
 
-								<v-col class="align-end d-flex">
-									<div class="d-inline-block">
+								<v-col class="align-center d-flex">
+									<div class>
 										<p class="my-0 py-0 caption">Enable rounded sum</p>
-										<v-switch class="my-1 py-0" v-model="calculations.RoundedSumState" inset></v-switch>
+										<v-switch class="ma-0 pa-0" v-model="calculations.RoundedSumState" inset></v-switch>
 									</div>
 								</v-col>
 
@@ -744,8 +744,11 @@ export default {
 
 	created() {
 		this.getArticles();
-		if (this.draft) {
-			this.selection_value == this.draft;
+
+		if (!!this.draft) {
+			// console.log(this.$route.params.id)
+
+			this.selection_value = this.draft;
 		}
 	},
 
@@ -855,7 +858,35 @@ export default {
 				console.log(index);
 			}
 		},
+		deleteText() {
+			let index = this.draggableItems.findIndex(i => i.text == true);
+			this.draggableItems.splice(index, 1);
+			this.addTextDialog = false;
+			this.hideAddText = false;
+			this.edit = false;
+			this.addTextVal = null
+		},
+		addText() {
+			this.selection_value = {
+				artikelnamn: this.addTextVal,
+				text: true
+			};
 
+			if (this.edit) {
+				let index = this.draggableItems.findIndex(i => i.text == true);
+				if (index > -1) {
+					Object.assign(this.draggableItems[index], this.selection_value);
+					this.addTextDialog = false;
+					this.hideAddText = true;
+				} else {
+					console.log(index);
+				}
+			} else {
+				this.addToInvoice();
+				this.addTextDialog = false;
+				this.hideAddText = true;
+			}
+		},
 		async getArticles() {
 			await this.$axios.setToken(this.$auth.getToken("local"));
 
@@ -867,10 +898,19 @@ export default {
 				.catch(err => console.log(err));
 		},
 		editDraggable(element) {
-			this.editDraggableDialog = true;
-			this.selection_value = Object.assign({}, this.selection_value, element);
-			this.edit = true;
-			this.indexBedoreEdit = this.draggableItems.indexOf(this.selection_value);
+			if (element.text) {
+				this.addTextDialog = true;
+				this.hideAddText = false;
+				this.edit = true;
+			} else {
+				this.editDraggableDialog = true;
+
+				this.selection_value = Object.assign({}, this.selection_value, element);
+				this.edit = true;
+				this.indexBedoreEdit = this.draggableItems.indexOf(
+					this.selection_value
+				);
+			}
 		},
 
 		RoundTotalSum() {
@@ -901,7 +941,7 @@ export default {
 			});
 
 			if (isNaN(calcs.RoundedSum)) calcs.RoundedSum = 0;
-			if (isNaN(calcs.totalSumToPa)) calcs.totalSumToPay = 0;
+			if (isNaN(calcs.totalSumToPay)) calcs.totalSumToPay = 0;
 			if (isNaN(calcs.amountExVAT)) calcs.amountExVAT = 0;
 		},
 

@@ -413,7 +413,8 @@ export default {
 					leveransmetod: deliveryMethod,
 					pdf_link: this.pdf_link,
 					invoicepaid: false,
-					salarypaid: false
+					salarypaid: false,
+					createdate: this.invoice.dateFrom,
 				})
 				.then(async res => {
 					let articles = this.draggableItems;

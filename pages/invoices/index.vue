@@ -27,10 +27,9 @@
 				</div>
 			</v-col>
 			<v-col cols="12" sm="12">
-					<v-btn text small :color="activeclass" @click="activeinvoices">Active invoices</v-btn>
-					<v-btn text small :color="allclass" @click="allinvoices">All invoices</v-btn>
+				<v-btn text small :color="activeclass" @click="activeinvoices">Active invoices</v-btn>
+				<v-btn text small :color="allclass" @click="allinvoices">All invoices</v-btn>
 				<v-card class="pa-8">
-
 					<v-row class="pa-4">
 						<!-- Start Search input -->
 						<v-col cols="12" sm="3">
@@ -116,7 +115,7 @@ export default {
 					sortable: false,
 					value: "userid"
 				},
-				{ text: "Customer", value: "userid" },
+				{ text: "Customer", value: "customername" },
 				{ text: "Invoice amount (inc VAT)", value: "summa" },
 				{ text: "status", value: "status" },
 				{ text: "Date of invoice", value: "createdate" },
@@ -206,7 +205,6 @@ export default {
 				console.log(res);
 			})
 			.catch(err => console.log(err));
-
 	}
 };
 </script>
