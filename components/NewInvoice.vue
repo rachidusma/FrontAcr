@@ -18,7 +18,7 @@
 			<!-- Start Product -->
 			<v-col cols="12">
 				<!-- <div class="overline mb-4">Articles :</div> -->
-				<v-card class="pa-3">
+				<v-card outlined class="pa-5">
 					<h3 class="mb-3">Items/services:</h3>
 					<!-- <v-divider class="mb-4"></v-divider> -->
 					<!-- Start Add row MODAL -->
