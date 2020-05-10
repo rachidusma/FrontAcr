@@ -415,6 +415,7 @@ export default {
 					invoicepaid: false,
 					salarypaid: false,
 					createdate: this.invoice.dateFrom,
+					paydate: this.invoice.dateTo,
 				})
 				.then(async res => {
 					let articles = this.draggableItems;

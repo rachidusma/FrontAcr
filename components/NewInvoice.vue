@@ -36,7 +36,11 @@
 									</template>
 
 									<v-card>
-										<v-card-title class="headline grey lighten-2" primary-title>Add new row</v-card-title>
+										<v-card-title class="headline grey lighten-2" primary-title>
+											<h3>Add new row</h3>
+											<v-spacer></v-spacer>
+											<v-icon class="font1" @click="addTextDialog = false">mdi mdi-close</v-icon>
+										</v-card-title>
 
 										<v-card-text>
 											<v-row>
@@ -65,6 +69,8 @@
 							<!-- Start Modal Title -->
 							<v-card-title>
 								<span class="headline">Add new row</span>
+								<v-spacer></v-spacer>
+								<v-icon class="font1" @click="resetModal">mdi mdi-close</v-icon>
 							</v-card-title>
 							<!-- End Modal Title -->
 
@@ -395,7 +401,6 @@
 										<v-col cols="2" md="2">
 											<span class="item" v-if="!element.text">{{ element.total }} Kr</span>
 											<span class="item" v-if="element.text"></span>
-
 										</v-col>
 									</v-row>
 								</div>
@@ -405,7 +410,11 @@
 
 						<v-dialog v-model="editDraggableDialog" max-width="600px">
 							<v-card>
-								<v-card-title class="headline">Edit product</v-card-title>
+								<v-card-title class="headline">
+									<h3>Edit product</h3>
+									<v-spacer></v-spacer>
+									<v-icon class="font1" @click="editDraggableDialog = false">mdi mdi-close</v-icon>
+								</v-card-title>
 
 								<!-- Start Modal Body -->
 								<v-card-text>
@@ -864,7 +873,7 @@ export default {
 			this.addTextDialog = false;
 			this.hideAddText = false;
 			this.edit = false;
-			this.addTextVal = null
+			this.addTextVal = null;
 		},
 		addText() {
 			this.selection_value = {

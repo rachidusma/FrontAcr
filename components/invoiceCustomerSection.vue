@@ -66,6 +66,8 @@
 						<v-card>
 							<v-card-title>
 								<span class="overline">Add user Profile</span>
+								<v-spacer></v-spacer>
+								<v-icon class="font1" @click="initialCustomer(2);dialog=false "> mdi mdi-close </v-icon>
 							</v-card-title>
 							<v-divider></v-divider>
 							<v-card-text v-if="customer">
@@ -340,8 +342,8 @@ export default {
 				.then(res => (this.items = res))
 				.catch(err => console.log(err));
 		},
-		initialCustomer() {
-			if (this.customer == undefined) {
+		initialCustomer(closeModal) {
+			if (this.customer == undefined || closeModal) {
 				this.editUserModal = false;
 				this.customer = {
 					customername: "",
