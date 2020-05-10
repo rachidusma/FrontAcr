@@ -6,56 +6,56 @@
 			</v-card-title>
 
 			<v-card-text>
-			<v-col cols="12" md="12">
-				<table id="basic-table" style="display: none">
-					<thead></thead>
-					<tbody>
-						<tr>
-							<td>FAKTURA NR</td>
-							<td>Sätts automatiskt</td>
-							<td>KUND</td>
-							<td>{{ customer.customername }}</td>
-						</tr>
-						<tr>
-							<td>FAKTURADATUM</td>
-							<td>{{ invoice.dateFrom }}</td>
-							<td>KUNDNR</td>
-							<td>{{ customer.kundnummer }}</td>
-						</tr>
-						<tr>
-							<td>RFALLODATUM</td>
-							<td>{{ invoice.dateTo }}</td>
-							<td>ERT VAT NR</td>
-							<td>{{ customer.vatnummer || '' }}</td>
-						</tr>
-					</tbody>
-				</table>
+				<v-col cols="12" md="12">
+					<table id="basic-table" style="display: none">
+						<thead></thead>
+						<tbody>
+							<tr>
+								<td>FAKTURA NR</td>
+								<td>Sätts automatiskt</td>
+								<td>KUND</td>
+								<td>{{ customer.customername }}</td>
+							</tr>
+							<tr>
+								<td>FAKTURADATUM</td>
+								<td>{{ invoice.dateFrom }}</td>
+								<td>KUNDNR</td>
+								<td>{{ customer.kundnummer }}</td>
+							</tr>
+							<tr>
+								<td>RFALLODATUM</td>
+								<td>{{ invoice.dateTo }}</td>
+								<td>ERT VAT NR</td>
+								<td>{{ customer.vatnummer || '' }}</td>
+							</tr>
+						</tbody>
+					</table>
 
-				<table id="products-table" style="display: none">
-					<thead>
-						<tr>
-							<td>BESKRIVNING</td>
-							<td>MOMS</td>
-							<td>ANTAL</td>
-							<td>À-PRIS</td>
-							<td>SUMMA</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="(prod,index) in draggableItems" :key="index">
-							<td>{{ prod.artikelnamn }}</td>
-							<td>{{ prod.moms }}</td>
-							<td>{{ prod.Quantity }}</td>
-							<td>{{ prod.pris_enhet }}</td>
-							<td>{{ prod.total }}</td>
-						</tr>
-					</tbody>
-				</table>
+					<table id="products-table" style="display: none">
+						<thead>
+							<tr>
+								<td>BESKRIVNING</td>
+								<td>MOMS</td>
+								<td>ANTAL</td>
+								<td>À-PRIS</td>
+								<td>SUMMA</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="(prod,index) in draggableItems" :key="index">
+								<td>{{ prod.artikelnamn }}</td>
+								<td>{{ prod.moms }}</td>
+								<td>{{ prod.Quantity }}</td>
+								<td>{{ prod.pris_enhet }}</td>
+								<td>{{ prod.total }}</td>
+							</tr>
+						</tbody>
+					</table>
 
-				<v-row>
-					<v-col cols="12" md="12">
-						<v-expansion-panels accordion hover v-model="deliveryMethod">
-							<!-- <v-expansion-panel>
+					<v-row>
+						<v-col cols="12" md="12">
+							<v-expansion-panels accordion hover v-model="deliveryMethod">
+								<!-- <v-expansion-panel>
 							<v-expansion-panel-header>
 							<template v-slot:default="{ open }">
 								<v-row no-gutters>
@@ -71,72 +71,72 @@
 							</v-expansion-panel-header>
 							<v-divider></v-divider>
 							<v-expansion-panel-content class="gray">Here we will put payement function</v-expansion-panel-content>
-							</v-expansion-panel>-->
+								</v-expansion-panel>-->
 
-							<v-expansion-panel>
-								<v-expansion-panel-header>
-									<v-row no-gutters>
-										<v-col cols="12">
-											<h3 class="text--primary pb-3">Email to customer</h3>
-										</v-col>
-										<v-col cols="12">
-											<p class="pa-0 ma-0 text--secondary">Send the invoice via Email.</p>
-										</v-col>
-									</v-row>
-								</v-expansion-panel-header>
-
-								<v-divider></v-divider>
-								<v-expansion-panel-content class="gray">
-									<v-container>
-										<v-row>
-											<v-col cols="12" md="5" sm="12">
-												<p class="overline">Type email of the customer</p>
-												<v-text-field label="Email" outlined color="#336882" dense></v-text-field>
-												<p class="overline">Invoice Delivery options</p>
-												<v-radio-group v-model="radioGroup">
-													<v-radio label="Send the invoice with a link to PDF" value="v" color="#336882"></v-radio>
-													<v-radio label="Send the invoice and attatch PDF File" value="f" color="#336882"></v-radio>
-												</v-radio-group>
-												<v-btn outlined color="#336882">Send</v-btn>
+								<v-expansion-panel>
+									<v-expansion-panel-header>
+										<v-row no-gutters>
+											<v-col cols="12">
+												<h3 class="text--primary pb-3">Email to customer</h3>
 											</v-col>
-											<v-col cols="12" md="5" sm="12">
-												<p class="overline">Send Your invoice as an Email</p>
+											<v-col cols="12">
+												<p class="pa-0 ma-0 text--secondary">Send the invoice via Email.</p>
 											</v-col>
 										</v-row>
-									</v-container>
-								</v-expansion-panel-content>
-							</v-expansion-panel>
+									</v-expansion-panel-header>
 
-							<!-- Start PDF Download -->
+									<v-divider></v-divider>
+									<v-expansion-panel-content class="gray">
+										<v-container>
+											<v-row>
+												<v-col cols="12" md="5" sm="12">
+													<p class="overline">Type email of the customer</p>
+													<v-text-field label="Email" outlined color="#336882" dense></v-text-field>
+													<p class="overline">Invoice Delivery options</p>
+													<v-radio-group v-model="radioGroup">
+														<v-radio label="Send the invoice with a link to PDF" value="v" color="#336882"></v-radio>
+														<v-radio label="Send the invoice and attatch PDF File" value="f" color="#336882"></v-radio>
+													</v-radio-group>
+													<v-btn outlined color="#336882">Send</v-btn>
+												</v-col>
+												<v-col cols="12" md="5" sm="12">
+													<p class="overline">Send Your invoice as an Email</p>
+												</v-col>
+											</v-row>
+										</v-container>
+									</v-expansion-panel-content>
+								</v-expansion-panel>
 
-							<v-expansion-panel>
-								<v-expansion-panel-header>
-									<v-row no-gutters>
-										<v-col cols="12">
-											<h3 class="text--primary pb-3">Download PDF</h3>
-										</v-col>
-										<v-col cols="12">
-											<p class="pa-0 ma-0 text--secondary">You can preview your invoice before publishing it.</p>
-										</v-col>
-									</v-row>
-								</v-expansion-panel-header>
-								<v-divider></v-divider>
+								<!-- Start PDF Download -->
 
-								<v-expansion-panel-content class="gray pa-5">
-									<v-row>
-										<v-col cols="6" class="text--secondary">
-											<p>You can preview your invoice before publishing it.</p>
-											<v-btn @click="downloedPDF('dsa')">Preview PDF</v-btn>
-										</v-col>
-										<v-col cols="3">
-											<img src="@/assets/invoice_img.png" alt="invoice" />
-										</v-col>
-									</v-row>
-								</v-expansion-panel-content>
-							</v-expansion-panel>
-							<!-- End PDF Download -->
+								<v-expansion-panel>
+									<v-expansion-panel-header>
+										<v-row no-gutters>
+											<v-col cols="12">
+												<h3 class="text--primary pb-3">Download PDF</h3>
+											</v-col>
+											<v-col cols="12">
+												<p class="pa-0 ma-0 text--secondary">You can preview your invoice before publishing it.</p>
+											</v-col>
+										</v-row>
+									</v-expansion-panel-header>
+									<v-divider></v-divider>
 
-							<!-- <v-expansion-panel>
+									<v-expansion-panel-content class="gray pa-5">
+										<v-row>
+											<v-col cols="6" class="text--secondary">
+												<p>You can preview your invoice before publishing it.</p>
+												<v-btn @click="downloedPDF('dsa')">Preview PDF</v-btn>
+											</v-col>
+											<v-col cols="3">
+												<img src="@/assets/invoice_img.png" alt="invoice" />
+											</v-col>
+										</v-row>
+									</v-expansion-panel-content>
+								</v-expansion-panel>
+								<!-- End PDF Download -->
+
+								<!-- <v-expansion-panel>
 							<v-expansion-panel-header v-slot="{ open }">
 							<v-row no-gutters>
 								<v-col cols="4">Send as E-invoice</v-col>
@@ -150,29 +150,29 @@
 							</v-expansion-panel-header>
 							<v-divider></v-divider>
 							<v-expansion-panel-content class="gray">Here we will put payement function</v-expansion-panel-content>
-							</v-expansion-panel>-->
-						</v-expansion-panels>
-					</v-col>
+								</v-expansion-panel>-->
+							</v-expansion-panels>
+						</v-col>
 
-					<v-col cols="12">
-						<v-btn
-							class="ma-2"
-							:loading="saveInvoiceBtnloading"
-							:disabled="saveInvoiceBtnloading"
-							color="secondary"
-							@click="saveInvoice('')"
-						>Save as draft</v-btn>
+						<v-col cols="12">
+							<v-btn
+								class="ma-2"
+								:loading="saveInvoiceBtnloading"
+								:disabled="saveInvoiceBtnloading"
+								color="secondary"
+								@click="saveInvoice('')"
+							>Save as draft</v-btn>
 
-						<v-btn
-							class="ma-2"
-							:loading="saveInvoiceBtnloading"
-							:disabled="saveInvoiceBtnDisabled"
-							color="primary"
-							@click="saveInvoice"
-						>{{ deliveryMethod == 1 ? "Download and Publish" : "Publish" }}</v-btn>
-					</v-col>
-				</v-row>
-			</v-col>
+							<v-btn
+								class="ma-2"
+								:loading="saveInvoiceBtnloading"
+								:disabled="saveInvoiceBtnDisabled"
+								color="primary"
+								@click="saveInvoice"
+							>{{ deliveryMethod == 1 ? "Download and Publish" : "Publish" }}</v-btn>
+						</v-col>
+					</v-row>
+				</v-col>
 			</v-card-text>
 		</v-card>
 	</v-col>
@@ -201,7 +201,7 @@ export default {
 		...mapState(["customer", "invoice"])
 	},
 	methods: {
-		downloedPDF(preview) {
+		async downloedPDF(preview) {
 			let doc = new jsPDF(),
 				vm = this,
 				res = doc.autoTableHtmlToJson(document.getElementById("basic-table")),
@@ -213,14 +213,14 @@ export default {
 				mid = 105;
 
 			function header() {
-				doc.setFont('times', 'italic');
-				doc.setFontSize('30');
-				doc.setTextColor(25, 212, 0)
+				doc.setFont("times", "italic");
+				doc.setFontSize("30");
+				doc.setTextColor(25, 212, 0);
 
 				doc.text("acredit", start, 20);
-				doc.setFont('Helvetica','');
-				doc.setFontSize('12');
-				doc.setTextColor(0)
+				doc.setFont("Helvetica", "");
+				doc.setFontSize("12");
+				doc.setTextColor(0);
 
 				doc.text("invoice Title", start, 30);
 				doc.text(vm.customer.customername || "", mid, 25);
@@ -362,7 +362,7 @@ export default {
 
 				data.append("file", pdf);
 
-				vm.$axios
+				await vm.$axios
 					.$post("/profile/file-upload", data, {
 						headers: {
 							accept: "application/json",
@@ -370,21 +370,37 @@ export default {
 							"Content-Type": `multipart/form-data;`
 						}
 					})
-					.then(res => {
-						if (200 === res.status)
-							if (res.data.error) {
-								// If file size is larger than expected.
-								if ("LIMIT_FILE_SIZE" === res.data.error.code)
-									alert("Max size: 2MB");
-								else alert(res.data.error);
-							} else {
-								this.pdf_link = res.location;
-							}
+					.then(response => {
+						console.log(response.status);
+						vm.pdf_link = response.location;
+						
+						doc.save("invoice.pdf");							
+
+						if (200 === response.status) { 
+							// If file size is larger than expected. 
+							if (response.data.error) { 
+								if ('LIMIT_FILE_SIZE' === response.data.error.code) { 
+									alert('Max size: 2MB', 'red'); 
+								} else { 
+									console.log(response.data); 
+									// If not the given file type 
+									alert(response.data.error, 'red'); 
+								}
+							} else { 
+								// Success 
+								let fileName = response.data; 
+								console.log('filedata', fileName);
+								 
+								alert('File Uploaded', '#3089cf'); 
+							} 
+						} 
+					
+
+						
 					})
 					.catch(err => {
 						console.log(err);
 					});
-				doc.save("invoice.pdf");
 			}
 		},
 
@@ -400,7 +416,7 @@ export default {
 			delete this.customer._id;
 
 			await this.$axios.setToken(this.$auth.getToken("local"));
-			this.downloedPDF();
+			await this.downloedPDF();
 
 			await this.$axios
 				.$post("/invoices", {
@@ -415,7 +431,7 @@ export default {
 					invoicepaid: false,
 					salarypaid: false,
 					createdate: this.invoice.dateFrom,
-					paydate: this.invoice.dateTo,
+					paydate: this.invoice.dateTo
 				})
 				.then(async res => {
 					let articles = this.draggableItems;

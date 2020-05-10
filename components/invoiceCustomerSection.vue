@@ -18,7 +18,7 @@
 						:return-object="true"
 						:loading="isLoading"
 						:search-input.sync="search"
-						@change="initialCustomer"
+						@change="initialCustomer(null)"
 					>
 						<template v-slot:selection="{ attr, on, item  }">
 							<span class="py-0 my-0" v-text="item.customername"></span>
@@ -343,6 +343,7 @@ export default {
 				.catch(err => console.log(err));
 		},
 		initialCustomer(closeModal) {
+			console.log(closeModal);
 			if (this.customer == undefined || closeModal) {
 				this.editUserModal = false;
 				this.customer = {
@@ -361,6 +362,8 @@ export default {
 					overdueinterest: 0
 				};
 			} else {
+				console.log('here');
+				
 				this.editUserModal = true;
 			}
 		},

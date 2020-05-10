@@ -966,13 +966,11 @@ export default {
 				{
 					src:
 						"https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js",
-					async: true,
-					defer: true
+
 				},
 				{
 					src: "https://unpkg.com/jspdf-autotable@2.3.2",
-					async: true,
-					defer: true
+
 				}
 			]
 		};
