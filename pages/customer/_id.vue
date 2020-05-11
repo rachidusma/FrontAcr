@@ -397,9 +397,6 @@ export default {
 			.$get("/invoices")
 			.then(res => {
 				res.forEach(inv => {
-          console.log(inv.published &&
-						!inv.invoicepaid &&
-						inv.duedate > Date.now())
 					if (!inv.published) inv.status = "Draft";
 					else if (
 						inv.published &&
