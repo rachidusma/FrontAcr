@@ -211,29 +211,32 @@ export default {
 
 			let published = !!draft /** Published? */,
 				deliveryMethod = this.deliveryMethod == 1 ? "pdf" : "e-invoice",
-				invoce_number = uuidv1();
-
-			/** Delete customer unnecessary data */
-			delete this.customer.__v;
-			delete this.customer._id;
+				invoce_number = uuidv1(),
+				publishDate = (!!draft) ? null : Date.now();
 
 			await this.$axios.setToken(this.$auth.getToken("local"));
 			await this.downloedPDF();
 
 			await this.$axios
 				.$post("/invoices", {
-					...this.customer,
-					id: invoce_number,
-					published: published,
-					dagar: this.invoice.dagar,
-					summa: this.calculations.totalSumToPay,
+					orcid: invoce_number,
+					customerid: this.customer._id,
+					customername: this.customer.customername,
+					duedate: this.invoice.dateTo,
+					overdueinterest: this.customer.overdueinterest,
+					summa: this.calculations.amountExVAT,
+					total: this.calculations.totalSumToPay,
 					extra_info: "",
 					leveransmetod: deliveryMethod,
+					published: published,
+					publishDate: publishDate,
 					pdf_link: this.pdf_link,
+					dagar: this.invoice.dagar,
+
+					fromDate: this.invoice.dateFrom,
+
 					invoicepaid: false,
 					salarypaid: false,
-					createdate: this.invoice.dateFrom,
-					paydate: this.invoice.dateTo
 				})
 				.then(async res => {
 					let articles = this.draggableItems;
