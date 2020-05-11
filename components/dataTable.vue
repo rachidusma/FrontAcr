@@ -65,12 +65,13 @@ export default {
 	data() {
 		return {
       search: "",
-      state: [{ text: "paid", value: "paid" }],
+      state: [{ text: "All states", value: "All" },],
 			States: [
 				{ text: "All states", value: "All" },
-				{ text: "Paid", value: "paid" },
-				{ text: "Overdue", value: "overdue" },
-				{ text: "Drafts", value: "draft" }
+				{ text: "Paid", value: "Paid" },
+				{ text: "Published", value: "Published" },
+				{ text: "Overdue", value: "Overdue" },
+				{ text: "Drafts", value: "Draft" }
 			],
 			types: [
 				{ text: "All types", value: "All" },

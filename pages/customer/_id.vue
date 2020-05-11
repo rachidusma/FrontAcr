@@ -396,25 +396,31 @@ export default {
 		await this.$axios
 			.$get("/invoices")
 			.then(res => {
-				res.forEach(inv => {
-					if (!inv.published) inv.status = "Draft";
-					else if (
-						inv.published &&
+        // res = res.slice(46, 47)
+        res.forEach(inv => {
+        // console.log(inv.duedate);
+          if (
+            inv.published &&
 						!inv.invoicepaid &&
-						inv.duedate > Date.now()
+						new Date(inv.duedate) > Date.now()
 					)
 						inv.status = "Published";
 					else if (
-						inv.published &&
+            inv.published &&
 						!inv.invoicepaid &&
-						inv.duedate < Date.now()
+						new Date(inv.duedate) < Date.now()
 					)
 						inv.status = "Overdue";
           else if (inv.published && inv.invoicepaid) inv.status = "Paid";
+					else if (!inv.published) inv.status = "Draft";
           
-					inv.duedate = new Date(inv.duedate).toISOString().substring(0, 10);
-					inv.fromDate = "-";
-					inv.deliveryDate = "-";
+          if(inv.duedate){
+            inv.duedate = new Date(inv.duedate).toISOString().substring(0, 10);
+            console.log(new Date(inv.duedate) > Date.now())
+
+          }
+				  inv.fromDate = "-";
+				  inv.deliveryDate = "-";
 				});
 
 				this.customerInvoices = res;
