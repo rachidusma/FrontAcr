@@ -936,6 +936,7 @@ export default {
 			calcs.RoundedSum = 0;
 
 			arr.map(x => {
+				if(x.text) {return};
 				/** Ex Vat Calc */
 				calcs.amountExVAT += Number(x.total);
 
@@ -959,21 +960,6 @@ export default {
 			this.oldIndex = evt.oldIndex;
 			this.newIndex = evt.newIndex;
 		}
-	},
-	head() {
-		return {
-			script: [
-				{
-					src:
-						"https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js",
-
-				},
-				{
-					src: "https://unpkg.com/jspdf-autotable@2.3.2",
-
-				}
-			]
-		};
 	}
 };
 </script>
