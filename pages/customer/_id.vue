@@ -311,55 +311,25 @@
 			</v-col>
 		</v-row>
 		<!-- End calculations section-->
-		<v-row>
-		<v-btn text small :color="activeclass" @click="activeinvoices">Active invoices</v-btn>
-		<v-btn text small :color="allclass" @click="allinvoices">All invoices</v-btn>	
-		</v-row>
-		<v-card class="pa-3" outlined>
-			<v-row>
-				<v-col cols="12">
-					<v-text-field v-model="search" class="mb-3" append-icon="mdi-magnify" label="Search" outlined hide-details></v-text-field>
-					<v-data-table
-						:search="search"
-						:headers="headers"
-						:items="displaiedInvoices"
-						:items-per-page="5"
-						class="elevation-1"
-					></v-data-table>
-				</v-col>
-			</v-row>
-		</v-card>
+
+		<dateTable :allItems="customerInvoices" />
 	</v-layout>
 </template>
 <script>
+import dateTable from "@/components/dataTable.vue";
 export default {
 	middleware: "auth",
 	layout: "admin",
 
+	components: {
+		dateTable
+	},
 	data() {
 		return {
-			search: "",
-			activeclass: "primary",
-			allclass: "normal",
 			customer: {},
 			deleteDialog: false,
 			editUserDialog: false,
-			headers: [
-				{
-					text: "Invoice number",
-					align: "start",
-					sortable: false,
-					value: "userid"
-				},
-				{ text: "Customer", value: "customername" },
-				{ text: "Invoice amount (inc VAT)", value: "summa" },
-				{ text: "status", value: "status" },
-				{ text: "Date of invoice", value: "createdate" },
-				{ text: "Due date", value: "userid" },
-				{ text: "Delivery  date", value: "userid" }
-			],
-			customerInvoices: [],
-			displaiedInvoices: [],
+			customerInvoices: []
 		};
 	},
 	computed: {
@@ -418,32 +388,44 @@ export default {
 			element.click();
 
 			document.body.removeChild(element);
-		},
-
-		activeinvoices() {
-			this.displaiedInvoices = this.customerInvoices;
-			this.displaiedInvoices = this.customerInvoices.filter(
-				invoice => invoice.status != "paid"
-			);
-			this.activeclass = "primary";
-			this.allclass = "normal";
-		},
-		allinvoices() {
-			this.displaiedInvoices = this.customerInvoices;
-			this.displaiedInvoices = this.customerInvoices.filter(
-				invoice => invoice.status != "draft"
-			);
-			this.allclass = "primary";
-			this.activeclass = "normal";
-		},
+		}
 	},
 	async created() {
 		await this.getCustomer();
-		await this.$axios.$get('/invoices')
+
+		await this.$axios
+			.$get("/invoices")
 			.then(res => {
-				this.customerInvoices =  res.filter(i => i.userid = this.customer.userid);
-				this.displaiedInvoices = this.customerInvoices;
+				res.forEach(inv => {
+          console.log(inv.published &&
+						!inv.invoicepaid &&
+						inv.duedate > Date.now())
+					if (!inv.published) inv.status = "Draft";
+					else if (
+						inv.published &&
+						!inv.invoicepaid &&
+						inv.duedate > Date.now()
+					)
+						inv.status = "Published";
+					else if (
+						inv.published &&
+						!inv.invoicepaid &&
+						inv.duedate < Date.now()
+					)
+						inv.status = "Overdue";
+          else if (inv.published && inv.invoicepaid) inv.status = "Paid";
+          
+					inv.duedate = new Date(inv.duedate).toISOString().substring(0, 10);
+					inv.fromDate = "-";
+					inv.deliveryDate = "-";
+				});
+
+				this.customerInvoices = res;
+
+				// this.activeinvoices();
+				console.log(res);
 			})
+			.catch(err => console.log(err));
 	}
 };
 </script>
