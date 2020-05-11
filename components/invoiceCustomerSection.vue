@@ -314,7 +314,7 @@ export default {
 		dialog: false,
 		editUserModal: false
 	}),
-	created() {
+	beforeMount() {
 		this.getUsers();
 	},
 	watch: {

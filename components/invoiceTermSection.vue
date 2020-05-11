@@ -161,7 +161,7 @@ export default {
 		}
 	},
 
-	created() {
+	beforeMount() {
 		delivery: "Fritt vårt lager";
 		overduePayment: "12%";
 	},

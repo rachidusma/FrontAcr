@@ -140,7 +140,7 @@ export default {
 			}
 		}
 	},
-	created() {
+	beforeMount() {
 		this.displaiedInvoices = this.allItems;
 	}
 };

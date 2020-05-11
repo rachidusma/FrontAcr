@@ -390,7 +390,7 @@ export default {
 			document.body.removeChild(element);
 		}
 	},
-	async created() {
+	async beforeMount() {
 		await this.getCustomer();
 
 		await this.$axios

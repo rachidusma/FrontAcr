@@ -18,7 +18,7 @@ export default {
     components: {
         newInvoice
     },
-	async created() {
+	async beforeMount() {
 		await this.$axios.$get(`/invoices/${this.$route.params.id}`).then(async res => {
             this.draft = res[0];
             await this.$axios.$get(`/customers/${res[0].userid}`).then(res => {

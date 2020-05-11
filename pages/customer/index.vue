@@ -48,7 +48,7 @@ export default {
 	components: {
 		UserModal
 	},
-	async created() {
+	async beforeMount() {
 		await this.$axios.get("/customers/").then(res => {
 			this.customers = res.data;
 		});

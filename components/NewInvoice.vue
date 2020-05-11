@@ -751,7 +751,7 @@ export default {
 		...mapState(["customer", "invoice"])
 	},
 
-	created() {
+	beforeMount() {
 		this.getArticles();
 
 		if (!!this.draft) {

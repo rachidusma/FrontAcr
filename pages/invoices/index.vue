@@ -168,7 +168,8 @@ export default {
 			}
 		}
 	},
-	async created() {
+	async beforeMount() {
+		this.$axios.setToken(this.$auth.getToken("local"));
 		await this.$axios
 			.$get("/invoices")
 			.then(res => {
