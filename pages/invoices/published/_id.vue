@@ -10,15 +10,13 @@
 				<v-row class="justify-space-between">
 					<!-- Start Customer Name -->
 					<v-col cols="12" md="4">
-						<h3>{{ invoice.customername }}</h3>
-						<v-chip class="ma-2" color="blue">Published</v-chip>
+						<h3 class="d-inline-block">{{ invoice.customername }}</h3>
+						<v-chip class="mt-3 mx-2" small color="blue">Published</v-chip>
 					</v-col>
 					<!-- End Customer Name -->
 
 					<!-- Start buttons -->
 					<v-col cols="12" md="8" class="justify-end d-flex">
-						<v-btn to="/newinvoice" color="success">Register Payment</v-btn>
-
 						<!-- Start Dropdown -->
 						<v-menu offset-y>
 							<template v-slot:activator="{ on }">
@@ -30,7 +28,7 @@
 							<v-list>
 								<v-list-item>Amend invoice</v-list-item>
 
-								<v-list-item :href="invoice.pdf_link">Download</v-list-item>
+								<v-list-item target="_blank" :href="invoice.pdf_link">Download</v-list-item>
 							</v-list>
 						</v-menu>
 					</v-col>
@@ -40,7 +38,7 @@
 		<!-- End header -->
 
 		<div class="pdf_container">
-			<v-btn outlined :href="invoice.pdf_link">
+			<v-btn outlined small class="ma-5" target="_blank" :href="invoice.pdf_link" >
 				<v-icon class="font1">mdi mdi-download</v-icon>
 			</v-btn>
 
@@ -82,11 +80,11 @@ export default {
 
 <style>
 .pdf_container {
-  position: relative;
+	position: relative !important;
 }
-.pdf_container button {
-  position: absolute;
-z-index: 999;
-right: 0;
+.pdf_container a {
+	position: absolute !important;
+	z-index: 7 !important;
+	right: 0 !important;
 }
 </style>

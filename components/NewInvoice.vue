@@ -627,9 +627,9 @@
 				</v-card>
 			</v-col>
 			<!-- End Product -->
-			<termSection :todatefromDraft="todatefromDraft" :datefromDraft="datesForTermSection"/>
+			<termSection :todatefromDraft="todatefromDraft" :datefromDraft="datesForTermSection" />
 
-			<dividerySection :calculations="calculations" :draggableItems="draggableItems" />
+			<dividerySection :calculations="calculations" :draggableItems="draggableItems" :invoiceId="invoiceId" />
 		</v-row>
 	</v-layout>
 </template>
@@ -720,7 +720,8 @@ export default {
 		/** FOR DRAFT */
 		customerNameForCustomerSection: null,
 		datesForTermSection: null,
-		todatefromDraft: null
+		todatefromDraft: null,
+		invoiceId: null
 	}),
 	components: {
 		customerSection,
@@ -755,29 +756,41 @@ export default {
 		},
 		...mapState(["customer", "invoice"])
 	},
-	watch:{
-		draft(val) {
-			this.addDraft()
+	watch: {
+		invoiceId(val) {
+			this.addDraft();
 		},
-		datesForTermSection(val){
-			this.addDraft()
+		draft(val) {
+			this.addDraft();
+		},
+		datesForTermSection(val) {
+			this.addDraft();
 		}
 	},
 	beforeMount() {
 		this.getArticles();
 	},
-	mounted() {		
+	mounted() {
 		if (!!this.draft) {
-			this.addDraft()
+			this.addDraft();
 		}
 	},
 
 	methods: {
-		addDraft() {
+		async addDraft() {
 			this.customerNameForCustomerSection = this.draft.customername;
-				this.datesForTermSection =  new Date(this.draft.createdate).toISOString().substr(0, 10);
-				this.todatefromDraft =  new Date(this.draft.duedate).toISOString().substr(0, 10);
-			this.selection_value = this.draft;
+			this.invoiceId = this.draft._id;
+			this.datesForTermSection = new Date(this.draft.createdate)
+				.toISOString()
+				.substr(0, 10);
+			this.todatefromDraft = new Date(this.draft.duedate)
+				.toISOString()
+				.substr(0, 10);
+			await this.$axios.$get(`articles/invoice/${this.draft._id}`).then(res => {
+				console.log('hhhhhhhhh loool res => ', res)
+				this.draggableItems = res;
+			});
+			// this.selection_value = this.draft;
 		},
 		sort() {
 			this.list = this.list.sort((a, b) => a.order - b.order);

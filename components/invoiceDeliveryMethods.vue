@@ -193,7 +193,7 @@ export default {
 			deliveryMethod: null
 		};
 	},
-	props: ["draggableItems", "calculations"],
+	props: ["draggableItems", "calculations", "invoiceId"],
 	computed: {
 		saveInvoiceBtnDisabled() {
 			if (this.deliveryMethod == 0) return false;
@@ -211,45 +211,81 @@ export default {
 
 			let published = !!draft /** Published? */,
 				deliveryMethod = this.deliveryMethod == 1 ? "pdf" : "e-invoice",
-				invoce_number = uuidv1(null, arr, -12).join(''),
-				publishDate = (!!draft) ? null : Date.now();
+				invoce_number = this.invoiceId || uuidv1(null, arr, -12).join(""),
+				publishDate = !!draft ? null : Date.now();
 
 			await this.$axios.setToken(this.$auth.getToken("local"));
 			await this.downloedPDF();
 
-			await this.$axios
-				.$post("/invoices", {
-					orcid: invoce_number,
-					customerid: this.customer._id,
-					customername: this.customer.customername,
-					duedate: this.invoice.dateTo,
-					overdueinterest: this.customer.overdueinterest,
-					summa: this.calculations.amountExVAT,
-					total: this.calculations.totalSumToPay,
-					extra_info: "",
-					leveransmetod: deliveryMethod,
-					published: published,
-					publishDate: publishDate,
-					pdf_link: this.pdf_link,
-					dagar: this.invoice.dagar,
+			if (!!this.$route.params.id) {
+				await this.$axios
+					.$patch(`/invoices/${this.$route.params.id}`, {
+						orcid: invoce_number,
+						customerid: this.customer._id,
+						customername: this.customer.customername,
+						duedate: this.invoice.dateTo,
+						overdueinterest: this.customer.overdueinterest,
+						summa: this.calculations.amountExVAT,
+						total: this.calculations.totalSumToPay,
+						extra_info: "",
+						leveransmetod: deliveryMethod,
+						published: published,
+						publishDate: publishDate,
+						pdf_link: this.pdf_link,
+						dagar: this.invoice.dagar,
 
-					fromDate: this.invoice.dateFrom,
+						fromDate: this.invoice.dateFrom,
 
-					invoicepaid: false,
-					salarypaid: false,
-				})
-				.then(async res => {
-					let articles = this.draggableItems;
+						invoicepaid: false,
+						salarypaid: false
+					})
+					.then(async res => {
+						let articles = this.draggableItems;
 
-					articles.forEach(item => {
-						item.invoiceId = invoce_number;
-					});
+						articles.forEach(item => {
+							item.invoiceId = invoce_number;
+						});
 
-					await this.$axios
-						.$post("/articles", articles)
-						.then(res => this.$router.push('/invoices'));
-				})
-				.catch(err => console.log(err));
+						await this.$axios
+							.$post("/articles", articles)
+							.then(res => console.log('patched'));
+					})
+					.catch(err => console.log(err));
+			} else {
+				await this.$axios
+					.$post("/invoices", {
+						orcid: invoce_number,
+						customerid: this.customer._id,
+						customername: this.customer.customername,
+						duedate: this.invoice.dateTo,
+						overdueinterest: this.customer.overdueinterest,
+						summa: this.calculations.amountExVAT,
+						total: this.calculations.totalSumToPay,
+						extra_info: "",
+						leveransmetod: deliveryMethod,
+						published: published,
+						publishDate: publishDate,
+						pdf_link: this.pdf_link,
+						dagar: this.invoice.dagar,
+
+						fromDate: this.invoice.dateFrom,
+
+						invoicepaid: false,
+						salarypaid: false
+					})
+					.then(async res => {
+						let articles = this.draggableItems;
+
+						articles.forEach(item => {
+							item.invoiceId = invoce_number;
+						});
+
+						await this.$axios
+							.$post("/articles", articles)
+							.then(res => this.$router.push("/invoices"));
+					})
+					.catch(err => console.log(err));
+			}
 
 			this.saveInvoiceBtnloading = false;
 		}
