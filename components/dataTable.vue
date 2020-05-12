@@ -115,7 +115,7 @@ export default {
 			}
 		},
 		activeinvoices() {
-			this.displaiedInvoices = this.allItems;
+			// this.displaiedInvoices = this.allItems;
 			this.displaiedInvoices = this.allItems.filter(
 				invoice => invoice.status != "paid"
 			);
@@ -133,15 +133,17 @@ export default {
 		handleClick(a) {
 			if (a.status == "Draft") {
 				this.$router.push("/invoices/draft/" + a._id);
-			} else if (a.status == "overdue") {
-				this.$router.push("/invoices/overdue/" + a.id);
+			} else if (a.status == "Overdue") {
+				this.$router.push("/invoices/overdue/" + a._id);
+			} else if (a.status == "Published") {
+				this.$router.push("/invoices/published/" + a._id);
 			} else {
-				this.$router.push("/invoices/paid" + a.id);
+				this.$router.push("/invoices/paid/" + a._id);
 			}
 		}
 	},
-	beforeMount() {
-		this.displaiedInvoices = this.allItems;
+	mounted() {
+		this.allinvoices()
 	}
 };
 </script>

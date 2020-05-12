@@ -14,6 +14,7 @@ const _6467f7b6 = () => interopDefault(import('..\\pages\\Signup.vue' /* webpack
 const _3276f9c6 = () => interopDefault(import('..\\pages\\invoices\\draft\\_id.vue' /* webpackChunkName: "pages_invoices_draft__id" */))
 const _13a27ffe = () => interopDefault(import('..\\pages\\invoices\\overdue\\_id.vue' /* webpackChunkName: "pages_invoices_overdue__id" */))
 const _f6abcd8c = () => interopDefault(import('..\\pages\\invoices\\paid\\_id.vue' /* webpackChunkName: "pages_invoices_paid__id" */))
+const _429e9b70 = () => interopDefault(import('..\\pages\\invoices\\published\\_id.vue' /* webpackChunkName: "pages_invoices_published__id" */))
 const _3938cb8f = () => interopDefault(import('..\\pages\\articles\\_id.vue' /* webpackChunkName: "pages_articles__id" */))
 const _1b7ae30e = () => interopDefault(import('..\\pages\\customer\\_id.vue' /* webpackChunkName: "pages_customer__id" */))
 const _3349c9c4 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
@@ -78,6 +79,10 @@ export const routerOptions = {
     path: "/invoices/paid/:id?",
     component: _f6abcd8c,
     name: "invoices-paid-id"
+  }, {
+    path: "/invoices/published/:id?",
+    component: _429e9b70,
+    name: "invoices-published-id"
   }, {
     path: "/articles/:id",
     component: _3938cb8f,

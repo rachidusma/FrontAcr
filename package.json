@@ -20,6 +20,7 @@
     "jspdf-autotable": "^3.5.3",
     "nuxt": "^2.0.0",
     "uuid": "^8.0.0",
+    "vue-pdf": "^4.0.8",
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
