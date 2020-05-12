@@ -27,7 +27,7 @@
 				</div>
 			</v-col>
 			<v-col cols="12" sm="12">
-				<dateTable :allItems="invoices" />
+				<dateTable :allItems.sync="invoices" />
 			</v-col>
 		</v-row>
 	</v-layout>
@@ -45,25 +45,36 @@ export default {
 		return {
 			invoices: []
 		};
-	},
+  },
 	methods: {},
 	async beforeMount() {
-
 		await this.$axios
 			.$get("/invoices")
 			.then(res => {
 				res.forEach(inv => {
-					if (inv.published && !inv.invoicepaid && new Date(inv.duedate) > Date.now()) inv.status = "Published";
-					else if ( inv.published && !inv.invoicepaid && new Date(inv.duedate) < Date.now() )
+					if (
+						inv.published &&
+						!inv.invoicepaid &&
+						new Date(inv.duedate) > Date.now()
+					)
+						inv.status = "Published";
+					else if (
+						inv.published &&
+						!inv.invoicepaid &&
+						new Date(inv.duedate) < Date.now()
+					)
 						inv.status = "Overdue";
 					else if (inv.published && inv.invoicepaid) inv.status = "Paid";
 					else if (!inv.published) inv.status = "Draft";
 
 					if (inv.duedate) {
 						inv.duedate = new Date(inv.duedate).toISOString().substring(0, 10);
-						console.log(new Date(inv.duedate) > Date.now());
+						inv.createdate = new Date(inv.createdate)
+							.toISOString()
+							.substring(0, 10);
+						// console.log(new Date(inv.duedate) > Date.now());
 					}
-					inv.fromDate = "-";
+					inv.fromDate = inv.createdate || "-";
 					inv.deliveryDate = "-";
 				});
 
@@ -72,9 +83,8 @@ export default {
 				// this.activeinvoices();
 				console.log(res);
 			})
-      .catch(err => console.log(err));
-      
-  }
+			.catch(err => console.log(err));
+	}
 };
 </script>
 <style  scoped>

@@ -64,8 +64,8 @@ export default {
 	props: ["allItems"],
 	data() {
 		return {
-      search: "",
-      state: [{ text: "All states", value: "All" },],
+			search: "",
+			state: [{ text: "All states", value: "All" }],
 			States: [
 				{ text: "All states", value: "All" },
 				{ text: "Paid", value: "Paid" },
@@ -97,7 +97,12 @@ export default {
 			],
 			displaiedInvoices: []
 		};
-	},
+  },
+  watch: {
+    allItems(val) {
+      this.displaiedInvoices = val
+    }
+  },
 	methods: {
 		getColor(status) {
 			if (status == "Paid") return "green";
@@ -143,7 +148,8 @@ export default {
 		}
 	},
 	mounted() {
-		this.allinvoices()
+    this.displaiedInvoices = this.allItems;
+    this.allinvoices();
 	}
 };
 </script>
