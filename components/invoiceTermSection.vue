@@ -132,7 +132,7 @@
 
 <script>
 export default {
-  props: ["fromDraft"],  
+	props: ["todatefromDraft","datefromDraft"],
 	data: vm => ({
 		date: new Date().toISOString().substr(0, 10),
 		dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
@@ -164,17 +164,21 @@ export default {
 
 	mounted() {
 		this.delivery = "Fritt vårt lager";
-    this.overduePayment = "12%";
-    
-    if(!!this.fromDraft) {
-      console.log(this.fromDraft);
-      
-      this.toDate = this.fromDraft.todate;
-      this.date = this.fromDraft.fromdate;
+		this.overduePayment = "12%";
 
-    }
+		if (!!this.fromDraft) {
+			console.log(1);
+			
+			this.assignDates(this.fromDraft);
+		}
 	},
 	watch: {
+		todatefromDraft(val) {
+			this.assignDates();
+		},
+		datefromDraft(val) {
+			this.assignDates();
+		},
 		delivery(val) {
 			this.$store.commit("setDelivery", val);
 		},
@@ -192,6 +196,14 @@ export default {
 	},
 
 	methods: {
+		assignDates() {
+			
+			console.log('das');
+			// console.log(val);
+			
+			this.toDate = this.todatefromDraft;
+			this.date = this.datefromDraft;
+		},
 		formatDate(date) {
 			if (!date) return null;
 

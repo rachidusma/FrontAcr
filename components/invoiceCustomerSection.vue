@@ -319,6 +319,9 @@ export default {
 		this.getUsers();
 	},
 	watch: {
+		customername(val) {
+			this.getUsers()
+		},
 		customer(val) {
 			if (val != "undefined") this.$store.commit("setCustomer", val);
 		},
@@ -341,14 +344,15 @@ export default {
 			await this.$axios
 				.$get("/customers")
 				.then(res => {
-          this.items = res;
-          
-					if (this.customername != null) {
-            let m = res.filter(x => x.customername == this.customername);
-            Object.assign(this.customer, m[0]);
-            console.log(m)
-          }
-          
+					this.items = res;
+					
+					console.log(this.customername);
+					
+					if (!!this.customername) {
+						let m = res.filter(x => x.customername == this.customername);
+						Object.assign(this.customer, m[0]);
+						console.log(m);
+					}
 				})
 				.catch(err => console.log(err));
 		},
