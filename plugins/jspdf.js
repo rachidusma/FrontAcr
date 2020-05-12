@@ -68,29 +68,29 @@ if (process.client) {
 
             let startY = 207;
             doc.text("SUMMA EX MOMS", mid, startY);
-            doc.text(String(vm.calculations.amountExVAT), mid + 60, startY);
+            doc.text(String(vm.calculations.amountExVAT.toFixed(2)), mid + 60, startY);
 
             let x = startY;
             if (vm.calculations.vat6) {
                 doc.text("MOMS 25%", mid, x + 6);
-                doc.text(String(vm.calculations.vat6), mid + 60, x + 6);
+                doc.text(String(vm.calculations.vat6.toFixed(2)), mid + 60, x + 6);
                 x += 6;
             }
 
             if (vm.calculations.vat12) {
                 doc.text("MOMS 12%", mid, x + 6);
-                doc.text(String(vm.calculations.vat12), mid + 60, x + 6);
+                doc.text(String(vm.calculations.vat12.toFixed(2)), mid + 60, x + 6);
                 x += 6;
             }
 
             if (vm.calculations.vat25) {
                 doc.text("MOMS 6%", mid, x + 6);
-                doc.text(String(vm.calculations.vat25), mid + 60, x + 6);
+                doc.text(String(vm.calculations.vat25.toFixed(2)), mid + 60, x + 6);
                 x += 6;
             }
 
             doc.text("ÖRESAVRUNDNING", mid, x + 6);
-            doc.text(String(vm.calculations.RoundedSum), mid + 60, x + 6);
+            doc.text(String(vm.calculations.RoundedSum.toFixed(2)), mid + 60, x + 6);
 
             doc.setFillColor(54, 64, 107);
             doc.rect(start, startY + 25, 170, 6, "f");
@@ -114,7 +114,7 @@ if (process.client) {
             doc.text("SUMMA ATT BETALA", start + 125, startY + 36);
             doc.setFontSize(10);
             doc.setFontStyle("bold");
-            doc.text(`${vm.calculations.totalSumToPay} kr`, 177, startY + 41);
+            doc.text(`${vm.calculations.totalSumToPay.toFixed(2)} kr`, 177, startY + 41);
 
             doc.setFontSize(12);
             doc.text("BETALNINGSVILLKOR", start + 124, startY + 50);

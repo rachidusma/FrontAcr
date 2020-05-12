@@ -56,7 +56,7 @@
 					</v-card>
 				</v-dialog>
 			</v-card-title>
-			
+
 			<v-card-text>
 				<v-row>
 					<v-col cols="12" lg="3">
@@ -132,6 +132,7 @@
 
 <script>
 export default {
+  props: ["fromDraft"],  
 	data: vm => ({
 		date: new Date().toISOString().substr(0, 10),
 		dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
@@ -161,9 +162,17 @@ export default {
 		}
 	},
 
-	beforeMount() {
-		delivery: "Fritt vårt lager";
-		overduePayment: "12%";
+	mounted() {
+		this.delivery = "Fritt vårt lager";
+    this.overduePayment = "12%";
+    
+    if(!!this.fromDraft) {
+      console.log(this.fromDraft);
+      
+      this.toDate = this.fromDraft.todate;
+      this.date = this.fromDraft.fromdate;
+
+    }
 	},
 	watch: {
 		delivery(val) {

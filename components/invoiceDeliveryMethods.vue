@@ -205,13 +205,13 @@ export default {
 		async downloedPDF(preview) {
 			await pdf(preview, this);
 		},
-
 		async saveInvoice(draft) {
 			this.saveInvoiceBtnloading = true; /** Loading */
+			const arr = new Array();
 
 			let published = !!draft /** Published? */,
 				deliveryMethod = this.deliveryMethod == 1 ? "pdf" : "e-invoice",
-				invoce_number = uuidv1(),
+				invoce_number = uuidv1(null, arr, -12).join(''),
 				publishDate = (!!draft) ? null : Date.now();
 
 			await this.$axios.setToken(this.$auth.getToken("local"));
@@ -247,7 +247,7 @@ export default {
 
 					await this.$axios
 						.$post("/articles", articles)
-						.then(res => console.log(res));
+						.then(res => this.$router.push('/invoices'));
 				})
 				.catch(err => console.log(err));
 

@@ -67,7 +67,7 @@
 							<v-card-title>
 								<span class="overline">Add user Profile</span>
 								<v-spacer></v-spacer>
-								<v-icon class="font1" @click="initialCustomer(2);dialog=false "> mdi mdi-close </v-icon>
+								<v-icon class="font1" @click="initialCustomer(2);dialog=false ">mdi mdi-close</v-icon>
 							</v-card-title>
 							<v-divider></v-divider>
 							<v-card-text v-if="customer">
@@ -291,6 +291,7 @@
 
 <script>
 export default {
+	props: ["customername"],
 	data: () => ({
 		customer: {
 			customername: "",
@@ -339,7 +340,16 @@ export default {
 
 			await this.$axios
 				.$get("/customers")
-				.then(res => (this.items = res))
+				.then(res => {
+          this.items = res;
+          
+					if (this.customername != null) {
+            let m = res.filter(x => x.customername == this.customername);
+            Object.assign(this.customer, m[0]);
+            console.log(m)
+          }
+          
+				})
 				.catch(err => console.log(err));
 		},
 		initialCustomer(closeModal) {
@@ -362,8 +372,8 @@ export default {
 					overdueinterest: 0
 				};
 			} else {
-				console.log('here');
-				
+				console.log("here");
+
 				this.editUserModal = true;
 			}
 		},

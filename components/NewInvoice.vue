@@ -4,13 +4,13 @@
 			<v-col cols="12">
 				<h1>Skapa en faktura</h1>
 			</v-col>
-
+      <!-- {{customerNameForCustomerSection}} -->
 			<!-- Start Customer -->
 			<v-col cols="12">
 				<!-- <div class="overline mb-4">Your customer:</div> -->
 				<v-card outlined class="pa-3">
 					<h3 class="text--primary pb-3">Customer:</h3>
-					<customerSection />
+					<customerSection :customername="customerNameForCustomerSection"/>
 				</v-card>
 			</v-col>
 			<!-- End Customer -->
@@ -627,7 +627,7 @@
 				</v-card>
 			</v-col>
 			<!-- End Product -->
-			<termSection />
+			<termSection :fromDraft="datesForTermSection"/>
 
 			<dividerySection :calculations="calculations" :draggableItems="draggableItems" />
 		</v-row>
@@ -715,7 +715,11 @@ export default {
 		},
 
 		oldIndex: "",
-		newIndex: ""
+    newIndex: "",
+
+    /** FOR DRAFT */
+    customerNameForCustomerSection: null,
+    datesForTermSection: {}
 	}),
 	components: {
 		customerSection,
@@ -749,15 +753,24 @@ export default {
 			return this.selection_value.unit;
 		},
 		...mapState(["customer", "invoice"])
-	},
-
-	beforeMount() {
+  },
+  
+  beforeMount(){
 		this.getArticles();
+  },
+	mounted() {
 
 		if (!!this.draft) {
-			// console.log(this.$route.params.id)
-
-			this.selection_value = this.draft;
+      // console.log(this.draft.customername);
+			this.customerNameForCustomerSection = this.draft.customername
+      let m = {
+        todate: new Date(this.draft.duedate).toISOString().substr(0, 10),
+        fromdate: new Date(this.draft.createdate).toISOString().substr(0, 10),
+      }
+      // console.log(new Date(m.todate).toISOString().substr(0, 10));
+      
+      Object.assign(this.datesForTermSection, m)
+      this.selection_value = this.draft;
 		}
 	},
 
@@ -963,6 +976,7 @@ export default {
 	}
 };
 </script>
+
 <style scoped>
 .gray {
 	background-color: #f5f7f9;
