@@ -270,7 +270,7 @@ export default {
 			if (!!this.$route.params.id) {
 				await this.$axios
 					.$patch(`/invoices/${this.$route.params.id}`, {
-						orcid: invoce_number,
+						ocrid: invoce_number,
 						customerid: this.customer._id,
 						customername: this.customer.customername,
 						duedate: this.invoice.dateTo,
@@ -293,7 +293,7 @@ export default {
 						/** EDIT INVOICE */
 						let articles = this.draggableItems;
 						articles.forEach(item => {
-							item.invoiceId = invoce_number;
+							item.invoiceid = invoce_number;
 							
 							delete item._id;
 							delete item.id;
@@ -310,7 +310,7 @@ export default {
 			} else {
 				await this.$axios
 					.$post("/invoices", {
-						orcid: invoce_number,
+						ocrid: invoce_number,
 						customerid: this.customer._id,
 						customername: this.customer.customername,
 						duedate: this.invoice.dateTo,
@@ -333,7 +333,7 @@ export default {
 						/** NEW INVOICE */
 						let articles = this.draggableItems;
 						articles.forEach(item => {
-							item.invoiceId = invoce_number;
+							item.invoiceid = invoce_number;
 							item.produktkod;
 							item.enhet = item.produktkod;
 
