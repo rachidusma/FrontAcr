@@ -166,11 +166,8 @@ export default {
 		this.delivery = "Fritt vårt lager";
 		this.overduePayment = "12%";
 
-		if (!!this.fromDraft) {
-			console.log(1);
-			
+		if (!!this.fromDraft) 
 			this.assignDates(this.fromDraft);
-		}
 	},
 	watch: {
 		todatefromDraft(val) {
@@ -196,11 +193,7 @@ export default {
 	},
 
 	methods: {
-		assignDates() {
-			
-			console.log('das');
-			// console.log(val);
-			
+		assignDates() {		
 			this.toDate = this.todatefromDraft;
 			this.date = this.datefromDraft;
 		},

@@ -17,7 +17,7 @@
 
 						<v-col cols="12" sm="4">
 							<h6 class="grey--text text-center subtitle-1 my-4">Overdue (inc VAT)</h6>
-							<h6 class="display-1 text-center">28 375,000 kr</h6>
+							<h6 class="display-1 text-center">{{overdueSum}} kr</h6>
 						</v-col>
 						<v-col cols="12" sm="4">
 							<h6 class="grey--text text-center subtitle-1 my-4">Outstanding (inc VAT)</h6>
@@ -37,15 +37,16 @@ import dateTable from "@/components/dataTable.vue";
 
 export default {
 	layout: "admin",
-
+	
 	components: {
 		dateTable
 	},
 	data() {
 		return {
-			invoices: []
+			invoices: [],
+			overdueSum: 0,
 		};
-  },
+	},
 	methods: {},
 	async beforeMount() {
 		await this.$axios
@@ -62,9 +63,10 @@ export default {
 						inv.published &&
 						!inv.invoicepaid &&
 						new Date(inv.duedate) < Date.now()
-					)
+					) {
 						inv.status = "Overdue";
-					else if (inv.published && inv.invoicepaid) inv.status = "Paid";
+						this.overdueSum += Number(inv.summa)	
+					} else if (inv.published && inv.invoicepaid) inv.status = "Paid";
 					else if (!inv.published) inv.status = "Draft";
 
 					if (inv.duedate) {
@@ -72,7 +74,6 @@ export default {
 						inv.createdate = new Date(inv.createdate)
 							.toISOString()
 							.substring(0, 10);
-						// console.log(new Date(inv.duedate) > Date.now());
 					}
 					inv.fromDate = inv.createdate || "-";
 					inv.deliveryDate = "-";

@@ -16,7 +16,7 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       // { href:"https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css", rel:"stylesheet"},
-      
+
     ]
   },
   /*
@@ -52,7 +52,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL : 'http://app.acredit.se/api'    
+    baseURL: 'http://app.acredit.se/api'
   },
   /*
   ** vuetify module configuration
@@ -79,10 +79,11 @@ export default {
   ** Build configuration
   */
   build: {
+    vendor: ['vue-pdf'],
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   },
   auth: {
@@ -90,13 +91,13 @@ export default {
       local: {
         endpoints: {
           login: { url: '/auth', method: 'post', propertyName: 'token' },
-          logout: { url: '/auth', method: 'post'},
+          logout: { url: '/auth', method: 'post' },
           user: { url: '/auth/users', method: 'get', propertyName: false }
         },
-        tokenName : 'x-auth-token',
-         // tokenRequired: true,
-         tokenType: ''
-         // autoFetchUser: true
+        tokenName: 'x-auth-token',
+        // tokenRequired: true,
+        tokenType: ''
+        // autoFetchUser: true
       }
     }
   }

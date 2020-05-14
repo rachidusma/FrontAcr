@@ -396,9 +396,7 @@ export default {
 		await this.$axios
 			.$get("/invoices")
 			.then(res => {
-        // res = res.slice(46, 47)
         res.forEach(inv => {
-        // console.log(inv.duedate);
           if (
             inv.published &&
 						!inv.invoicepaid &&
@@ -416,8 +414,6 @@ export default {
           
           if(inv.duedate){
             inv.duedate = new Date(inv.duedate).toISOString().substring(0, 10);
-            console.log(new Date(inv.duedate) > Date.now())
-
           }
 				  inv.fromDate = "-";
 				  inv.deliveryDate = "-";
@@ -426,7 +422,7 @@ export default {
 				this.customerInvoices = res;
 
 				// this.activeinvoices();
-				console.log(res);
+
 			})
 			.catch(err => console.log(err));
 	}

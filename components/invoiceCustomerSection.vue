@@ -345,19 +345,14 @@ export default {
 				.$get("/customers")
 				.then(res => {
 					this.items = res;
-					
-					console.log(this.customername);
-					
 					if (!!this.customername) {
 						let m = res.filter(x => x.customername == this.customername);
 						Object.assign(this.customer, m[0]);
-						console.log(m);
 					}
 				})
 				.catch(err => console.log(err));
 		},
 		initialCustomer(closeModal) {
-			console.log(closeModal);
 			if (this.customer == undefined || closeModal) {
 				this.editUserModal = false;
 				this.customer = {
@@ -376,8 +371,6 @@ export default {
 					overdueinterest: 0
 				};
 			} else {
-				console.log("here");
-
 				this.editUserModal = true;
 			}
 		},
@@ -388,7 +381,6 @@ export default {
 		},
 		async saveUser() {
 			await this.$axios.setToken(this.$auth.getToken("local"));
-			console.log(this.customer);
 			await this.$axios
 				.$post("/customers", this.customer)
 				.then(res => {
@@ -419,7 +411,6 @@ export default {
 			await this.$axios
 				.$patch(`/customers/${customer._id}`, customer)
 				.then(res => {
-					console.log(customer);
 					this.dialog = false;
 					this.editUserModal = true;
 					Object.assign(this.customer, customer);

@@ -868,8 +868,6 @@ export default {
 				.then(res => {
 					this.getArticles();
 					this.resetModal();
-
-					console.log("save res", res);
 				})
 				.catch(err => console.log(err));
 		},
