@@ -1,14 +1,16 @@
 1- Add text (New invoice page). ✅
-2- Fix {overdue,published,paid Status} (invoices page).
+2- Fix {overdue,published,paid Status} (invoices page).  ✅
 3- Add close modal icons. ✅
 4- link Drojsmalsranta with interest (New invoice page).
 5- Link dagar with days (New invoice page). ✅
 6- redirect to published page after hit on publish.
 7- Draft page. 
-8- published page.
-9- overdue page.
+8- published page. ✅
+9- overdue page. ✅
 10- paid page.
-11- Fix Overpaid (inc VAT),Overdue (inc VAT),Outstanding (inc VAT)(invoices page)
+11- Fix Overpaid (inc VAT),
+    Overdue (inc VAT),  ✅
+    Outstanding (inc VAT)(invoices page) 
 12- fix filters (invoices page)
 13- Fix customer page ✅
 14- Fix Articles page

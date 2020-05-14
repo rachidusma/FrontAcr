@@ -145,18 +145,18 @@
 
 										<!-- Start Standard Edit -->
 										<v-row v-if="selection_value != null">
-											<!-- Strat Quantity -->
+											<!-- Strat number -->
 											<v-col cols="12" sm="6">
 												<v-text-field
-													v-model="selection_value.Quantity"
-													:value="selection_value.Quantity"
-													:suffix="selection_value.unit"
+													v-model="selection_value.number"
+													:value="selection_value.number"
+													:suffix="selection_value.enhet"
 													label="Quantity"
 													type="number"
 													dense
 												></v-text-field>
 											</v-col>
-											<!-- End Quantity -->
+											<!-- End number -->
 
 											<!-- Strat Price / unit ex VAT -->
 											<v-col cols="12" sm="6">
@@ -175,7 +175,7 @@
 												<p class="font-weight-black">Amount ex VAT</p>
 												<p
 													class="font-weight-medium"
-												>{{ (selection_value.pris_enhet * selection_value.Quantity) || "0,00" }} Kr</p>
+												>{{ (selection_value.pris_enhet * selection_value.number) || "0,00" }} Kr</p>
 											</v-col>
 											<!-- End Amount ex VAT -->
 										</v-row>
@@ -199,17 +199,17 @@
 										</v-col>
 										<!-- End Description -->
 
-										<!-- Strat Quantity -->
+										<!-- Strat number -->
 										<v-col cols="12" sm="6">
-											<v-text-field type="number" dense v-model="selection_value.Quantity" label="Quantity"></v-text-field>
+											<v-text-field type="number" dense v-model="selection_value.number" label="Quantity"></v-text-field>
 										</v-col>
-										<!-- End Quantity -->
+										<!-- End number -->
 
 										<!-- Strat Unit -->
 										<v-col class="d-flex" cols="12" sm="6">
 											<!-- TODO: Add UNIT HERE enhet-->
 											<v-select
-												v-model="selection_value.produktkod"
+												v-model="selection_value.enhet"
 												:items="Unit"
 												item-text="slection"
 												item-value="slection"
@@ -263,7 +263,7 @@
 											<p class="font-weight-black">Amount ex VAT</p>
 											<p
 												class="font-weight-medium"
-											>{{ selection_value.pris_enhet * selection_value.Quantity || "0,00" }} Kr</p>
+											>{{ selection_value.pris_enhet * selection_value.number || "0,00" }} Kr</p>
 										</v-col>
 										<!-- End Amount ex VAT -->
 									</v-row>
@@ -353,7 +353,7 @@
 									<span class="item">moms</span>
 								</v-col>
 								<v-col cols="2" md="2">
-									<span class="item">Quantity</span>
+									<span class="item">number</span>
 								</v-col>
 								<v-col cols="2" md="2">
 									<span class="item">Unit price</span>
@@ -392,7 +392,7 @@
 											<span class="item">{{ element.moms }}</span>
 										</v-col>
 										<v-col cols="2" md="2">
-											<span class="item">{{ element.Quantity }}</span>
+											<span class="item">{{ element.number }} {{ element.enhet }}</span>
 										</v-col>
 										<v-col cols="2" md="2">
 											<span class="item" v-if="!element.text">{{ element.pris_enhet }} Kr</span>
@@ -429,17 +429,17 @@
 											</v-col>
 											<!-- End Description -->
 
-											<!-- Strat Quantity -->
+											<!-- Strat number -->
 											<v-col cols="12" sm="6">
-												<v-text-field type="number" dense v-model="selection_value.Quantity" label="Quantity"></v-text-field>
+												<v-text-field type="number" dense v-model="selection_value.number" label="Quantity"></v-text-field>
 											</v-col>
-											<!-- End Quantity -->
+											<!-- End number -->
 
 											<!-- Strat Unit -->
 											<v-col class="d-flex" cols="12" sm="6">
 												<!-- TODO: Add UNIT HERE enhet-->
 												<v-select
-													v-model="selection_value.produktkod"
+													v-model="selection_value.enhet"
 													:items="Unit"
 													item-text="slection"
 													item-value="slection"
@@ -493,7 +493,7 @@
 												<p class="font-weight-black">Amount ex VAT</p>
 												<p
 													class="font-weight-medium"
-												>{{ selection_value.pris_enhet * selection_value.Quantity || "0,00" }} Kr</p>
+												>{{ selection_value.pris_enhet * selection_value.number || "0,00" }} Kr</p>
 											</v-col>
 											<!-- End Amount ex VAT -->
 										</v-row>
@@ -629,7 +629,11 @@
 			<!-- End Product -->
 			<termSection :todatefromDraft="todatefromDraft" :datefromDraft="datesForTermSection" />
 
-			<dividerySection :calculations="calculations" :draggableItems="draggableItems" :invoiceId="invoiceId" />
+			<dividerySection
+				:calculations="calculations"
+				:draggableItems="draggableItems"
+				:invoiceId="invoiceId"
+			/>
 		</v-row>
 	</v-layout>
 </template>
@@ -642,6 +646,7 @@ import termSection from "@/components/invoiceTermSection";
 import ArticleModal from "@/components/ArticleModal";
 
 import { mapState } from "vuex";
+import { v1 as uuidv1 } from "uuid";
 
 export default {
 	data: vm => ({
@@ -654,7 +659,7 @@ export default {
 		addTextVal: null,
 		hideAddText: false,
 		/** Selection Options */
-		Vat: ["0%", "6%", "12%", "25%"],
+		Vat: ["0", "6", "12", "25"],
 		Unit: [
 			"hours",
 			"pound",
@@ -787,7 +792,7 @@ export default {
 				.toISOString()
 				.substr(0, 10);
 			await this.$axios.$get(`articles/invoice/${this.draft._id}`).then(res => {
-				console.log('hhhhhhhhh loool res => ', res)
+				console.log("articles res => ", res);
 				this.draggableItems = res;
 			});
 			// this.selection_value = this.draft;
@@ -813,12 +818,12 @@ export default {
 			this.createNewModal = true;
 			this.selection_value = {
 				artikelnamn: null,
-				produktkod: null,
+				enhet: null,
 				pris_enhet: null,
 				moms: null,
 				typ: null,
-
-				Quantity: 1,
+				produktkod: null,
+				number: 1,
 				rotRutType: null,
 				materialType: null
 			};
@@ -828,20 +833,30 @@ export default {
 			this.selection_value.materialType = null;
 		},
 		setQuantity() {
-			if (this.selection_value) this.selection_value.Quantity = 1;
+			if (this.selection_value) this.selection_value.number = 1;
 		},
 		addToInvoice() {
 			let rows = this.draggableItems;
 			var clonedObj = Object.assign({}, this.selection_value);
 			this.selection_value = null;
 
+			console.log(clonedObj);
+			delete clonedObj.materialType;
+			delete clonedObj.rotRutType;
+
 			if (this.editedIndex > -1) {
 				clonedObj.id = 0;
+				let arr = new Array();
+				clonedObj.produktkod = uuidv1(null, arr, -12).join("");
+
 				Object.assign(rows[this.editedIndex], clonedObj);
 				this.doCalculations(rows);
 			} else {
 				clonedObj.id = rows.length;
-				clonedObj.total = clonedObj.Quantity * clonedObj.pris_enhet;
+				let arr = new Array();
+				clonedObj.produktkod = uuidv1(null, arr, -12).join("");
+
+				clonedObj.total = clonedObj.number * clonedObj.pris_enhet;
 
 				rows.push(clonedObj);
 
@@ -857,12 +872,15 @@ export default {
 				0,
 				this.selection_value.moms.length - 1
 			);
+			let arr = new Array();
 			await this.$axios
 				.$post("/articlepatterns", {
 					artikelnamn: this.selection_value.artikelnamn,
-					produktkod: this.selection_value.produktkod,
+					enhet: this.selection_value.enhet,
+					produktkod: uuidv1(null, arr, -12).join(""),
 					pris_enhet: Number(this.selection_value.pris_enhet),
 					moms: x,
+					number: this.selection_value.number,
 					typ: this.selection_value.typ
 				})
 				.then(res => {
@@ -884,7 +902,7 @@ export default {
 			var clonedObj = Object.assign({}, this.selection_value);
 			this.selection_value = null;
 
-			clonedObj.total = clonedObj.Quantity * clonedObj.pris_enhet;
+			clonedObj.total = clonedObj.number * clonedObj.pris_enhet;
 
 			let index = this.draggableItems.findIndex(i => i._id === clonedObj._id);
 			if (index > -1) {
@@ -970,9 +988,9 @@ export default {
 				/** Ex Vat Calc */
 				calcs.amountExVAT += Number(x.total);
 
-				if (x.moms == "6%") calcs.vat6 += 0.6 * Number(x.total);
-				else if (x.moms == "12%") calcs.vat12 += 0.12 * Number(x.total);
-				else if (x.moms == "25%") calcs.vat25 += 0.25 * Number(x.total);
+				if (x.moms == "6") calcs.vat6 += 0.6 * Number(x.total);
+				else if (x.moms == "12") calcs.vat12 += 0.12 * Number(x.total);
+				else if (x.moms == "25") calcs.vat25 += 0.25 * Number(x.total);
 
 				calcs.totalSumToPay =
 					calcs.amountExVAT + calcs.vat6 + calcs.vat12 + calcs.vat25;

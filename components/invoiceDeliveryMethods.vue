@@ -203,7 +203,56 @@ export default {
 	},
 	methods: {
 		async downloedPDF(preview) {
-			await pdf(preview, this);
+			let location,
+				vm = this;
+
+			if (!!preview) {
+				pdf(preview, this);
+			}
+			if (!preview) {
+				let pdfFile = pdf(preview, this).data,
+					doc = pdf(preview, this).doc;
+
+				return new Promise(function(resolve, reject) {
+					vm.$axios
+						.$post("/profile/file-upload", pdfFile, {
+							headers: {
+								accept: "application/json",
+								"Accept-Language": "en-US,en;q=0.8",
+								"Content-Type": `multipart/form-data;`
+							}
+						})
+						.then(response => {
+							console.log(response["location"]);
+							vm.pdf_link = response["location"];
+							console.log(response["location"]);
+							resolve(vm.pdf_link);
+							doc.save("dsa.pdf");
+							return;
+							if (200 === response.status) {
+								// If file size is larger than expected.
+								if (response.data.error) {
+									if ("LIMIT_FILE_SIZE" === response.data.error.code) {
+										alert("Max size: 2MB", "red");
+									} else {
+										console.log(response.data);
+										// If not the given file type
+										alert(response.data.error, "red");
+									}
+								} else {
+									// Success
+									let fileName = response.data;
+									console.log("filedata", fileName);
+
+									alert("File Uploaded", "#3089cf");
+								}
+							}
+						})
+						.catch(err => {
+							reject(err);
+						});
+				});
+			}
 		},
 		async saveInvoice(draft) {
 			this.saveInvoiceBtnloading = true; /** Loading */
@@ -214,8 +263,9 @@ export default {
 				invoce_number = this.invoiceId || uuidv1(null, arr, -12).join(""),
 				publishDate = !!draft ? null : Date.now();
 
-			await this.$axios.setToken(this.$auth.getToken("local"));
-			await this.downloedPDF();
+			this.$axios.setToken(this.$auth.getToken("local")); /** Set token */
+
+			await this.downloedPDF(); /** Generate the pdf and get its link */
 
 			if (!!this.$route.params.id) {
 				await this.$axios
@@ -230,25 +280,31 @@ export default {
 						extra_info: "",
 						leveransmetod: deliveryMethod,
 						published: published,
-						publishDate: publishDate,
+						createdate: this.invoice.dateFrom,
 						pdf_link: this.pdf_link,
 						dagar: this.invoice.dagar,
 
-						fromDate: this.invoice.dateFrom,
+						// fromDcreatedateate: this.invoice.dateFrom,
 
 						invoicepaid: false,
 						salarypaid: false
 					})
 					.then(async res => {
+						/** EDIT INVOICE */
 						let articles = this.draggableItems;
-
 						articles.forEach(item => {
 							item.invoiceId = invoce_number;
+							
+							delete item._id;
+							delete item.id;
+							delete item.__v;
+							delete item.total;
+							console.log(item);
 						});
 
 						await this.$axios
 							.$post("/articles", articles)
-							.then(res => console.log('patched'));
+							.then(res => console.log("patched"));
 					})
 					.catch(err => console.log(err));
 			} else {
@@ -268,21 +324,28 @@ export default {
 						pdf_link: this.pdf_link,
 						dagar: this.invoice.dagar,
 
-						fromDate: this.invoice.dateFrom,
+						createdate: this.invoice.dateFrom,
 
 						invoicepaid: false,
 						salarypaid: false
 					})
 					.then(async res => {
+						/** NEW INVOICE */
 						let articles = this.draggableItems;
-
 						articles.forEach(item => {
 							item.invoiceId = invoce_number;
+							item.produktkod;
+							item.enhet = item.produktkod;
+
+							delete item._id;
+							delete item.id;
+							delete item.__v;
+							delete item.total;
 						});
 
 						await this.$axios
 							.$post("/articles", articles)
-							.then(res => this.$router.push("/invoices"));
+							.then(res => console.log(res));
 					})
 					.catch(err => console.log(err));
 			}
