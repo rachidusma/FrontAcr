@@ -57,7 +57,7 @@
 					<!-- Start Customer Name -->
 					<v-col cols="12" md="4">
 						<h3 class="d-inline-block">{{ invoice.customername }}</h3>
-						<v-chip class="mt-3 mx-2" small color="blue">Published</v-chip>
+						<v-chip class="mt-3 text--white mx-2" small color="blue">Published</v-chip>
 					</v-col>
 					<!-- End Customer Name -->
 

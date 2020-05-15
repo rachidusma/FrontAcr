@@ -2,9 +2,31 @@
 	<v-layout>
 		<v-row>
 			<v-col cols="12">
-				<h1>Skapa en faktura</h1>
+				<v-breadcrumbs
+					class="pa-0 ma-0"
+					:items="[
+						{ text: 'invoices', href: '/invoices' },
+						{ text: 'create new invoice', disabled: true }
+					]"
+				></v-breadcrumbs>
 			</v-col>
-			<!-- {{customerNameForCustomerSection}} -->
+
+			<v-col cols="12" class="d-flex">
+				<h1 class="d-inline-block">Skapa en faktura</h1>
+				<v-spacer></v-spacer>
+				<v-menu offset-y v-if="this.draft && !this.draft.published">
+					<template v-slot:activator="{ on }">
+						<v-btn outlined class="ml-2" v-on="on">
+							More
+							<v-icon class="font1">mdi mdi-chevron-down</v-icon>
+						</v-btn>
+					</template>
+					<v-list>
+						<v-list-item v-if="this.draft" @click="deleteDraft">Delete</v-list-item>
+					</v-list>
+				</v-menu>
+			</v-col>
+
 			<!-- Start Customer -->
 			<v-col cols="12">
 				<!-- <div class="overline mb-4">Your customer:</div> -->
@@ -633,6 +655,8 @@
 				:calculations="calculations"
 				:draggableItems="draggableItems"
 				:invoiceId="invoiceId"
+				:userId="userId"
+				:invoiceOcr="invoiceOcr"
 			/>
 		</v-row>
 	</v-layout>
@@ -726,7 +750,9 @@ export default {
 		customerNameForCustomerSection: null,
 		datesForTermSection: null,
 		todatefromDraft: null,
-		invoiceId: null
+		invoiceId: null,
+		userId: null,
+		invoiceOcr: null
 	}),
 	components: {
 		customerSection,
@@ -765,6 +791,9 @@ export default {
 		invoiceId(val) {
 			this.addDraft();
 		},
+		userId(val) {
+			this.addDraft();
+		},
 		draft(val) {
 			this.addDraft();
 		},
@@ -785,17 +814,26 @@ export default {
 		async addDraft() {
 			this.customerNameForCustomerSection = this.draft.customername;
 			this.invoiceId = this.draft._id;
+			this.invoiceOcr = this.draft.ocrid;
+			this.userId = this.draft.userid;
 			this.datesForTermSection = new Date(this.draft.createdate)
 				.toISOString()
 				.substr(0, 10);
 			this.todatefromDraft = new Date(this.draft.duedate)
 				.toISOString()
 				.substr(0, 10);
-			await this.$axios.$get(`articles/invoice/${this.draft._id}`).then(res => {
+				
+			await this.$axios.$get(`articles/invoice/${this.draft.ocrid}`).then(res => {
 				console.log("articles res => ", res);
 				this.draggableItems = res;
 			});
 			// this.selection_value = this.draft;
+		},
+		async deleteDraft() {
+			await this.$axios
+				.$delete(`/invoices/${this.$route.params.id}`)
+				.then(res => this.$router.push("/invoices"))
+				.catch(err => console.log(err));
 		},
 		sort() {
 			this.list = this.list.sort((a, b) => a.order - b.order);

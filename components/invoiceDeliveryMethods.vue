@@ -55,24 +55,7 @@
 					<v-row>
 						<v-col cols="12" md="12">
 							<v-expansion-panels accordion hover v-model="deliveryMethod">
-								<!-- <v-expansion-panel>
-                            <v-expansion-panel-header>
-                            <template v-slot:default="{ open }">
-                                <v-row no-gutters>
-                                <v-col cols="4">Get paid right now</v-col>
-                                <v-col cols="8" class="text--secondary">
-                                    <v-fade-transition leave-absolute>
-                                    <span v-if="open" key="0">Sell ​​your invoice through Acredit and get paid within 24h.</span>
-                                    <span v-else key="1"></span>
-                                    </v-fade-transition>
-                                </v-col>
-                                </v-row>
-                            </template>
-                            </v-expansion-panel-header>
-                            <v-divider></v-divider>
-                            <v-expansion-panel-content class="gray">Here we will put payement function</v-expansion-panel-content>
-								</v-expansion-panel>-->
-
+								<!-- Start Email -->
 								<v-expansion-panel>
 									<v-expansion-panel-header>
 										<v-row no-gutters>
@@ -106,9 +89,9 @@
 										</v-container>
 									</v-expansion-panel-content>
 								</v-expansion-panel>
+								<!-- End Email -->
 
 								<!-- Start PDF Download -->
-
 								<v-expansion-panel>
 									<v-expansion-panel-header>
 										<v-row no-gutters>
@@ -135,22 +118,6 @@
 									</v-expansion-panel-content>
 								</v-expansion-panel>
 								<!-- End PDF Download -->
-
-								<!-- <v-expansion-panel>
-                            <v-expansion-panel-header v-slot="{ open }">
-                            <v-row no-gutters>
-                                <v-col cols="4">Send as E-invoice</v-col>
-                                <v-col cols="8" class="text--secondary">
-                                <v-fade-transition leave-absolute>
-                                    <span v-if="open" key="0">Send your invoice with e-invoice only 2 sek</span>
-                                    <span v-else key="1"></span>
-                                </v-fade-transition>
-                                </v-col>
-                            </v-row>
-                            </v-expansion-panel-header>
-                            <v-divider></v-divider>
-                            <v-expansion-panel-content class="gray">Here we will put payement function</v-expansion-panel-content>
-								</v-expansion-panel>-->
 							</v-expansion-panels>
 						</v-col>
 
@@ -193,13 +160,13 @@ export default {
 			deliveryMethod: null
 		};
 	},
-	props: ["draggableItems", "calculations", "invoiceId"],
+	props: ["draggableItems", "calculations", "invoiceId","invoiceOcr"],
 	computed: {
 		saveInvoiceBtnDisabled() {
 			if (this.deliveryMethod == 0) return false;
 			return !!!this.deliveryMethod;
 		},
-		...mapState(["customer", "invoice"])
+		...mapState(["customer", "invoice", "userId"])
 	},
 	methods: {
 		async downloedPDF(preview) {
@@ -225,9 +192,9 @@ export default {
 						.then(response => {
 							console.log(response["location"]);
 							vm.pdf_link = response["location"];
-							console.log(response["location"]);
-							resolve(vm.pdf_link);
-							doc.save("dsa.pdf");
+							console.log(vm.pdf_link);
+							resolve(doc);
+							// doc.save("dsa.pdf");
 							return;
 							if (200 === response.status) {
 								// If file size is larger than expected.
@@ -259,98 +226,80 @@ export default {
 			const arr = new Array();
 
 			let published = !!draft /** Published? */,
-				deliveryMethod = this.deliveryMethod == 1 ? "pdf" : "e-invoice",
-				invoce_number = this.invoiceId || uuidv1(null, arr, -12).join(""),
-				publishDate = !!draft ? null : Date.now();
+				vm = this,
+				deliveryMethod = vm.deliveryMethod == 1 ? "pdf" : "e-invoice",
+				invoce_number = vm.invoiceOcr || uuidv1(null, arr, -12).join(""),
+				publishDate = !!draft ? null : Date.now(),
+				invoice_obj = {
+					published: published,
+					invoicepaid: false,
+					salarypaid: false,
+					_id: vm.invoiceId,
+					userid: vm.userId || null,
+					customername: vm.customer.customername,
+					duedate: vm.invoice.dateTo,
+					overdueinterest: vm.customer.overdueinterest,
+					summa: vm.calculations.amountExVAT,
+					total: vm.calculations.totalSumToPay,
+					extra_info: "",
+					leveransmetod: deliveryMethod,
+					pdf_link: vm.pdf_link,
+					createdate: vm.invoice.dateFrom,
+					customerid: vm.customer._id,
 
-			this.$axios.setToken(this.$auth.getToken("local")); /** Set token */
+					ocrid: invoce_number,
+					dagar: vm.invoice.dagar
+					// publishDate: publishDate,
+				};
 
-			await this.downloedPDF(); /** Generate the pdf and get its link */
+			vm.$axios.setToken(vm.$auth.getToken("local")); /** Set token */
 
-			if (!!this.$route.params.id) {
-				await this.$axios
-					.$patch(`/invoices/${this.$route.params.id}`, {
-						ocrid: invoce_number,
-						customerid: this.customer._id,
-						customername: this.customer.customername,
-						duedate: this.invoice.dateTo,
-						overdueinterest: this.customer.overdueinterest,
-						summa: this.calculations.amountExVAT,
-						total: this.calculations.totalSumToPay,
-						extra_info: "",
-						leveransmetod: deliveryMethod,
-						published: published,
-						createdate: this.invoice.dateFrom,
-						pdf_link: this.pdf_link,
-						dagar: this.invoice.dagar,
+ 			/** Generate the pdf and get its link */
+			vm.downloedPDF().then(async res => {
+				res.save();
+				/** If there is an Invoice Edit it */
+				if (!!vm.$route.params.id) {
+					invoice_obj.pdf_link = vm.pdf_link;
+					await vm.$axios
+						.$patch(`/invoices/${vm.$route.params.id}`, invoice_obj)
+						.then(async res => {
+							console.log("edit", invoice_obj);
+							await vm.sendArticles(invoce_number);
+						})
+						.catch(err => console.log(err));
+				} else {
+					invoice_obj.pdf_link = vm.pdf_link;
 
-						// fromDcreatedateate: this.invoice.dateFrom,
+					await vm.$axios
+						.$post("/invoices", invoice_obj)
+						.then(async res => {
+							console.log("new", invoice_obj);
 
-						invoicepaid: false,
-						salarypaid: false
-					})
-					.then(async res => {
-						/** EDIT INVOICE */
-						let articles = this.draggableItems;
-						articles.forEach(item => {
-							item.invoiceid = invoce_number;
-							
-							delete item._id;
-							delete item.id;
-							delete item.__v;
-							delete item.total;
-							console.log(item);
-						});
+							await vm.sendArticles(invoce_number);
+						})
+						.catch(err => console.log(err));
+				}
+			});
 
-						await this.$axios
-							.$post("/articles", articles)
-							.then(res => console.log("patched"));
-					})
-					.catch(err => console.log(err));
-			} else {
-				await this.$axios
-					.$post("/invoices", {
-						ocrid: invoce_number,
-						customerid: this.customer._id,
-						customername: this.customer.customername,
-						duedate: this.invoice.dateTo,
-						overdueinterest: this.customer.overdueinterest,
-						summa: this.calculations.amountExVAT,
-						total: this.calculations.totalSumToPay,
-						extra_info: "",
-						leveransmetod: deliveryMethod,
-						published: published,
-						publishDate: publishDate,
-						pdf_link: this.pdf_link,
-						dagar: this.invoice.dagar,
+			
 
-						createdate: this.invoice.dateFrom,
+			vm.saveInvoiceBtnloading = false;
+		},
+		async sendArticles(invoce_number) {
+			let articles = this.draggableItems;
+			articles.forEach(item => {
+				item.invoiceid = invoce_number;
 
-						invoicepaid: false,
-						salarypaid: false
-					})
-					.then(async res => {
-						/** NEW INVOICE */
-						let articles = this.draggableItems;
-						articles.forEach(item => {
-							item.invoiceid = invoce_number;
-							item.produktkod;
-							item.enhet = item.produktkod;
+				delete item._id;
+				delete item.id;
+				delete item.__v;
+				delete item.total;
+				console.log(item);
+			});
 
-							delete item._id;
-							delete item.id;
-							delete item.__v;
-							delete item.total;
-						});
-
-						await this.$axios
-							.$post("/articles", articles)
-							.then(res => console.log(res));
-					})
-					.catch(err => console.log(err));
-			}
-
-			this.saveInvoiceBtnloading = false;
+			await this.$axios
+				.$post("/articles", articles)
+				.then(res => console.log("patched"));
 		}
 	}
 };

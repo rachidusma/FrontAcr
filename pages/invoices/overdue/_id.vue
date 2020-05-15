@@ -57,7 +57,9 @@
 					<!-- Start Customer Name -->
 					<v-col cols="12" md="4">
 						<h3 class="d-inline-block">{{ invoice.customername }}</h3>
-						<v-chip class="mt-3 mx-2" small color="blue">Published</v-chip>
+						<v-chip class="mt-3 mx-2" small color="error">
+							Overdue {{ overdueDays }} days ago
+						</v-chip>
 					</v-col>
 					<!-- End Customer Name -->
 
@@ -80,9 +82,10 @@
 					</v-col>
 				</v-row>
 			</v-col>
-
+			
+			<!-- start published at -->
 			<v-col cols="12 d-flex">
-				<v-icon class="text--black mr-8">mdi mdi-file-document-outline</v-icon>
+				<v-icon class="d-none d-sm-flex text--black mr-8">mdi mdi-file-document-outline</v-icon>
 				<v-card class="px-5 flex-grow-1" outlined tile>
 					<v-row>
 						<v-col cols="12" md="6">
@@ -96,6 +99,31 @@
 					</v-row>
 				</v-card>
 			</v-col>
+			<!-- End published at -->
+
+			<!-- start sent with email? -->
+			<v-col cols="12 d-flex">
+				<v-icon class="d-none d-sm-flex text--black mr-8"> mdi mdi-email-outline </v-icon>
+				<v-card class="px-5 flex-grow-1" outlined tile>
+					<v-row>
+						<v-col cols="12" md="6">
+							
+							<h4 class="text--primary d-inline">Emailed to eric@dk.se</h4>
+							<span>2020-05-14, 17:05</span>
+						</v-col>
+						<v-col cols="12" md="6">
+							<h4 class="text--primary d-inline">Delivery status:</h4>
+							<span>Invoice opened</span>
+						</v-col>
+						<v-col cols="12" md="6">
+							<h4 class="text--primary d-inline">Invoice sent as </h4>
+							<span> Link and attached PDF</span>
+						</v-col>
+					</v-row>
+				</v-card>
+			</v-col>
+			<!-- End sent with email? -->
+
 		</v-row>
 		<!-- End header -->
 
@@ -103,7 +131,9 @@
 			<v-btn outlined small class="ma-5" target="_blank" :href="invoice.pdf_link">
 				<v-icon class="font1">mdi mdi-download</v-icon>
 			</v-btn>
-			<vuePDF :src="invoice.pdf_link"></vuePDF>
+			<no-ssr>
+				<vuePDF :src="invoice.pdf_link"></vuePDF>
+			</no-ssr>
 		</div>
 	</div>
 </template>
@@ -115,7 +145,7 @@ if (process.browser) {
 }
 
 export default {
-	name: "published invoice",
+	name: "overdueInvoice",
 	middleware: "auth",
 	layout: "admin",
 	components: {
@@ -124,6 +154,7 @@ export default {
 	data() {
 		return {
 			invoice: {},
+			overdueDays: 0,
 			amendInvoiceModalState: false,
 			undoModalState: false
 		};
@@ -134,7 +165,7 @@ export default {
 				{ text: "invoices", href: "/invoices" },
 				{ text: this.invoice._id, disabled: true }
 			];
-		}
+		},
 	},
 
 	methods: {
@@ -156,6 +187,7 @@ export default {
 			res[0].createdate = new Date(res[0].createdate)
 				.toISOString()
 				.substring(0, 10);
+			this.overdueDays = Math.round(new Date(res[0].createdate) - new Date(res[0].duedate));
 			this.invoice = res[0];
 		});
 	}
