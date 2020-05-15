@@ -160,7 +160,14 @@ export default {
 			deliveryMethod: null
 		};
 	},
-	props: ["draggableItems", "calculations", "invoiceId","invoiceOcr", "userId"],
+	props: [
+		"draggableItems",
+		"calculations",
+		"invoiceId",
+		"invoiceOcr",
+		"userId",
+		"extraInfo"
+	],
 	computed: {
 		saveInvoiceBtnDisabled() {
 			if (this.deliveryMethod == 0) return false;
@@ -230,6 +237,7 @@ export default {
 				deliveryMethod = vm.deliveryMethod == 1 ? "pdf" : "e-invoice",
 				invoce_number = vm.invoiceOcr || uuidv1(null, arr, -12).join(""),
 				publishDate = !!draft ? null : Date.now(),
+				extra_info = !!vm.extraInfo ? vm.extraInfo : null,
 				invoice_obj = {
 					published: published,
 					invoicepaid: false,
@@ -241,7 +249,7 @@ export default {
 					overdueinterest: vm.customer.overdueinterest,
 					summa: vm.calculations.amountExVAT,
 					total: vm.calculations.totalSumToPay,
-					extra_info: "",
+					extra_info,
 					leveransmetod: deliveryMethod,
 					pdf_link: vm.pdf_link,
 					createdate: vm.invoice.dateFrom,
@@ -254,7 +262,7 @@ export default {
 
 			vm.$axios.setToken(vm.$auth.getToken("local")); /** Set token */
 
- 			/** Generate the pdf and get its link */
+			/** Generate the pdf and get its link */
 			vm.downloedPDF().then(async res => {
 				res.save();
 				/** If there is an Invoice Edit it */
@@ -269,6 +277,7 @@ export default {
 						.catch(err => console.log(err));
 				} else {
 					invoice_obj.pdf_link = vm.pdf_link;
+					delete invoice_obj._id;
 
 					await vm.$axios
 						.$post("/invoices", invoice_obj)
@@ -284,20 +293,23 @@ export default {
 			vm.saveInvoiceBtnloading = false;
 		},
 		async sendArticles(invoce_number) {
-			let articles = this.draggableItems;
-			articles.forEach(item => {
-				item.invoiceid = invoce_number;
+			let articles = this.draggableItems; /** Get the articles */
 
-				delete item._id;
-				delete item.id;
-				delete item.__v;
-				delete item.total;
-				console.log(item);
-			});
+			for (let index = 0; index < articles.length; index++) {
+				articles[index].invoiceid = invoce_number;
 
-			await this.$axios
-				.$post("/articles", articles)
-				.then(res => console.log("patched"));
+				delete articles[index].__v;
+				delete articles[index]._id;
+				delete articles[index].id;
+				delete articles[index].total;
+				delete articles[index].userid;
+
+				console.log(articles[index]);
+
+				await this.$axios
+					.$post("/articles", articles[index])
+					.then(res => console.log("patched"));
+			}
 		}
 	}
 };

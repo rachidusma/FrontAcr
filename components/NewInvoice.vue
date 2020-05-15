@@ -657,6 +657,7 @@
 				:invoiceId="invoiceId"
 				:userId="userId"
 				:invoiceOcr="invoiceOcr"
+				:extraInfo="addTextVal"
 			/>
 		</v-row>
 	</v-layout>
@@ -822,11 +823,13 @@ export default {
 			this.todatefromDraft = new Date(this.draft.duedate)
 				.toISOString()
 				.substr(0, 10);
-				
-			await this.$axios.$get(`articles/invoice/${this.draft.ocrid}`).then(res => {
-				console.log("articles res => ", res);
-				this.draggableItems = res;
-			});
+
+			await this.$axios
+				.$get(`articles/invoice/${this.draft.ocrid}`)
+				.then(res => {
+					console.log("articles res => ", res);
+					this.draggableItems = res;
+				});
 			// this.selection_value = this.draft;
 		},
 		async deleteDraft() {

@@ -51,7 +51,7 @@
 				@click:row="handleClick"
 			>
 				<template v-slot:item.ocrid="{ item }">
-					<P class="text--blue">#{{ item.ocrid }}</p>
+					<P class="blue--text">#{{ item.ocrid }}</p>
 				</template>
 				<template v-slot:item.status="{ item }">
 					<v-chip :color="getColor(item.status)" dark>{{ item.status }}</v-chip>
@@ -125,15 +125,15 @@ export default {
 		activeinvoices() {
 			// this.displaiedInvoices = this.allItems;
 			this.displaiedInvoices = this.allItems.filter(
-				invoice => invoice.status != "paid"
+				invoice => invoice.status != "Paid"
 			);
 			this.activeclass = "primary";
 			this.allclass = "normal";
 		},
 		allinvoices() {
-			this.displaiedInvoices = this.allItems;
+			// this.displaiedInvoices = this.allItems;
 			this.displaiedInvoices = this.allItems.filter(
-				invoice => invoice.status != "draft"
+				invoice => invoice.status != "Draft"
 			);
 			this.allclass = "primary";
 			this.activeclass = "normal";
