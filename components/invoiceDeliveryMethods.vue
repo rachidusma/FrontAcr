@@ -160,13 +160,13 @@ export default {
 			deliveryMethod: null
 		};
 	},
-	props: ["draggableItems", "calculations", "invoiceId","invoiceOcr"],
+	props: ["draggableItems", "calculations", "invoiceId","invoiceOcr", "userId"],
 	computed: {
 		saveInvoiceBtnDisabled() {
 			if (this.deliveryMethod == 0) return false;
 			return !!!this.deliveryMethod;
 		},
-		...mapState(["customer", "invoice", "userId"])
+		...mapState(["customer", "invoice"])
 	},
 	methods: {
 		async downloedPDF(preview) {
@@ -234,7 +234,7 @@ export default {
 					published: published,
 					invoicepaid: false,
 					salarypaid: false,
-					_id: vm.invoiceId,
+					_id: vm.invoiceId || null,
 					userid: vm.userId || null,
 					customername: vm.customer.customername,
 					duedate: vm.invoice.dateTo,
@@ -280,8 +280,6 @@ export default {
 						.catch(err => console.log(err));
 				}
 			});
-
-			
 
 			vm.saveInvoiceBtnloading = false;
 		},

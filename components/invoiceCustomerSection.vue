@@ -339,7 +339,7 @@ export default {
 	},
 	methods: {
 		async getUsers() {
-			await this.$axios.setToken(this.$auth.getToken("local"));
+			this.$axios.setToken(this.$auth.getToken("local"));
 
 			await this.$axios
 				.$get("/customers")
@@ -347,6 +347,8 @@ export default {
 					this.items = res;
 					if (!!this.customername) {
 						let m = res.filter(x => x.customername == this.customername);
+						this.$store.commit('setCustomer', m[0])
+						
 						Object.assign(this.customer, m[0]);
 					}
 				})

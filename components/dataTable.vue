@@ -50,6 +50,9 @@
 				class="elevation-1"
 				@click:row="handleClick"
 			>
+				<template v-slot:item.ocrid="{ item }">
+					<P class="text--blue">#{{ item.ocrid }}</p>
+				</template>
 				<template v-slot:item.status="{ item }">
 					<v-chip :color="getColor(item.status)" dark>{{ item.status }}</v-chip>
 				</template>
@@ -86,7 +89,7 @@ export default {
 					text: "Invoice number",
 					align: "start",
 					sortable: false,
-					value: "userid"
+					value: "ocrid"
 				},
 				{ text: "Customer", value: "customername" },
 				{ text: "Invoice amount (inc VAT)", value: "summa" },
