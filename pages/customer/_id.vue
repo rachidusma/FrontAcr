@@ -47,7 +47,7 @@
 
 					<!-- Start buttons -->
 					<v-col cols="12" md="8" class="justify-end d-flex">
-						<v-btn to="/newinvoice" color="success">New Invoice</v-btn>
+						<v-btn @click="addInvoiceWithCustomer" color="success">New Invoice</v-btn>
 
 						<!-- Start Dropdown -->
 						<v-menu offset-y>
@@ -167,7 +167,10 @@ export default {
 				.then(res => this.$router.push("/customer"))
 				.catch(err => console.log(err));
 		},
-
+    addInvoiceWithCustomer() {
+      this.$store.commit('setCustomer', this.customer);
+      this.$router.push('/newinvoice')
+    },
 		async downloadData() {
 			var element = document.createElement("a");
 			element.setAttribute(

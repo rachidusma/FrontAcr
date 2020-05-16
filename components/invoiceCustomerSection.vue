@@ -291,7 +291,7 @@
 
 <script>
 export default {
-	props: ["customername"],
+	props: ["customername", "customernameFromVuex"],
 	data: () => ({
 		customer: {
 			customername: "",
@@ -351,6 +351,11 @@ export default {
 					this.items = res;
 					if (!!this.customername) {
 						let m = res.filter(x => x.customername == this.customername);
+						this.$store.commit('setCustomer', m[0])
+						
+						Object.assign(this.customer, m[0]);
+					} else if (!!this.customernameFromVuex) {
+						let m = res.filter(x => x.customername == this.customernameFromVuex);
 						this.$store.commit('setCustomer', m[0])
 						
 						Object.assign(this.customer, m[0]);

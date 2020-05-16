@@ -32,7 +32,7 @@
 				<!-- <div class="overline mb-4">Your customer:</div> -->
 				<v-card outlined class="pa-3">
 					<h3 class="text--primary pb-3">Customer:</h3>
-					<customerSection :customername="customerNameForCustomerSection" />
+					<customerSection :customernameFromVuex="customer.customername" :customername="customerNameForCustomerSection" />
 				</v-card>
 			</v-col>
 			<!-- End Customer -->
