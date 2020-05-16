@@ -7,44 +7,29 @@
 					<v-btn color="success" to="/newinvoice">New invoice</v-btn>
 				</div>
 			</v-col>
-			<v-col cols="12" sm="12">
-				<div class="blueSection">
-					<v-row justify="center" align="center" style="width:100%;height:100%">
-						<v-col cols="12" sm="4">
-							<h6 class="grey--text text-center subtitle-1 my-4">Overpaid (inc VAT)</h6>
-							<h6 class="display-1 text-center">0,00 kr</h6>
-						</v-col>
+		<calculations :overdue="overdueSum" />
 
-						<v-col cols="12" sm="4">
-							<h6 class="grey--text text-center subtitle-1 my-4">Overdue (inc VAT)</h6>
-							<h6 class="display-1 text-center">{{overdueSum}} kr</h6>
-						</v-col>
-						<v-col cols="12" sm="4">
-							<h6 class="grey--text text-center subtitle-1 my-4">Outstanding (inc VAT)</h6>
-							<h6 class="display-1 text-center">28 375,00</h6>
-						</v-col>
-					</v-row>
-				</div>
-			</v-col>
-			<v-col cols="12" sm="12">
-				<dateTable :allItems.sync="invoices" />
-			</v-col>
+		<v-col cols="12" sm="12">
+			<dateTable :allItems.sync="invoices" />
+		</v-col>
 		</v-row>
 	</v-layout>
 </template>
 <script>
 import dateTable from "@/components/dataTable.vue";
+import calculations from "@/components/calculationSection.vue";
 
 export default {
 	layout: "admin",
-	
+
 	components: {
-		dateTable
+		dateTable,
+		calculations
 	},
 	data() {
 		return {
 			invoices: [],
-			overdueSum: 0,
+			overdueSum: 0
 		};
 	},
 	methods: {},
@@ -65,7 +50,7 @@ export default {
 						new Date(inv.duedate) < Date.now()
 					) {
 						inv.status = "Overdue";
-						this.overdueSum += Number(inv.summa)	
+						this.overdueSum += Number(inv.summa);
 					} else if (inv.published && inv.invoicepaid) inv.status = "Paid";
 					else if (!inv.published) inv.status = "Draft";
 
