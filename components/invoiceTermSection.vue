@@ -111,7 +111,7 @@
 
 					<v-col cols="12" lg="2">
 						<p class="py-0 my-0">Days</p>
-						{{ days }}
+						{{ (invoice.dagar > 0 ) ? invoice.dagar : days }}
 					</v-col>
 				</v-row>
 
@@ -131,6 +131,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'	;
+
 export default {
 	props: ["todatefromDraft","datefromDraft"],
 	data: vm => ({
@@ -159,7 +161,7 @@ export default {
 		},
 		computedToDateFormatted() {
 			return this.formatDate(this.toDate);
-		}
+		},...mapState(['invoice'])
 	},
 
 	mounted() {

@@ -9,7 +9,7 @@ export const state = () => ({
         dateFrom: new Date().toISOString().substr(0, 10),
         dateTo: new Date().toISOString().substr(0, 10),
         Delivery: 'Fritt vårt lager',
-        OverduePayment: '12%',
+        OverduePayment: 0,
     }
 });
 
@@ -39,6 +39,9 @@ export const mutations = {
     },
     setOverduePayment(state, payment) {
         return state.invoice.OverduePayment = payment
+    },
+    setDagar(state, dagar) {
+        return state.invoice.dagar = dagar
     }
 };
 

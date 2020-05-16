@@ -323,7 +323,11 @@ export default {
 			this.getUsers()
 		},
 		customer(val) {
-			if (val != "undefined") this.$store.commit("setCustomer", val);
+			if (val != "undefined") { 
+				this.$store.commit("setCustomer", val);
+				this.$store.commit("setDagar", val.dagar)
+				this.$store.commit("setOverduePayment", val.overdueinterest)
+			}
 		},
 		search(val) {
 			// Items have already been loaded

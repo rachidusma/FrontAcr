@@ -46,37 +46,35 @@
 						</v-col>
 
 						<v-col cols="12" sm="12" md="12">
-							<v-text-field
-								dense
-								label="Enhet"
+							<v-select
 								v-model="editItem.enhet"
-								placeholder="Enhet"
+								:items="Unit"
+								label="Enhet"
 								outlined
-								type="number"
+								dense
 								color="#336882"
-							></v-text-field>
+							></v-select>
 						</v-col>
 
 						<v-col cols="12" sm="12" md="12">
-							<v-text-field
-								dense
-								label="Moms (%)"
-								placeholder="Moms"
+              <v-select
 								v-model="editItem.moms"
+								:items="Vat"
+								label="Moms"
 								outlined
-								type="number"
+								dense
 								color="#336882"
-							></v-text-field>
+							></v-select>
 						</v-col>
 						<v-col cols="12" sm="12" md="12">
-							<v-text-field
-								dense
-								label="typ"
+              <v-select
 								v-model="editItem.typ"
-								placeholder="typ"
+								:items="Kind"
+								label="typ"
 								outlined
+								dense
 								color="#336882"
-							></v-text-field>
+							></v-select>
 						</v-col>
 					</v-row>
 				</v-container>
@@ -98,18 +96,35 @@ export default {
 	data() {
 		return {
 			dialog: false,
-			editItem: {}
+			editItem: {},
+			Vat: ["0", "6", "12", "25"],
+			Unit: [
+				"hours",
+				"pound",
+				"pieces",
+				"hours",
+				"days",
+				"months",
+				"kilograms",
+				"grams",
+				"liters",
+				"meters",
+				"centimeters",
+				"millimeters",
+				"m²",
+				"m³",
+				"miles",
+				"kms"
+			],
+			Kind: ["Goods", "services"]
 		};
 	},
 	props: ["editItemId", "editItemObject", "edit"],
 	watch: {
 		editItemId(newVal) {
-			console.log("Prop changed: ", newVal);
 			Object.assign(this.editItem, this.editItemObject);
 		},
-
 		edit(val) {
-			console.log(val);
 			this.dialog = val;
 		}
 	},
@@ -123,7 +138,6 @@ export default {
 			await this.$axios
 				.$patch(`/articles/${this.editItem._id}`, this.editItem)
 				.then(res => {
-					console.log(res);
 					this.modalUpadted();
 				})
 				.catch(err => {
@@ -134,7 +148,6 @@ export default {
 			await this.$axios
 				.$post("/articles", this.editItem)
 				.then(res => {
-					console.log(res);
 					this.modalUpadted();
 				})
 				.catch(err => {

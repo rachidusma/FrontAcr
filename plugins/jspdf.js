@@ -5,7 +5,7 @@ if (process.client) {
     require('jspdf-autotable');
     let pdf_link;
     exports.link = pdf_link;
-    exports.pdf = function (preview, vm) {
+    exports.pdf = function (preview, vm, ocrid) {
         const doc = new jsPDF(),
             start = 20,
             end = 200,
@@ -156,12 +156,12 @@ if (process.client) {
             doc.setFontSize(10);
             doc.text(`Page 1 of 1`, 5, 292);
         }
-        if (!!preview) {
-             doc.save("fixed.pdf");
+        if (!!preview) {            
+             doc.save(`${ocrid}.pdf`);
 
             return;
         } else {
-            const pdf = new File([doc.output("blob")], "filename.pdf", { type: "pdf" }),
+            const pdf = new File([doc.output("blob")], `${ocrid}.pdf`, { type: "pdf" }),
                 data = new FormData();
 
             data.append("file", pdf);

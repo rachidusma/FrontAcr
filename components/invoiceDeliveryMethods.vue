@@ -151,6 +151,9 @@ import { mapState } from "vuex";
 import { v1 as uuidv1 } from "uuid";
 import { pdf } from "@/plugins/jspdf.js";
 
+const arr = new Array();
+let ocrid =  uuidv1(null, arr, -12).join("");
+
 export default {
 	data() {
 		return {
@@ -176,17 +179,18 @@ export default {
 		...mapState(["customer", "invoice"])
 	},
 	methods: {
-		async downloedPDF(preview) {
+		async downloedPDF(preview, invId) {
 			let location,
 				vm = this;
 
 			if (!!preview) {
-				pdf(preview, this);
+				pdf(preview, this, ocrid);
 			}
 			if (!preview) {
-				let pdfFile = pdf(preview, this).data,
-					doc = pdf(preview, this).doc;
-
+				let pdfFile = pdf(preview, this, invId).data,
+					doc = pdf(preview, this, invId).doc;
+					console.log(pdfFile);
+					
 				return new Promise(function(resolve, reject) {
 					vm.$axios
 						.$post("/profile/file-upload", pdfFile, {
@@ -197,7 +201,6 @@ export default {
 							}
 						})
 						.then(response => {
-							console.log(response["location"]);
 							vm.pdf_link = response["location"];
 							console.log(vm.pdf_link);
 							resolve(doc);
@@ -230,12 +233,11 @@ export default {
 		},
 		async saveInvoice(draft) {
 			this.saveInvoiceBtnloading = true; /** Loading */
-			const arr = new Array();
 
 			let published = !!draft /** Published? */,
 				vm = this,
 				deliveryMethod = vm.deliveryMethod == 1 ? "pdf" : "e-invoice",
-				invoce_number = vm.invoiceOcr || uuidv1(null, arr, -12).join(""),
+				invoce_number = vm.invoiceOcr || ocrid,
 				publishDate = !!draft ? null : Date.now(),
 				extra_info = !!vm.extraInfo ? vm.extraInfo : null,
 				invoice_obj = {
@@ -263,8 +265,8 @@ export default {
 			vm.$axios.setToken(vm.$auth.getToken("local")); /** Set token */
 
 			/** Generate the pdf and get its link */
-			vm.downloedPDF().then(async res => {
-				res.save();
+			vm.downloedPDF(null, ocrid).then(async res => {
+				res.save(`${ocrid}.pdf`);
 				/** If there is an Invoice Edit it */
 				if (!!vm.$route.params.id) {
 					invoice_obj.pdf_link = vm.pdf_link;
