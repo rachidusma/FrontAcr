@@ -39,7 +39,7 @@
 
 						<v-card-text>
 							<v-col cols="12">
-								<v-text-field v-model="overduePayment" label="Interest on overdue payment"></v-text-field>
+								<v-text-field v-model="overduePayment" type="number" hint="will show like 13%" label="Interest on overdue payment"></v-text-field>
 							</v-col>
 							<v-col cols="12">
 								<v-text-field v-model="delivery" label="Delivery"></v-text-field>
@@ -122,7 +122,7 @@
 					</v-col>
 					<v-col cols="12" sm="auto">
 						<p class="text--secondary">Interest on overdue payment</p>
-						<span class="text--primary">{{ overduePayment }}</span>
+						<span class="text--primary">{{ overduePayment }}%</span>
 					</v-col>
 				</v-row>
 			</v-card-text>
@@ -132,6 +132,11 @@
 
 <script>
 import { mapState } from 'vuex'	;
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
 
 export default {
 	props: ["todatefromDraft","datefromDraft"],
@@ -149,6 +154,7 @@ export default {
 	}),
 
 	computed: {
+		
 		days() {
 			let days = (new Date(this.toDate) - new Date(this.date)) / 86400000;
 			if (days >= 0) {
@@ -160,6 +166,13 @@ export default {
 			return this.formatDate(this.date);
 		},
 		computedToDateFormatted() {
+			if(this.invoice.dagar > 0) {
+				console.log( this.invoice.dagar )
+				 let m = new Date(this.date);
+				this.todate = m.addDays(4);
+				
+				return this.formatDate(this.toDate);
+			}
 			return this.formatDate(this.toDate);
 		},...mapState(['invoice'])
 	},

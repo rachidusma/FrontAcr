@@ -197,7 +197,7 @@
 												<p class="font-weight-black">Amount ex VAT</p>
 												<p
 													class="font-weight-medium"
-												>{{ (selection_value.pris_enhet * selection_value.number) || "0,00" }} Kr</p>
+												>{{ (Number(selection_value.number) * Number(selection_value.pris_enhet) ) || "0,00" }} Kr</p>
 											</v-col>
 											<!-- End Amount ex VAT -->
 										</v-row>
