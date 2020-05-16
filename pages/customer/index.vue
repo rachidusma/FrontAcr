@@ -10,7 +10,12 @@
 				<v-row class="pa-4">
 					<h1 class="title">Customers</h1>
 					<v-spacer></v-spacer>
-					<UserModal @updated="getCustomers" />
+					<v-btn color="success" @click="addCustomerModalState= true">Create Customer</v-btn>
+					<UserModal
+						@close="addCustomerModalState = false"
+						@updated="getCustomers"
+						:state="addCustomerModalState"
+					/>
 				</v-row>
 			</v-col>
 			<!-- End page Header -->
@@ -52,6 +57,7 @@ export default {
 	},
 	data() {
 		return {
+			addCustomerModalState: false,
 			search: "",
 			breadCampItems: [
 				{ text: "Invoices", href: "/invoices" },

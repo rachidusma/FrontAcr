@@ -1,8 +1,5 @@
 <template>
 	<v-dialog v-model="dialog" persistent max-width="600px">
-		<template v-slot:activator="{ on }">
-			<v-btn color="success" v-on="on">create new</v-btn>
-		</template>
 		<v-card>
 			<v-card-title>Add user Profile</v-card-title>
 			<v-divider></v-divider>
@@ -191,49 +188,68 @@
 							></v-text-field>
 						</v-col>
 						<!-- End country -->
-
 					</v-row>
 				</v-container>
 				<small>*indicates required field</small>
 			</v-card-text>
 			<v-card-actions>
-				<v-btn depressed @click="dialog = false">Close</v-btn>
+				<v-btn depressed @click="close">Close</v-btn>
 				<v-spacer></v-spacer>
-				<v-btn color="primary" depressed @click="saveUser">Save</v-btn>
+				<v-btn v-if="customerId" color="success" depressed @click="editUser">update</v-btn>
+				<v-btn v-else color="primary" depressed @click="saveUser">Save</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
 </template>
 <script>
 export default {
-	data() {
-		return {
-			the_customer: {},
+  data() {
+    return {
+      the_customer: {},
 			dialog: false
 		};
 	},
+  props: ["customerId", "customer", "state"],
+  watch: {
+    customerId(val) {
+      Object.assign(this.the_customer, this.customer);
+    },
+    state(val) {
+      this.dialog = val
+    }
+  },
 	methods: {
 		async saveUser() {
-			await this.$axios.$post('/customers', this.the_customer)
+			await this.$axios
+				.$post("/customers", this.the_customer)
 				.then(res => {
 					console.log(res);
-					this.$emit('updated');
+					this.$emit("updated");
 					this.dialog = false;
 					this.the_customer = {};
 				})
-				.catch(err => console.log(err))
+				.catch(err => console.log(err));
 		},
 		async editUser() {
 			await this.$axios.setToken(this.$auth.getToken("local"));
 			let customer = this.customer;
 
 			await this.$axios
-				.$patch(`/customers/${customer._id}`, customer)
+				.$patch(`/customers/${customer._id}`, this.the_customer)
 				.then(async res => {
-					await this.getCustomer();
+          console.log(res);
+          
+          this.$emit('UserEdited');
+          this.dialog = false;
+					this.the_customer = {};
 				})
 				.catch(err => console.log(err));
-		}
+    },
+    close() {
+      this.the_customer = {};
+      this.$emit('close');
+      this.dialog = false;
+    }
 	}
 };
 </script>
