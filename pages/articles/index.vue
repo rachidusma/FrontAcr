@@ -10,7 +10,13 @@
 				<v-row class="pa-4">
 					<h1 class="title">Articles</h1>
 					<v-spacer></v-spacer>
-					<ArticleModal />
+					<ArticleModal
+						@closed="reset()"
+            @updated="getArticles();"
+						:editItemObject="selectedItem"
+						:editItemId="selectedItem._id"
+						:edit="editDialogState"
+					/>
 				</v-row>
 			</v-col>
 			<!-- End page Header -->
@@ -30,6 +36,7 @@
 					</v-row>
 					<!-- End Search bar -->
 
+					<!-- Start Delete Item -->
 					<v-dialog v-model="deleteDialog" max-width="500px">
 						<v-card>
 							<v-card-title>Delete Items</v-card-title>
@@ -43,6 +50,7 @@
 							</v-card-actions>
 						</v-card>
 					</v-dialog>
+					<!-- End Delete Item -->
 
 					<v-data-table
 						:headers="headers"
@@ -61,7 +69,7 @@
 								</template>
 								<v-list>
 									<!-- start Edit item -->
-									<v-list-item @click="editItem(item)">
+									<v-list-item @click=" getItem(item); editDialogState = true;">
 										<v-list-item-title>Edit</v-list-item-title>
 									</v-list-item>
 									<!-- End Edit item -->
@@ -76,9 +84,7 @@
 						</template>
 						<!-- End dropdown menu column -->
 
-						<template v-slot:no-data>
-							NO DATA AVILABLE
-						</template>
+						<template v-slot:no-data>NO DATA AVILABLE</template>
 					</v-data-table>
 				</v-card>
 			</v-col>
@@ -114,7 +120,8 @@ export default {
 			],
 			articles: [],
 			selectedItem: {},
-			deleteDialog: false
+			deleteDialog: false,
+			editDialogState: false
 		};
 	},
 
@@ -131,19 +138,24 @@ export default {
 			} catch (e) {
 				console.log(e);
 			}
-		},
-		async editItem(item) {
-			console.log(item);
-		},
+    },
+    reset() {
+      console.log('lol')
+      this.editDialogState = false;
+			this.selectedItem =  {};
+    },
 		getItem(item) {
 			Object.assign(this.selectedItem, item);
 		},
 		async deleteItem() {
 			try {
+				this.deleteDialog = false;
 				await this.$axios
 					.$delete(`/articles/${this.selectedItem._id}`)
 					.then(res => {
-						console.log(res);
+            /** Reset the selected item for the article modal */
+            Object.assign(this.selectedItem, {});
+            /** Get All articles */
 						this.getArticles();
 					});
 			} catch (e) {
