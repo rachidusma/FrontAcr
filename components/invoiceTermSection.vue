@@ -138,14 +138,12 @@ Date.prototype.addDays = function(days) {
     return date;
 }
 
+	let todate= new Date().toISOString().substr(0, 10);
 export default {
 	props: ["todatefromDraft","datefromDraft"],
 	data: vm => ({
 		date: new Date().toISOString().substr(0, 10),
-		dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
-
-		toDate: new Date().toISOString().substr(0, 10),
-		toDateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
+		toDate: (!!todate) ? todate : new Date().toISOString().substr(0, 10),
 		delivery: "Fritt vårt lager",
 		overduePayment: "12%",
 		menu1: false,
@@ -169,11 +167,14 @@ export default {
 			if(this.invoice.dagar > 0) {
 				console.log( this.invoice.dagar )
 				 let m = new Date(this.date);
-				this.todate = m.addDays(4);
+				todate = m.addDays(this.invoice.dagar).toISOString().substr(0, 10);
+			this.$store.commit("dateTo", todate);
+
+				console.log( this.invoice.dagar )
 				
-				return this.formatDate(this.toDate);
+				return this.formatDate(todate);
 			}
-			return this.formatDate(this.toDate);
+			return this.formatDate(todate);
 		},...mapState(['invoice'])
 	},
 
@@ -198,11 +199,9 @@ export default {
 			this.$store.commit("setOverduePayment", val);
 		},
 		date(val) {
-			this.dateFormatted = this.formatDate(this.date);
 			this.$store.commit("dateFrom", val);
 		},
 		toDate(val) {
-			this.toDateFormatted = this.formatDate(this.toDate);
 			this.$store.commit("dateTo", val);
 		}
 	},

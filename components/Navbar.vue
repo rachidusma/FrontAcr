@@ -17,32 +17,27 @@
 			</div>
 		</v-app-bar>
 
-		<v-navigation-drawer color="#336882" dark  v-model="drawer" absolute temporary>
+		<v-navigation-drawer color="white"   v-model="drawer" absolute temporary >
 			<v-list-item>
-				<nuxt-link to="/" class=" link">Home</nuxt-link>
+				<nuxt-link to="/" class="black--text">Home</nuxt-link>
 			</v-list-item>
 
 			<v-list-item>
-				<nuxt-link to="/job" class="  link">Calculate</nuxt-link>
+				<nuxt-link to="/job" class="black--text">Calculate</nuxt-link>
 			</v-list-item>
 
 			<v-list-item>
-				<nuxt-link to="/newinvoice" class=" link">Calculate</nuxt-link>
+				<nuxt-link to="/newinvoice" class="black--text">Calculate</nuxt-link>
 			</v-list-item>
 
-				<v-divider inset vertical></v-divider>
-
 			<v-list-item>
-				<nuxt-link to="/signup" class=" link">Register</nuxt-link>
+				<nuxt-link to="/signup" class="black--text">Register</nuxt-link>
 			</v-list-item>
 
 				<v-divider></v-divider>
 			<v-list-item>
-				<nuxt-link to="/login" class="  link">Login</nuxt-link>
+				<nuxt-link to="/login" class="black--text">Login</nuxt-link>
 			</v-list-item>
-
-			<v-divider></v-divider>
-
 		</v-navigation-drawer>
 	</div>
 </template>
@@ -63,5 +58,9 @@ export default {
 	font-weight: bold;
 	margin-left: 20px;
 	font-size: 120%;
+}
+.v-list-item a {
+	text-decoration: none;
+	font-weight: bold;
 }
 </style>
