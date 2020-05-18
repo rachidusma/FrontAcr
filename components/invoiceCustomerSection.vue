@@ -52,7 +52,7 @@
 
 				<!-- Start user modal -->
 				<v-col cols="12" sm="3">
-					<v-dialog v-model="dialog" persistent max-width="600px">
+					<v-dialog v-model="dialog" scrollable persistent max-width="600px">
 						<template v-slot:activator="{ on }">
 							<v-btn class="mx-2" color="primary" v-if="!editUserModal" v-on="on">create new</v-btn>
 							<v-btn
@@ -65,9 +65,9 @@
 						</template>
 						<v-card>
 							<v-card-title>
-								<span class="overline">Add user Profile</span>
+								<h4>New customer</h4>
 								<v-spacer></v-spacer>
-								<v-icon class="font1" @click="initialCustomer(2);dialog=false ">mdi mdi-close</v-icon>
+								<v-icon class="black--text" @click="initialCustomer(2);dialog=false ">mdi mdi-close</v-icon>
 							</v-card-title>
 							<v-divider></v-divider>
 							<v-card-text v-if="customer">
@@ -82,7 +82,7 @@
 									<v-row>
 										<p class="overline">Personal informations</p>
 										<!-- Start customername -->
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-text-field
 												:label="(IndividualsOrCorporations == 1) ? 'Name*' : 'Company*'"
 												v-model="customer.customername"
@@ -94,7 +94,7 @@
 										<!-- End customername -->
 
 										<!-- Start orgnummer -->
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-text-field
 												v-if="IndividualsOrCorporations == '2'"
 												label="Org-nummer"
@@ -108,7 +108,7 @@
 										<!-- End orgnummer -->
 
 										<!-- Start Personal -->
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-text-field
 												v-if="IndividualsOrCorporations == '1'"
 												label="Personal number"
@@ -122,7 +122,7 @@
 										<!-- End Personal -->
 
 										<!-- Start orgnummer -->
-										<v-col class="py-0" cols="12" v-if="IndividualsOrCorporations == 2">
+										<v-col cols="12" v-if="IndividualsOrCorporations == 2">
 											<v-text-field
 												label="VAT number"
 												placeholder="YYYYMMDD-NNNN"
@@ -135,7 +135,7 @@
 										<!-- End orgnummer -->
 
 										<!-- Start kundnummer -->
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-text-field
 												label="Kundnummer"
 												placeholder="Kundnummer"
@@ -147,13 +147,13 @@
 										</v-col>
 										<!-- End kundnummer -->
 
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-divider></v-divider>
 											<h1 class="overline pt-4 pb-4">Contact informations</h1>
 										</v-col>
 
 										<!-- Start postadress -->
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-text-field
 												label="Postadress"
 												placeholder="Postadress"
@@ -165,7 +165,7 @@
 										<!-- End postadress -->
 
 										<!-- Start postadress2 -->
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-text-field
 												label="Postadress 2"
 												v-model="customer.postadress2"
@@ -177,7 +177,7 @@
 										<!-- End postadress2 -->
 
 										<!-- Start postnummer -->
-										<v-col class="py-0" cols="12" md="6">
+										<v-col cols="12" md="6">
 											<v-text-field
 												label="Postnummer"
 												placeholder="Postnummer"
@@ -190,13 +190,13 @@
 										<!-- End postnummer -->
 
 										<!-- Start stad -->
-										<v-col class="py-0" cols="12" md="6">
+										<v-col cols="12" md="6">
 											<v-text-field label="stad" v-model="customer.stad" placeholder="stad" outlined dense></v-text-field>
 										</v-col>
 										<!-- End stad -->
 
 										<!-- Start kontaktperson -->
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-text-field
 												label="Kontaktperson"
 												v-model="customer.kontaktperson"
@@ -208,7 +208,7 @@
 										<!-- End kontaktperson -->
 
 										<!-- Start epost -->
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-text-field
 												label="E-post"
 												placeholder="E-post"
@@ -222,7 +222,7 @@
 										<!-- End epost -->
 
 										<!-- Start verdueinterest -->
-										<v-col class="py-0" cols="12">
+										<v-col cols="12">
 											<v-text-field
 												label="Dröjsmålsränta (%)"
 												placeholder="Dröjsmålsränta"
@@ -236,15 +236,17 @@
 								</v-container>
 								<small>*indicates required field</small>
 							</v-card-text>
-							<v-card-actions>
-								<v-spacer></v-spacer>
-								<div v-if="editUserModal == false">
+
+							<v-card-actions class="grey lighten-3 pa-5">
+								<div class="d-flex" style="width: 100%" v-if="editUserModal == false">
 									<v-btn color="blue darken-1" text @click="resetModal">Close</v-btn>
+									<v-spacer></v-spacer>
 									<v-btn color="primary" @click="saveUser">Save</v-btn>
 								</div>
 
-								<div v-else-if="editUserModal == true">
+								<div class="d-flex" style="width: 100%" v-else-if="editUserModal == true">
 									<v-btn color="blue darken-1" text @click="dialog= false;">Close</v-btn>
+									<v-spacer></v-spacer>
 									<v-btn color="success" @click="editUser">Edit</v-btn>
 								</div>
 							</v-card-actions>
@@ -320,13 +322,13 @@ export default {
 	},
 	watch: {
 		customername(val) {
-			this.getUsers()
+			this.getUsers();
 		},
 		customer(val) {
-			if (val != "undefined") { 
+			if (val != "undefined") {
 				this.$store.commit("setCustomer", val);
-				this.$store.commit("setDagar", val.dagar)
-				this.$store.commit("setOverduePayment", val.overdueinterest)
+				this.$store.commit("setDagar", val.dagar);
+				this.$store.commit("setOverduePayment", val.overdueinterest);
 			}
 		},
 		search(val) {
@@ -351,13 +353,15 @@ export default {
 					this.items = res;
 					if (!!this.customername) {
 						let m = res.filter(x => x.customername == this.customername);
-						this.$store.commit('setCustomer', m[0])
-						
+						this.$store.commit("setCustomer", m[0]);
+
 						Object.assign(this.customer, m[0]);
 					} else if (!!this.customernameFromVuex) {
-						let m = res.filter(x => x.customername == this.customernameFromVuex);
-						this.$store.commit('setCustomer', m[0])
-						
+						let m = res.filter(
+							x => x.customername == this.customernameFromVuex
+						);
+						this.$store.commit("setCustomer", m[0]);
+
 						Object.assign(this.customer, m[0]);
 					}
 				})
@@ -431,3 +435,10 @@ export default {
 	}
 };
 </script>
+
+<style scoped>
+div.v-card div[class^="col"] {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+</style>

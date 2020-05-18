@@ -30,10 +30,10 @@
 						<v-btn color="success" dark right v-on="on">Edit</v-btn>
 					</template>
 					<v-card>
-						<v-card-title class="headline white lighten-2" primary-title>
-							<h3>Terms</h3>
+						<v-card-title>
+							<h4>Terms</h4>
 							<v-spacer></v-spacer>
-							<v-icon class="font1" @click="dialog = false">mdi mdi-close</v-icon>
+							<v-icon class="black--text" @click="dialog = false">mdi mdi-close</v-icon>
 						</v-card-title>
 						<v-divider></v-divider>
 
@@ -48,10 +48,10 @@
 
 						<v-divider></v-divider>
 
-						<v-card-actions>
-							<v-btn depressed text @click="dialog = false">Close</v-btn>
+						<v-card-actions class="grey lighten-3 pa-5">
+							<v-btn text @click="dialog = false">Close</v-btn>
 							<v-spacer></v-spacer>
-							<v-btn color="primary" text @click="dialog = false">Save</v-btn>
+							<v-btn color="success" @click="dialog = false">Save</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-dialog>

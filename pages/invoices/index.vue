@@ -20,6 +20,7 @@ import dateTable from "@/components/dataTable.vue";
 import calculations from "@/components/calculationSection.vue";
 
 export default {
+	middleware: "auth",
 	layout: "admin",
 
 	components: {

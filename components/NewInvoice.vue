@@ -32,7 +32,10 @@
 				<!-- <div class="overline mb-4">Your customer:</div> -->
 				<v-card outlined class="pa-3">
 					<h3 class="text--primary pb-3">Customer:</h3>
-					<customerSection :customernameFromVuex="customer.customername" :customername="customerNameForCustomerSection" />
+					<customerSection
+						:customernameFromVuex="customer.customername"
+						:customername="customerNameForCustomerSection"
+					/>
 				</v-card>
 			</v-col>
 			<!-- End Customer -->
@@ -58,12 +61,13 @@
 									</template>
 
 									<v-card>
-										<v-card-title class="headline grey lighten-2" primary-title>
-											<h3>Add new row</h3>
+										<v-card-title>
+											<h4>Add new row</h4>
 											<v-spacer></v-spacer>
-											<v-icon class="font1" @click="addTextDialog = false">mdi mdi-close</v-icon>
+											<v-icon class="black--text" @click="addTextDialog = false">mdi mdi-close</v-icon>
 										</v-card-title>
 
+										<v-divider></v-divider>
 										<v-card-text>
 											<v-row>
 												<v-col cols="12">
@@ -74,11 +78,11 @@
 
 										<v-divider></v-divider>
 
-										<v-card-actions>
+										<v-card-actions class="grey lighten-3 pa-5">
 											<v-btn color="error" v-if="edit" @click="deleteText">Delet</v-btn>
-											<v-btn @click="addTextDialog = false">Close</v-btn>
+											<v-btn text @click="addTextDialog = false">Close</v-btn>
 											<v-spacer></v-spacer>
-											<v-btn color="primary" text @click="addText()">Add to invoice</v-btn>
+											<v-btn color="primary" @click="addText()">Add to invoice</v-btn>
 										</v-card-actions>
 									</v-card>
 								</v-dialog>
@@ -90,11 +94,12 @@
 						<v-card>
 							<!-- Start Modal Title -->
 							<v-card-title>
-								<span class="headline">Add new row</span>
+								<h4>Add new row</h4>
 								<v-spacer></v-spacer>
 								<v-icon class="font1" @click="resetModal">mdi mdi-close</v-icon>
 							</v-card-title>
 							<!-- End Modal Title -->
+							<v-divider></v-divider>
 
 							<!-- Start Modal Body -->
 							<v-card-text>
@@ -109,7 +114,9 @@
 														v-model="selection_value"
 														:items="articles"
 														@change="setQuantity"
+														placeholder="Search For saved item"
 														clearable
+														outlined
 														dense
 														color="blue-grey lighten-2"
 														label="Description"
@@ -217,19 +224,24 @@
 									<v-row v-else>
 										<!-- Strat Description -->
 										<v-col cols="12">
-											<v-text-field dense v-model="selection_value.artikelnamn" label="artikelnamn"></v-text-field>
+											<v-text-field outlined dense v-model="selection_value.artikelnamn" label="artikelnamn"></v-text-field>
 										</v-col>
 										<!-- End Description -->
 
 										<!-- Strat number -->
 										<v-col cols="12" sm="6">
-											<v-text-field type="number" dense v-model="selection_value.number" label="Quantity"></v-text-field>
+											<v-text-field
+												outlined
+												type="number"
+												dense
+												v-model="selection_value.number"
+												label="Quantity"
+											></v-text-field>
 										</v-col>
 										<!-- End number -->
 
 										<!-- Strat Unit -->
 										<v-col class="d-flex" cols="12" sm="6">
-											<!-- TODO: Add UNIT HERE enhet-->
 											<v-select
 												v-model="selection_value.enhet"
 												:items="Unit"
@@ -247,6 +259,7 @@
 											<v-text-field
 												v-model="selection_value.pris_enhet"
 												dense
+												outlined
 												value="1"
 												type="number"
 												label="Price / unit ex VAT"
@@ -335,12 +348,13 @@
 								</v-container>
 							</v-card-text>
 							<!-- End Modal Body -->
+							<v-divider></v-divider>
 
 							<!-- Start Modal Footer -->
-							<v-card-actions class="gray">
+							<v-card-actions class="grey lighten-3 pa-5">
 								<!-- Start For Add New Customar  -->
 								<div>
-									<v-btn class="mt-2" @click="resetModal">Cancel</v-btn>
+									<v-btn class="mt-2" text @click="resetModal">Cancel</v-btn>
 									<v-btn
 										class="mt-2 d-block d-sm-inline"
 										@click="saveAsItem"
@@ -430,14 +444,14 @@
 						</draggable>
 						<!-- End Draggable Content -->
 
-						<v-dialog v-model="editDraggableDialog" max-width="600px">
+						<v-dialog v-model="editDraggableDialog" scrollable max-width="600px">
 							<v-card>
 								<v-card-title class="headline">
-									<h3>Edit product</h3>
+									<h4>Edit product</h4>
 									<v-spacer></v-spacer>
-									<v-icon class="font1" @click="editDraggableDialog = false">mdi mdi-close</v-icon>
+									<v-icon class="black--text" @click="editDraggableDialog = false">mdi mdi-close</v-icon>
 								</v-card-title>
-
+								<v-divider></v-divider>
 								<!-- Start Modal Body -->
 								<v-card-text>
 									<v-container>
@@ -458,8 +472,7 @@
 											<!-- End number -->
 
 											<!-- Strat Unit -->
-											<v-col class="d-flex" cols="12" sm="6">
-												<!-- TODO: Add UNIT HERE enhet-->
+											<v-col cols="12" sm="6">
 												<v-select
 													v-model="selection_value.enhet"
 													:items="Unit"
@@ -564,13 +577,14 @@
 										<!-- End Checkbox -->
 									</v-container>
 								</v-card-text>
-								<!-- End Modal Body -->
-								<v-card-actions>
-									<!-- Start For Edit Customar  -->
+								<v-divider></v-divider>
 
+								<!-- End Modal Body -->
+								<v-card-actions class="grey lighten-3 pa-5">
+									<!-- Start For Edit Customar  -->
 									<div>
 										<v-btn class="mt-2" color="error" @click="Delete">Delete</v-btn>
-										<v-btn class="mt-2" @click="resetDraggableModal">Cancel</v-btn>
+										<v-btn class="mt-2" text @click="resetDraggableModal">Cancel</v-btn>
 										<v-btn
 											class="mt-2 d-block d-sm-inline"
 											@click="saveAsItem"
@@ -674,6 +688,8 @@ import { mapState } from "vuex";
 import { v1 as uuidv1 } from "uuid";
 
 export default {
+    	middleware: "auth",
+
 	data: vm => ({
 		drag: false,
 		createNewModal: false,
@@ -1054,6 +1070,7 @@ export default {
 </script>
 
 <style scoped>
+
 .gray {
 	background-color: #f5f7f9;
 	padding-top: 30px;

@@ -78,12 +78,7 @@ export default {
 	methods: {
 		async userLogin(userInfo) {
 			try {
-				await this.$auth
-					.loginWith("local", { data: userInfo })
-					.then(res => {
-            this.$store.commit('setUser', res.data);
-            })
-					.catch(err => console.log(err));
+				await this.$auth.loginWith("local", { data: userInfo })
 				this.snackbar = true;
 			} catch (err) {
 				this.snackbar = true;

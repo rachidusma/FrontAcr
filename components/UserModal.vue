@@ -1,7 +1,11 @@
 <template>
 	<v-dialog v-model="dialog" persistent max-width="600px">
 		<v-card>
-			<v-card-title>Add user Profile</v-card-title>
+			<v-card-title>
+				<h4>Add user Profile</h4>
+				<v-spacer></v-spacer>
+				<v-icon class="black--text" @click="close">mdi mdi-close</v-icon>
+				</v-card-title>
 			<v-divider></v-divider>
 
 			<v-card-text>
@@ -192,11 +196,11 @@
 				</v-container>
 				<small>*indicates required field</small>
 			</v-card-text>
-			<v-card-actions>
-				<v-btn depressed @click="close">Close</v-btn>
+			<v-card-actions class="grey lighten-3 pa-5">
+				<v-btn text @click="close">Close</v-btn>
 				<v-spacer></v-spacer>
-				<v-btn v-if="customerId" color="success" depressed @click="editUser">update</v-btn>
-				<v-btn v-else color="primary" depressed @click="saveUser">Save</v-btn>
+				<v-btn v-if="customerId" color="success" @click="editUser">update</v-btn>
+				<v-btn v-else color="success" @click="saveUser">Save</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>

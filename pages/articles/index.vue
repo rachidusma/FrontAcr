@@ -12,7 +12,7 @@
 					<v-spacer></v-spacer>
 					<ArticleModal
 						@closed="reset()"
-            @updated="getArticles();"
+						@updated="getArticles();"
 						:editItemObject="selectedItem"
 						:editItemId="selectedItem._id"
 						:edit="editDialogState"
@@ -39,11 +39,16 @@
 					<!-- Start Delete Item -->
 					<v-dialog v-model="deleteDialog" max-width="500px">
 						<v-card>
-							<v-card-title>Delete Items</v-card-title>
+							<v-card-title>
+								<h4>Delete Items</h4>
+								<v-spacer></v-spacer>
+								<v-icon class="black--text" @click="deleteDialog = false">mdi mdi-close</v-icon>
 
-							<v-card-text class="text-center">Are you sure you want to delete this item?</v-card-text>
+							</v-card-title>
+							<v-divider></v-divider>
+							<v-card-text class="pa-5 text-center text-primary">Are you sure you want to delete this item?</v-card-text>
 
-							<v-card-actions>
+							<v-card-actions class="grey lighten-3 pa-5">
 								<v-btn depressed @click="deleteDialog = false">Cancel</v-btn>
 								<v-spacer></v-spacer>
 								<v-btn depressed color="error" @click="deleteItem">Delete</v-btn>
@@ -138,12 +143,12 @@ export default {
 			} catch (e) {
 				console.log(e);
 			}
-    },
-    reset() {
-      console.log('lol')
-      this.editDialogState = false;
-			this.selectedItem =  {};
-    },
+		},
+		reset() {
+			console.log("lol");
+			this.editDialogState = false;
+			this.selectedItem = {};
+		},
 		getItem(item) {
 			Object.assign(this.selectedItem, item);
 		},
@@ -153,9 +158,9 @@ export default {
 				await this.$axios
 					.$delete(`/articles/${this.selectedItem._id}`)
 					.then(res => {
-            /** Reset the selected item for the article modal */
-            Object.assign(this.selectedItem, {});
-            /** Get All articles */
+						/** Reset the selected item for the article modal */
+						Object.assign(this.selectedItem, {});
+						/** Get All articles */
 						this.getArticles();
 					});
 			} catch (e) {

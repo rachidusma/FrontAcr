@@ -14,7 +14,7 @@
 					</v-col>
 					<!-- End Customer Name -->
 
-          <!-- Statrt Edit Dialog -->
+					<!-- Statrt Edit Dialog -->
 					<UserModal
 						:state="editUserDialog"
 						@UserEdited="getCustomer"
@@ -22,28 +22,31 @@
 						:customerId="customer._id"
 						:customer="customer"
 					/>
-          <!-- End Edit Dialog -->
+					<!-- End Edit Dialog -->
 
-          <!-- Start Delete Dialog -->
+					<!-- Start Delete Dialog -->
 					<v-dialog v-model="deleteDialog" width="500">
 						<v-card>
-							<v-card-title>Deleting customer {{ customer.customername }}</v-card-title>
-              <v-divider></v-divider>
+							<v-card-title>
+								<h4>Deleting customer {{ customer.customername }}</h4>
+								<v-spacer></v-spacer>
+								<v-icon class="black--text" @click="deleteDialog = false">mdi mdi-close</v-icon>
+							</v-card-title>
+							<v-divider></v-divider>
 							<v-card-text
 								class="py-3"
 							>Are you sure you want to remove customer Marika Bengtsson? This cannot be undone!</v-card-text>
 
 							<v-divider></v-divider>
 
-							<v-card-actions>
-								<v-btn depressed  @click="deleteDialog = false">close</v-btn>
+							<v-card-actions class="grey lighten-3 pa-5">
+								<v-btn text @click="deleteDialog = false">close</v-btn>
 								<v-spacer></v-spacer>
 								<v-btn color="error" depressed @click="deleteCustomer">Yes, delete</v-btn>
 							</v-card-actions>
-
 						</v-card>
 					</v-dialog>
-          <!-- End Delete Dialog -->
+					<!-- End Delete Dialog -->
 
 					<!-- Start buttons -->
 					<v-col cols="12" md="8" class="justify-end d-flex">
@@ -75,10 +78,9 @@
 									<v-list-item-title @click="downloadData">Download Data</v-list-item-title>
 								</v-list-item>
 								<!-- End Download  -->
-
 							</v-list>
 						</v-menu>
-            <!-- End Dropdown -->
+						<!-- End Dropdown -->
 					</v-col>
 				</v-row>
 			</v-col>
@@ -128,16 +130,16 @@ export default {
 
 	components: {
 		dateTable,
-    UserModal,
-    calculations
+		UserModal,
+		calculations
 	},
 	data() {
 		return {
 			customer: {},
 			deleteDialog: false,
 			editUserDialog: false,
-      customerInvoices: [],
-      overdueSum: 0
+			customerInvoices: [],
+			overdueSum: 0
 		};
 	},
 	computed: {
@@ -167,10 +169,10 @@ export default {
 				.then(res => this.$router.push("/customer"))
 				.catch(err => console.log(err));
 		},
-    addInvoiceWithCustomer() {
-      this.$store.commit('setCustomer', this.customer);
-      this.$router.push('/newinvoice')
-    },
+		addInvoiceWithCustomer() {
+			this.$store.commit("setCustomer", this.customer);
+			this.$router.push("/newinvoice");
+		},
 		async downloadData() {
 			var element = document.createElement("a");
 			element.setAttribute(
@@ -194,7 +196,7 @@ export default {
 		await this.$axios
 			.$get("/invoices")
 			.then(res => {
-        let m = res.filter(x => x.customername == this.customer.customername)
+				let m = res.filter(x => x.customername == this.customer.customername);
 				m.forEach(inv => {
 					if (
 						inv.published &&
@@ -206,12 +208,10 @@ export default {
 						inv.published &&
 						!inv.invoicepaid &&
 						new Date(inv.duedate) < Date.now()
-					)
-						{
-              inv.status = "Overdue";
-              this.overdueSum += inv.summa
-            }
-					else if (inv.published && inv.invoicepaid) inv.status = "Paid";
+					) {
+						inv.status = "Overdue";
+						this.overdueSum += inv.summa;
+					} else if (inv.published && inv.invoicepaid) inv.status = "Paid";
 					else if (!inv.published) inv.status = "Draft";
 
 					if (inv.duedate) {

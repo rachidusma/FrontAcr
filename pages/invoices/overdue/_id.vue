@@ -8,9 +8,13 @@
 
 			<div>
 				<v-row justify="center">
-					<v-dialog v-model="amendInvoiceModalState" max-width="500px">
+					<v-dialog v-model="amendInvoiceModalState" scrollable max-width="500px">
 						<v-card>
-							<v-card-title>Amend invoice</v-card-title>
+							<v-card-title>
+								<h4>Amend invoice</h4>
+								<v-spacer></v-spacer>
+								<v-icon class="black--text" @click="amendInvoiceModalState = false">mdi mdi-close</v-icon>
+								</v-card-title>
 							<v-divider></v-divider>
 
 							<v-card-text>
@@ -28,16 +32,20 @@
 							</v-card-text>
 							<v-divider></v-divider>
 
-							<v-card-actions>
+							<v-card-actions class="grey lighten-3 pa-5">
 								<v-spacer></v-spacer>
-								<v-btn @click="amendInvoiceModalState = false">Done</v-btn>
+								<v-btn  color="success" @click="amendInvoiceModalState = false">Done</v-btn>
 							</v-card-actions>
 						</v-card>
 					</v-dialog>
 
 					<v-dialog v-model="undoModalState" max-width="500px">
 						<v-card>
-							<v-card-title>Undo publish?</v-card-title>
+							<v-card-title>
+								<h4>Undo publish?</h4>
+								<v-spacer></v-spacer>
+								<v-icon class="black--text" @click="undoModalState = false">mdi mdi-close</v-icon>
+								</v-card-title>
 							<v-divider></v-divider>
 							<v-card-text
 								class="py-5"

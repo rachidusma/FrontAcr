@@ -93,7 +93,7 @@ export default {
         endpoints: {
           login: { url: '/auth', method: 'post', propertyName: 'token' },
           logout: { url: '/auth', method: 'post' },
-          user: { url: '/auth/users', method: 'get', propertyName: false }
+          user: { url: '/auth/user', method: 'get', propertyName: false }
         },
         tokenName: 'x-auth-token',
         // tokenRequired: true,

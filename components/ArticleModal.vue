@@ -1,16 +1,21 @@
 <template>
-	<v-dialog v-model="dialog" persistent max-width="600px">
+	<v-dialog v-model="dialog" scrollable persistent max-width="600px">
 		<template v-slot:activator="{ on }">
 			<v-btn color="success" v-on="on">Add new</v-btn>
 		</template>
-		<v-card>
-			<v-card-title>Add article</v-card-title>
+		<v-card outlined>
+			<v-card-title class="py-3 my-1">
+				<h4 v-if="editItemId">Edit article</h4>
+				<h4 v-else>Add article</h4>
+				<v-spacer></v-spacer>
+
+				<v-icon class="black--text" @click="close">mdi mdi-close</v-icon>
+			</v-card-title>
+
 			<v-divider></v-divider>
-			<v-card-text>
+			<v-card-text class="py-2">
 				<v-container>
 					<v-row>
-						<p class="overline">Article informations</p>
-
 						<v-col cols="12" sm="12" md="12">
 							<v-text-field
 								dense
@@ -57,35 +62,20 @@
 						</v-col>
 
 						<v-col cols="12" sm="12" md="12">
-              <v-select
-								v-model="editItem.moms"
-								:items="Vat"
-								label="Moms"
-								outlined
-								dense
-								color="#336882"
-							></v-select>
+							<v-select v-model="editItem.moms" :items="Vat" label="Moms" outlined dense color="#336882"></v-select>
 						</v-col>
 						<v-col cols="12" sm="12" md="12">
-              <v-select
-								v-model="editItem.typ"
-								:items="Kind"
-								label="typ"
-								outlined
-								dense
-								color="#336882"
-							></v-select>
+							<v-select v-model="editItem.typ" :items="Kind" label="typ" outlined dense color="#336882"></v-select>
 						</v-col>
 					</v-row>
 				</v-container>
-				<small>*indicates required field</small>
 			</v-card-text>
 
-			<v-card-actions>
+			<v-card-actions class="grey lighten-3 pa-5">
 				<v-btn depressed @click="close">Close</v-btn>
 				<v-spacer></v-spacer>
 				<v-btn v-if="editItemId" depressed color="success" @click="updateArticle">Update</v-btn>
-				<v-btn v-else color="primary" depressed @click="saveArticle">Save</v-btn>
+				<v-btn v-else color="success" depressed @click="saveArticle">Save</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
@@ -164,7 +154,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+div.v-card div[class^='col'] {
+    padding-top: 0;
+    padding-bottom: 0;
+}
 .overline {
 	color: #336882;
 	font-size: 25px;

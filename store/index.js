@@ -1,7 +1,5 @@
 
-export const state = () => ({
-    loggedInUser: {},
-    
+export const state = () => ({   
     /** NEW INVOICE */
     customer: {},
     invoice: {
@@ -14,10 +12,6 @@ export const state = () => ({
 });
 
 export const mutations = {
-    setUser(state, user) {
-        return Object.assign(state.loggedInUser, user);
-    },
-    
     /** NEW INVOICE */
     setCustomer(state, customer) {
         return Object.assign(state.customer, customer);
