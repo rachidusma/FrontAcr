@@ -1,5 +1,26 @@
 <template>
 	<v-col cols="12">
+		<v-dialog v-model="dialog" max-width="500px">
+			<v-card>
+				<v-card-title class="headline">
+					<h6>Created Successfuly</h6>
+					<v-spacer></v-spacer>
+					<v-icon class="font1" @click="dialog = false">mdi mdi-close</v-icon>
+				</v-card-title>
+				<v-divider></v-divider>
+
+				<v-card-text class="pa-5 text-center">The invoice saved.</v-card-text>
+
+				<v-card-actions class="grey lighten-3 pa-5">
+					<v-spacer></v-spacer>
+
+					<v-btn color="success" :to="invoiceLink">Visit it</v-btn>
+
+					<v-btn color="success" to="/newinvoice">Create new one</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
+
 		<v-card outlined class="pa-3">
 			<v-card-title>
 				<h3>Delivery method</h3>
@@ -45,7 +66,7 @@
 							<tr v-for="(prod,index) in draggableItems" :key="index">
 								<td>{{ prod.artikelnamn }}</td>
 								<td>{{ prod.moms }}%</td>
-								<td>{{ prod.number }} {{ prod.enhet }} </td>
+								<td>{{ prod.number }} {{ prod.enhet }}</td>
 								<td>{{ prod.pris_enhet }} Kr</td>
 								<td v-if="!prod.text">{{ prod.total }} Kr</td>
 								<td v-else></td>
@@ -153,12 +174,14 @@ import { v1 as uuidv1 } from "uuid";
 import { pdf } from "@/plugins/jspdf.js";
 
 const arr = new Array();
-let ocrid =  uuidv1(null, arr, -12).join("");
+let ocrid = uuidv1(null, arr, -12).join("");
 
 export default {
 	data() {
 		return {
 			radioGroup: "",
+			dialog: true,
+			invoiceLink: null,
 			saveInvoiceBtnloading: false,
 			pdf_link: "",
 			deliveryMethod: null
@@ -190,8 +213,8 @@ export default {
 			if (!preview) {
 				let pdfFile = pdf(preview, this, invId).data,
 					doc = pdf(preview, this, invId).doc;
-					console.log(pdfFile);
-					
+				console.log(pdfFile);
+
 				return new Promise(function(resolve, reject) {
 					vm.$axios
 						.$post("/profile/file-upload", pdfFile, {
@@ -274,8 +297,14 @@ export default {
 					await vm.$axios
 						.$patch(`/invoices/${vm.$route.params.id}`, invoice_obj)
 						.then(async res => {
-							console.log("edit", invoice_obj);
+							console.log("edit", res);
+
 							await vm.sendArticles(invoce_number);
+							if (res.published && res.createdate >= res.duedate)
+								this.invoiceLink = `/invoices/overdue/${res._id}`;
+							else if (res.published && res.createdate <= res.duedate)
+								this.invoiceLink = `/invoices/published/${res._id}`;
+							else this.invoiceLink = `/invoices/draft/${res._id}`;
 						})
 						.catch(err => console.log(err));
 				} else {
@@ -285,9 +314,15 @@ export default {
 					await vm.$axios
 						.$post("/invoices", invoice_obj)
 						.then(async res => {
-							console.log("new", invoice_obj);
+							console.log("new", res);
 
 							await vm.sendArticles(invoce_number);
+
+							if (res.published && res.createdate >= res.duedate)
+								this.invoiceLink = `/invoices/overdue/${res._id}`;
+							else if (res.published && res.createdate <= res.duedate)
+								this.invoiceLink = `/invoices/published/${res._id}`;
+							else this.invoiceLink = `/invoices/draft/${res._id}`;
 						})
 						.catch(err => console.log(err));
 				}
@@ -313,6 +348,8 @@ export default {
 					.$post("/articles", articles[index])
 					.then(res => console.log("patched"));
 			}
+
+			this.dialog = true;
 		}
 	}
 };
