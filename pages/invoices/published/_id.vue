@@ -14,7 +14,7 @@
 								<h4>Amend invoice</h4>
 								<v-spacer></v-spacer>
 								<v-icon class="black--text" @click="amendInvoiceModalState= false">mdi mdi-close</v-icon>
-								</v-card-title>
+							</v-card-title>
 							<v-divider></v-divider>
 
 							<v-card-text>
@@ -107,7 +107,7 @@
 			<v-btn outlined small class="ma-5" target="_blank" :href="invoice.pdf_link">
 				<v-icon class="font1">mdi mdi-download</v-icon>
 			</v-btn>
-			<vuePDF :src="invoice.pdf_link"></vuePDF>
+			<vuePDF v-for="i in numPages" :key="i" :src="invoice.pdf_link" :page="i"></vuePDF>
 		</div>
 	</div>
 </template>
@@ -129,7 +129,8 @@ export default {
 		return {
 			invoice: {},
 			amendInvoiceModalState: false,
-			undoModalState: false
+			undoModalState: false,
+			numPages: undefined,
 		};
 	},
 	computed: {
@@ -145,9 +146,14 @@ export default {
 		async undo() {
 			this.undoModalState = false;
 			this.invoice.published = false;
-			await this.$axios.$patch(`/invoices/${this.$route.params.id}`, this.invoice)
-				.then(res => this.$router.push(`/invoices/draft/${this.$route.params.id}`))
-				.catch(err => { console.log(err) });
+			await this.$axios
+				.$patch(`/invoices/${this.$route.params.id}`, this.invoice)
+				.then(res =>
+					this.$router.push(`/invoices/draft/${this.$route.params.id}`)
+				)
+				.catch(err => {
+					console.log(err);
+				});
 		}
 	},
 	async mounted() {
@@ -156,6 +162,9 @@ export default {
 				.toISOString()
 				.substring(0, 10);
 			this.invoice = res[0];
+		});
+		var loadingTask = vuePDF.createLoadingTask(this.invoice.pdf_link).then(pdf => {
+			this.numPages = pdf.numPages;
 		});
 	}
 };

@@ -14,7 +14,7 @@ if (process.client) {
         function header() {
             doc.setFont("times", "italic");
             doc.setFontSize("30");
-            doc.setTextColor(25, 212, 0);
+            doc.setTextColor(51, 104, 130);
 
             doc.text("acredit", start, 20);
             doc.setFont("Helvetica", "");
@@ -53,10 +53,6 @@ if (process.client) {
 
             doc.text("Org.nr 5590303797", 85, 285);
             doc.text("VAT-nummer", 90, 290);
-
-            doc.textWithLink("Vist StackOverflow here", 150, 290, {
-                url: "https://stackoverflow.com/"
-            });
         }
 
         function pays() {

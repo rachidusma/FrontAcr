@@ -1,16 +1,16 @@
 <template>
-    <v-layout>
-        <NewInvoice />
-    </v-layout>
+	<v-layout>
+		<NewInvoice />
+	</v-layout>
 </template>
 <script>
-import NewInvoice from '@/components/NewInvoice';
+import NewInvoice from "@/components/NewInvoice";
 export default {
-    	middleware: "auth",
+	middleware: "auth",
 
-    layout: 'admin',
-    components : {
-        NewInvoice
-    },
-}
+	layout: "admin",
+	components: {
+		NewInvoice
+	}
+};
 </script>

@@ -35,7 +35,7 @@
 			</v-list-item>
 
 				<v-divider></v-divider>
-			<v-list-item>
+			<v-list-item v-if="!$auth.loggedIn">
 				<nuxt-link to="/login" class="black--text">Login</nuxt-link>
 			</v-list-item>
 		</v-navigation-drawer>

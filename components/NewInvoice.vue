@@ -688,7 +688,7 @@ import { mapState } from "vuex";
 import { v1 as uuidv1 } from "uuid";
 
 export default {
-    	middleware: "auth",
+	middleware: "auth",
 
 	data: vm => ({
 		drag: false,
@@ -1070,7 +1070,6 @@ export default {
 </script>
 
 <style scoped>
-
 .gray {
 	background-color: #f5f7f9;
 	padding-top: 30px;

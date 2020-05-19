@@ -44,10 +44,11 @@
 						<tbody>
 							<tr v-for="(prod,index) in draggableItems" :key="index">
 								<td>{{ prod.artikelnamn }}</td>
-								<td>{{ prod.moms }}</td>
-								<td>{{ prod.Quantity }}</td>
-								<td>{{ prod.pris_enhet }}</td>
-								<td>{{ prod.total }}</td>
+								<td>{{ prod.moms }}%</td>
+								<td>{{ prod.number }} {{ prod.enhet }} </td>
+								<td>{{ prod.pris_enhet }} Kr</td>
+								<td v-if="!prod.text">{{ prod.total }} Kr</td>
+								<td v-else></td>
 							</tr>
 						</tbody>
 					</table>

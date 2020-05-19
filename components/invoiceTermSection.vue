@@ -39,7 +39,12 @@
 
 						<v-card-text>
 							<v-col cols="12">
-								<v-text-field v-model="overduePayment" type="number" hint="will show like 13%" label="Interest on overdue payment"></v-text-field>
+								<v-text-field
+									v-model="overduePayment"
+									type="number"
+									hint="will show like 13%"
+									label="Interest on overdue payment"
+								></v-text-field>
 							</v-col>
 							<v-col cols="12">
 								<v-text-field v-model="delivery" label="Delivery"></v-text-field>
@@ -131,19 +136,19 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'	;
+import { mapState } from "vuex";
 Date.prototype.addDays = function(days) {
-    var date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
+	var date = new Date(this.valueOf());
+	date.setDate(date.getDate() + days);
+	return date;
+};
 
-	let todate= new Date().toISOString().substr(0, 10);
+let todate = new Date().toISOString().substr(0, 10);
 export default {
-	props: ["todatefromDraft","datefromDraft"],
+	props: ["todatefromDraft", "datefromDraft"],
 	data: vm => ({
 		date: new Date().toISOString().substr(0, 10),
-		toDate: (!!todate) ? todate : new Date().toISOString().substr(0, 10),
+		toDate: !!todate ? todate : new Date().toISOString().substr(0, 10),
 		delivery: "Fritt vårt lager",
 		overduePayment: "12%",
 		menu1: false,
@@ -152,7 +157,6 @@ export default {
 	}),
 
 	computed: {
-		
 		days() {
 			let days = (new Date(this.toDate) - new Date(this.date)) / 86400000;
 			if (days >= 0) {
@@ -164,26 +168,29 @@ export default {
 			return this.formatDate(this.date);
 		},
 		computedToDateFormatted() {
-			if(this.invoice.dagar > 0) {
-				console.log( this.invoice.dagar )
-				 let m = new Date(this.date);
-				todate = m.addDays(this.invoice.dagar).toISOString().substr(0, 10);
-			this.$store.commit("dateTo", todate);
+			if (this.invoice.dagar > 0) {
+				console.log(this.invoice.dagar);
+				let m = new Date(this.date);
+				todate = m
+					.addDays(this.invoice.dagar)
+					.toISOString()
+					.substr(0, 10);
+				this.$store.commit("dateTo", todate);
 
-				console.log( this.invoice.dagar )
-				
+				console.log(this.invoice.dagar);
+
 				return this.formatDate(todate);
 			}
 			return this.formatDate(todate);
-		},...mapState(['invoice'])
+		},
+		...mapState(["invoice"])
 	},
 
 	mounted() {
 		this.delivery = "Fritt vårt lager";
 		this.overduePayment = "12%";
 
-		if (!!this.fromDraft) 
-			this.assignDates(this.fromDraft);
+		if (!!this.fromDraft) this.assignDates(this.fromDraft);
 	},
 	watch: {
 		todatefromDraft(val) {
@@ -207,7 +214,7 @@ export default {
 	},
 
 	methods: {
-		assignDates() {		
+		assignDates() {
 			this.toDate = this.todatefromDraft;
 			this.date = this.datefromDraft;
 		},
