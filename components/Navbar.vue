@@ -13,17 +13,13 @@
 				<v-btn outlined @click="$auth.logout()">Logout</v-btn>
 			</div>
 			<div v-else>
-				<nuxt-link to="/login" class="link">Login</nuxt-link>
+				<nuxt-link to="/" class="link">Login</nuxt-link>
 			</div>
 		</v-app-bar>
 
 		<v-navigation-drawer color="white"   v-model="drawer" absolute temporary >
 			<v-list-item>
 				<nuxt-link to="/" class="black--text">Home</nuxt-link>
-			</v-list-item>
-
-			<v-list-item>
-				<nuxt-link to="/job" class="black--text">Calculate</nuxt-link>
 			</v-list-item>
 
 			<v-list-item>
@@ -34,10 +30,7 @@
 				<nuxt-link to="/signup" class="black--text">Register</nuxt-link>
 			</v-list-item>
 
-				<v-divider></v-divider>
-			<v-list-item v-if="!$auth.loggedIn">
-				<nuxt-link to="/login" class="black--text">Login</nuxt-link>
-			</v-list-item>
+
 		</v-navigation-drawer>
 	</div>
 </template>

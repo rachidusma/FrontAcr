@@ -6,8 +6,6 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _03c5c932 = () => interopDefault(import('..\\pages\\articles\\index.vue' /* webpackChunkName: "pages_articles_index" */))
 const _58374f26 = () => interopDefault(import('..\\pages\\customer\\index.vue' /* webpackChunkName: "pages_customer_index" */))
 const _6e3ff71e = () => interopDefault(import('..\\pages\\invoices\\index.vue' /* webpackChunkName: "pages_invoices_index" */))
-const _178cddaf = () => interopDefault(import('..\\pages\\job.vue' /* webpackChunkName: "pages_job" */))
-const _061d264a = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages_login" */))
 const _f7f0eaea = () => interopDefault(import('..\\pages\\newinvoice.vue' /* webpackChunkName: "pages_newinvoice" */))
 const _013bba21 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages_register" */))
 const _6467f7b6 = () => interopDefault(import('..\\pages\\Signup.vue' /* webpackChunkName: "pages_Signup" */))
@@ -47,14 +45,6 @@ export const routerOptions = {
     path: "/invoices",
     component: _6e3ff71e,
     name: "invoices"
-  }, {
-    path: "/job",
-    component: _178cddaf,
-    name: "job"
-  }, {
-    path: "/login",
-    component: _061d264a,
-    name: "login"
   }, {
     path: "/newinvoice",
     component: _f7f0eaea,
