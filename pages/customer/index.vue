@@ -28,7 +28,7 @@
 							v-model="search"
 							append-icon="mdi-magnify"
 							label="Search"
-							single-line
+							outlined
 							class="mb-4 pa-4"
 							color="#336882"
 						></v-text-field>

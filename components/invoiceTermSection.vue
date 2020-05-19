@@ -127,7 +127,7 @@
 					</v-col>
 					<v-col cols="12" sm="auto">
 						<p class="text--secondary">Interest on overdue payment</p>
-						<span class="text--primary">{{ overduePayment }}%</span>
+						<span class="text--primary">{{ overduePayment }}</span>
 					</v-col>
 				</v-row>
 			</v-card-text>

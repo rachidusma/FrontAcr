@@ -180,7 +180,7 @@ export default {
 	data() {
 		return {
 			radioGroup: "",
-			dialog: true,
+			dialog: false,
 			invoiceLink: null,
 			saveInvoiceBtnloading: false,
 			pdf_link: "",

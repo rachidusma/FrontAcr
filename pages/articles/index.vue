@@ -28,6 +28,7 @@
 						<v-spacer></v-spacer>
 						<v-text-field
 							v-model="search"
+							outlined
 							append-icon="mdi-magnify"
 							label="Search"
 							class="mb-4 pa-4"
@@ -43,7 +44,6 @@
 								<h4>Delete Items</h4>
 								<v-spacer></v-spacer>
 								<v-icon class="black--text" @click="deleteDialog = false">mdi mdi-close</v-icon>
-
 							</v-card-title>
 							<v-divider></v-divider>
 							<v-card-text class="pa-5 text-center text-primary">Are you sure you want to delete this item?</v-card-text>
@@ -64,9 +64,7 @@
 						class="elevation-1"
 						:search="search"
 					>
-					<template v-slot:item.pris_enhet="{item}">
-						{{item.pris_enhet }} kr
-					</template>
+						<template v-slot:item.pris_enhet="{item}">{{item.pris_enhet }} kr</template>
 						<!-- Start dropdown menu column -->
 						<template v-slot:item.actions="{ item }">
 							<v-menu>
@@ -140,7 +138,7 @@ export default {
 	methods: {
 		async getArticles() {
 			try {
-				await this.$axios.get("/articles/").then(res => {
+				await this.$axios.get("/articlepatterns/").then(res => {
 					this.articles = res.data;
 				});
 			} catch (e) {
@@ -159,7 +157,7 @@ export default {
 			try {
 				this.deleteDialog = false;
 				await this.$axios
-					.$delete(`/articles/${this.selectedItem._id}`)
+					.$delete(`/articlepatterns/${this.selectedItem._id}`)
 					.then(res => {
 						/** Reset the selected item for the article modal */
 						Object.assign(this.selectedItem, {});

@@ -126,7 +126,7 @@ export default {
 		},
 		async updateArticle() {
 			await this.$axios
-				.$patch(`/articles/${this.editItem._id}`, this.editItem)
+				.$patch(`/articlepatterns/${this.editItem._id}`, this.editItem)
 				.then(res => {
 					this.modalUpadted();
 				})
@@ -136,7 +136,7 @@ export default {
 		},
 		async saveArticle() {
 			await this.$axios
-				.$post("/articles", this.editItem)
+				.$post("/articlepatterns", this.editItem)
 				.then(res => {
 					this.modalUpadted();
 				})
