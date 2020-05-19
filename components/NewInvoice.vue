@@ -117,7 +117,7 @@
 														placeholder="Search For saved item"
 														clearable
 														outlined
-														dense
+														
 														color="blue-grey lighten-2"
 														label="Description"
 														item-text="artikelnamn"
@@ -131,7 +131,10 @@
 
 														<!-- Start The Create New Button in the autocomplete -->
 														<template v-slot:prepend-item>
-															<v-btn class="m-2" outlined large block @click="createNewModalfn">+ Create new</v-btn>
+															<v-btn class="m-2 justify-start" large text block @click="createNewModalfn">
+																<span>+ Create new</span>
+															</v-btn>
+															<v-divider></v-divider>
 														</template>
 														<!-- End The Create New Button in the autocomplete -->
 
@@ -149,7 +152,7 @@
 
 															<template v-else>
 																<!-- satrt An option -->
-																<div class="d-flex justify-space-between align-center" style="width: 100%">
+																<div class="d-flex justify-space-between align-center pa-3" style="width: 100%">
 																	<p class="black--text">{{ data.item.artikelnamn }}</p>
 																	<small class="grey--text">
 																		<i>pris_enhet:</i>
@@ -177,6 +180,7 @@
 											<!-- Strat number -->
 											<v-col cols="12" sm="6">
 												<v-text-field
+													outlined
 													v-model="selection_value.number"
 													:value="selection_value.number"
 													:suffix="selection_value.enhet"
@@ -190,6 +194,7 @@
 											<!-- Strat Price / unit ex VAT -->
 											<v-col cols="12" sm="6">
 												<v-text-field
+													outlined
 													v-model="selection_value.pris_enhet"
 													:value="selection_value.pris_enhet"
 													label="Price / unit ex VAT"
@@ -425,7 +430,7 @@
 											<strong class="item">{{ element.artikelnamn }}</strong>
 										</v-col>
 										<v-col cols="2" md="2">
-											<span class="item">{{ element.moms }}</span>
+											<span class="item">{{ element.moms }}%</span>
 										</v-col>
 										<v-col cols="2" md="2">
 											<span class="item">{{ element.number }} {{ element.enhet }}</span>

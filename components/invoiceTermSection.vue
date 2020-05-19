@@ -150,7 +150,7 @@ export default {
 		date: new Date().toISOString().substr(0, 10),
 		toDate: !!todate ? todate : new Date().toISOString().substr(0, 10),
 		delivery: "Fritt vårt lager",
-		overduePayment: "12%",
+		overduePayment: "12",
 		menu1: false,
 		menu2: false,
 		dialog: false

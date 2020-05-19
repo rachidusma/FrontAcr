@@ -1,33 +1,31 @@
 <template>
 	<v-app dark>
 		<!-- Start The Drawer -->
-		<v-navigation-drawer
-			v-model="drawer"
-			fixed
-			app
-			clipped
-			class="pt-4"
-		>
-			<v-list shaped>
-				<v-list-group no-action prepend-icon="mdi-file-document" value="true">
+		<v-navigation-drawer v-model="drawer" fixed app clipped class="pt-4">
+			<v-list>
+				<v-list-group no-action value="true">
 					<template v-slot:activator>
+						<v-list-item-icon>
+							<img src="/invoice.svg" alt="invoice" />
+						</v-list-item-icon>
+
 						<v-list-item-content>
 							<v-list-item-title>Invoice</v-list-item-title>
 						</v-list-item-content>
 					</template>
 
 					<v-divider></v-divider>
-					<v-list-item link to="/invoices">
+					<v-list-item link color="#f5f7f9" to="/invoices">
 						<v-list-item-title>Invoice</v-list-item-title>
 					</v-list-item>
 					<v-divider></v-divider>
 
-					<v-list-item link to="/customer">
+					<v-list-item link color="#f5f7f9" to="/customer">
 						<v-list-item-title>Customer</v-list-item-title>
 					</v-list-item>
 					<v-divider></v-divider>
 
-					<v-list-item link to="/articles">
+					<v-list-item link color="#f5f7f9" to="/articles">
 						<v-list-item-title>Articles</v-list-item-title>
 					</v-list-item>
 				</v-list-group>
@@ -64,23 +62,28 @@ export default {
 		return {
 			clipped: true,
 			drawer: true,
-		
-		
+
 			title: "Acredit"
 		};
 	}
 };
 </script>
 <style scoped>
+.v-list-item__icon {
+  margin-right: 10px !important;
+}
+.v-list-item--active.v-list-item.v-list-item--link.theme--light{
+  color: black !important;
+}
+.gray {
+	background-color: #f5f7f9;
+}
 .link {
 	text-decoration: none;
 	color: white;
 	font-weight: bold;
 	margin-left: 20px;
 	font-size: 120%;
-}
-.gray {
-	background-color: #f5f7f9;
 }
 .maintitle {
 	font-size: 1.625rem !important;
@@ -91,3 +94,5 @@ export default {
 	font-family: "Roboto", sans-serif !important;
 }
 </style>
+
+

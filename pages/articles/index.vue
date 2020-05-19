@@ -64,6 +64,9 @@
 						class="elevation-1"
 						:search="search"
 					>
+					<template v-slot:item.pris_enhet="{item}">
+						{{item.pris_enhet }} kr
+					</template>
 						<!-- Start dropdown menu column -->
 						<template v-slot:item.actions="{ item }">
 							<v-menu>
