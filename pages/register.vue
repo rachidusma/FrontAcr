@@ -23,6 +23,7 @@
 	border: 1px solid #336882;
 	border-radius: 4px;
 	padding: 15px;
+	
 	margin-top: 50px;
 }
 .link {

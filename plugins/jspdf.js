@@ -10,8 +10,10 @@ if (process.client) {
             start = 20,
             end = 200,
             mid = 105;
+            let endOfTitle = 50;
 
         function header() {
+            /** Start The header */
             doc.setFont("times", "italic");
             doc.setFontSize("30");
             doc.setTextColor(51, 104, 130);
@@ -21,21 +23,23 @@ if (process.client) {
             doc.setFontSize("12");
             doc.setTextColor(0);
 
-            doc.text("invoice Title", start, 30);
-            doc.text(vm.customer.customername || "", mid, 25);
-            doc.text(vm.customer.postadress || "", mid, 30);
-            doc.text(vm.customer.postadress || "", mid, 20);
-            doc.line(start, 35, end, 35);
+            /** Start customer info */
+            doc.text(`Referens: ${vm.$auth.user.name} ${vm.$auth.user.lastname}`, start, endOfTitle);
+            doc.text(vm.customer.customername || "", mid, endOfTitle - 10);
+            doc.text(vm.customer.postadress || "", mid, endOfTitle - 5);
+            doc.text(vm.customer.postadress || "", mid, endOfTitle);
+            doc.line(start, endOfTitle + 5, end, endOfTitle + 5);
 
             doc.autoTable({
                 html: '#basic-table',
 
-                margin: { top: 38, left: start, right: start, bottom: 10 },
+                margin: { top: endOfTitle + 8, left: start, right: start, bottom: 10 },
+                headStyles: { fillColor: "[0, 88, 122]" },
                 theme: "plain"
             })
 
 
-            doc.line(start, 70, end, 70);
+            doc.line(start, endOfTitle + 32, end, endOfTitle + 32);
         }
 
         function footer() {
@@ -56,7 +60,7 @@ if (process.client) {
         }
 
         function pays() {
-            doc.setFillColor(164, 172, 212);
+            doc.setFillColor(0, 88, 122);
             doc.rect(start, 200, 170, 35, "f");
 
             doc.setFontStyle("bold");
@@ -121,14 +125,14 @@ if (process.client) {
         }
 
         pays();
-        if (vm.draggableItems.length > 15) {
+        if (vm.draggableItems.length > 13) {
             doc.text("Se fakturaspecifikation på följande sidor", start, 90);
 
             doc.addPage();
 
             doc.autoTable({
                 html: '#products-table',
-                margin: { top: 70, left: start, right: start, bottom: 60 },
+                margin: { top: endOfTitle+40, left: start, right: start, bottom: 60 },
                 headStyles: { fillColor: "#0d5892" }
             })
 
@@ -144,7 +148,7 @@ if (process.client) {
             header();
             doc.autoTable({
                 html: '#products-table',
-                margin: { top: 70, left: start, right: start, bottom: 60 },
+                margin: { top: endOfTitle+40, left: start, right: start, bottom: 60 },
                 pageBreak: "avoid"
             })
 
@@ -152,8 +156,8 @@ if (process.client) {
             doc.setFontSize(10);
             doc.text(`Page 1 of 1`, 5, 292);
         }
-        if (!!preview) {            
-             doc.save(`${ocrid}.pdf`);
+        if (!!preview) {
+            doc.save(`${ocrid}.pdf`);
 
             return;
         } else {
@@ -162,7 +166,7 @@ if (process.client) {
 
             data.append("file", pdf);
 
-            return {data, doc}
+            return { data, doc }
         }
     }
 }
