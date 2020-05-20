@@ -80,17 +80,6 @@
 			</v-col>
       <!-- End invoice -->
 
-      <!-- Start Customer 
-      <v-col cols="12">
-				<v-card class="mx-auto py-4" tile outlined>
-					<v-card-title>Customer number</v-card-title>
-
-												<v-form ref="form" v-model="customerValid" lazy-validation>
-												</v-form>
-				</v-card>
-			</v-col>
-       End Customer  -->
-
 		</v-row>
 	</v-container>
 </template>
@@ -104,7 +93,6 @@ export default {
 	data() {
 		return {
 			invoiceValid: true,
-			customerValid: true,
       reiquiredRules: [v => !!v || "Must be filled in"],
 
       

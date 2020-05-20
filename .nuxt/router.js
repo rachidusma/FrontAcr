@@ -10,6 +10,8 @@ const _f7f0eaea = () => interopDefault(import('..\\pages\\newinvoice.vue' /* web
 const _013bba21 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages_register" */))
 const _344bb47e = () => interopDefault(import('..\\pages\\settings\\index.vue' /* webpackChunkName: "pages_settings_index" */))
 const _6467f7b6 = () => interopDefault(import('..\\pages\\Signup.vue' /* webpackChunkName: "pages_Signup" */))
+const _255c3947 = () => interopDefault(import('..\\pages\\settings\\change-password.vue' /* webpackChunkName: "pages_settings_change-password" */))
+const _7c54055c = () => interopDefault(import('..\\pages\\settings\\export-data.vue' /* webpackChunkName: "pages_settings_export-data" */))
 const _b4c3afb8 = () => interopDefault(import('..\\pages\\settings\\invoice-settings.vue' /* webpackChunkName: "pages_settings_invoice-settings" */))
 const _142e847f = () => interopDefault(import('..\\pages\\settings\\personal-settings.vue' /* webpackChunkName: "pages_settings_personal-settings" */))
 const _3276f9c6 = () => interopDefault(import('..\\pages\\invoices\\draft\\_id.vue' /* webpackChunkName: "pages_invoices_draft__id" */))
@@ -64,6 +66,14 @@ export const routerOptions = {
     path: "/Signup",
     component: _6467f7b6,
     name: "Signup"
+  }, {
+    path: "/settings/change-password",
+    component: _255c3947,
+    name: "settings-change-password"
+  }, {
+    path: "/settings/export-data",
+    component: _7c54055c,
+    name: "settings-export-data"
   }, {
     path: "/settings/invoice-settings",
     component: _b4c3afb8,

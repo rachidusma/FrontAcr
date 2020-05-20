@@ -20,7 +20,7 @@
 				<v-card class="mx-auto py-4" tile outlined>
 					<v-form ref="form" v-model="valid" lazy-validation>
 						<v-container>
-							<v-text-field :value="this.user.email" outlined dense label="E-mail" disabled></v-text-field>
+							<v-text-field :value="user.email" outlined dense label="E-mail" disabled></v-text-field>
 
 							<v-text-field v-model="user.name" outlined dense label="First name" required></v-text-field>
 							<v-text-field v-model="user.lastname" outlined dense label="Last name" required></v-text-field>
