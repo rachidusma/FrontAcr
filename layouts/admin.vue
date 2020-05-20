@@ -29,6 +29,14 @@
 						<v-list-item-title>Articles</v-list-item-title>
 					</v-list-item>
 				</v-list-group>
+				<v-divider></v-divider>
+				
+				<v-list-item link color="#f5f7f9" to="/settings">
+					<v-list-item-icon> 
+						<img src="/settings.svg" alt="settings" />
+					</v-list-item-icon>
+					<v-list-item-title>Settings</v-list-item-title>
+				</v-list-item>
 			</v-list>
 		</v-navigation-drawer>
 		<!-- End The Drawer -->
@@ -70,10 +78,10 @@ export default {
 </script>
 <style scoped>
 .v-list-item__icon {
-  margin-right: 10px !important;
+	margin-right: 10px !important;
 }
-.v-list-item--active.v-list-item.v-list-item--link.theme--light{
-  color: black !important;
+.v-list-item--active.v-list-item.v-list-item--link.theme--light {
+	color: black !important;
 }
 .gray {
 	background-color: #f5f7f9;
