@@ -64,6 +64,7 @@
 						class="elevation-1"
 						:search="search"
 					>
+						<template v-slot:item.moms="{item}">{{item.moms }} %</template>
 						<template v-slot:item.pris_enhet="{item}">{{item.pris_enhet }} kr</template>
 						<!-- Start dropdown menu column -->
 						<template v-slot:item.actions="{ item }">
@@ -141,12 +142,11 @@ export default {
 				await this.$axios.get("/articlepatterns/").then(res => {
 					this.articles = res.data;
 				});
-			} catch (e) {
-				console.log(e);
+			} catch (error) {
+				console.log(error);
 			}
 		},
 		reset() {
-			console.log("lol");
 			this.editDialogState = false;
 			this.selectedItem = {};
 		},
@@ -164,8 +164,8 @@ export default {
 						/** Get All articles */
 						this.getArticles();
 					});
-			} catch (e) {
-				console.log(e);
+			} catch (error) {
+				console.log(error);
 			}
 		}
 	}

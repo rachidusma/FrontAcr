@@ -8,6 +8,7 @@ const _58374f26 = () => interopDefault(import('..\\pages\\customer\\index.vue' /
 const _6e3ff71e = () => interopDefault(import('..\\pages\\invoices\\index.vue' /* webpackChunkName: "pages_invoices_index" */))
 const _f7f0eaea = () => interopDefault(import('..\\pages\\newinvoice.vue' /* webpackChunkName: "pages_newinvoice" */))
 const _013bba21 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages_register" */))
+const _344bb47e = () => interopDefault(import('..\\pages\\settings\\index.vue' /* webpackChunkName: "pages_settings_index" */))
 const _6467f7b6 = () => interopDefault(import('..\\pages\\Signup.vue' /* webpackChunkName: "pages_Signup" */))
 const _3276f9c6 = () => interopDefault(import('..\\pages\\invoices\\draft\\_id.vue' /* webpackChunkName: "pages_invoices_draft__id" */))
 const _13a27ffe = () => interopDefault(import('..\\pages\\invoices\\overdue\\_id.vue' /* webpackChunkName: "pages_invoices_overdue__id" */))
@@ -53,6 +54,10 @@ export const routerOptions = {
     path: "/register",
     component: _013bba21,
     name: "register"
+  }, {
+    path: "/settings",
+    component: _344bb47e,
+    name: "settings"
   }, {
     path: "/Signup",
     component: _6467f7b6,
