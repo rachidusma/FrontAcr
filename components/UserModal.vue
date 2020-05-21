@@ -1,265 +1,144 @@
 <template>
-	<v-dialog v-model="dialog" persistent max-width="600px">
-		<v-card>
-			<v-card-title>
-				<h4>Add user Profile</h4>
-				<v-spacer></v-spacer>
-				<v-icon class="black--text" @click="close">mdi mdi-close</v-icon>
-				</v-card-title>
-			<v-divider></v-divider>
-
-			<v-card-text>
-				<v-container>
-					<v-row>
-						<p class="overline">Personal informations</p>
-						<!-- Start customername -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								label="Name*"
-								v-model="the_customer.customername"
-								placeholder="Customer full name"
-								outlined
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End customername -->
-
-						<!-- Start orgnummer -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								label="Org-nummer"
-								placeholder="YYYYMMDD-NNNN"
-								outlined
-								type="number"
-								v-model="the_customer.orgnummer"
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End orgnummer -->
-
-						<!-- Start vatnummer -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								label="VAT-nummer"
-								v-model="the_customer.vatnummer"
-								placeholder="VAT-nummer"
-								outlined
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End vatnummer -->
-
-						<!-- Start kundnummer -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								label="Kundnummer"
-								placeholder="Kundnummer"
-								outlined
-								v-model="the_customer.kundnummer"
-								type="number"
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End kundnummer -->
-
-						<v-col cols="12">
-							<v-divider></v-divider>
-							<h1 class="overline pt-4 pb-4">Contact informations</h1>
-						</v-col>
-
-						<!-- Start postadress -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								label="Postadress"
-								v-model="the_customer.postadress"
-								placeholder="Postadress"
-								outlined
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End postadress -->
-
-						<!-- Start postadress2 -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								label="Postadress 2"
-								v-model="the_customer.postadress2"
-								placeholder="Postadress 2"
-								outlined
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End postadress2 -->
-
-						<!-- Start postnummer -->
-						<v-col cols="12" sm="12" md="6">
-							<v-text-field
-								dense
-								v-model="the_customer.postnummer"
-								label="Postnummer"
-								placeholder="Postnummer"
-								outlined
-								type="number"
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End postnummer -->
-
-						<!-- Start stad -->
-						<v-col cols="12" sm="12" md="6">
-							<v-text-field
-								dense
-								label="stad"
-								v-model="the_customer.stad"
-								placeholder="stad"
-								outlined
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End stad -->
-
-						<!-- Start kontaktperson -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								label="Kontaktperson"
-								v-model="the_customer.kontaktperson"
-								placeholder="Kontaktperson"
-								outlined
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End kontaktperson -->
-
-						<!-- Start Epost -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								v-model="the_customer.epost"
-								label="E-post"
-								placeholder="E-post"
-								type="email"
-								outlined
-								color="#336882"
-							></v-text-field>
-							<v-divider></v-divider>
-						</v-col>
-						<!-- End Epost -->
-
-						<!-- Start dagar -->
-						<v-col cols="12">
-							<p class="overline">Term</p>
-							<v-text-field
-								dense
-								v-model="the_customer.dagar"
-								label="Dagar*"
-								placeholder="Dagar"
-								outlined
-								type="number"
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End dagar -->
-
-						<!-- Start overdueinterest -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								v-model="the_customer.overdueinterest"
-								label="Dröjsmålsränta (%)"
-								placeholder="Dröjsmålsränta"
-								outlined
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End overdueinterest -->
-
-						<!-- Start country -->
-						<v-col cols="12">
-							<v-text-field
-								dense
-								label="Country"
-								v-model="the_customer.country"
-								placeholder="Country"
-								outlined
-								color="#336882"
-							></v-text-field>
-						</v-col>
-						<!-- End country -->
-					</v-row>
-				</v-container>
-				<small>*indicates required field</small>
-			</v-card-text>
-			<v-card-actions class="grey lighten-3 pa-5">
-				<v-btn text @click="close">Close</v-btn>
-				<v-spacer></v-spacer>
-				<v-btn v-if="customerId" color="success" @click="editUser">update</v-btn>
-				<v-btn v-else color="success" @click="saveUser">Save</v-btn>
-			</v-card-actions>
-		</v-card>
-	</v-dialog>
+  <v-dialog v-model="dialog" persistent max-width="600px">
+    <template v-slot:activator="{ on }">
+      <v-btn color="success" v-on="on">create new</v-btn>
+    </template>
+    <v-card>
+      <v-card-title>
+        <span class="overline">Add user Profile</span>
+      </v-card-title>
+      <v-divider></v-divider>
+      <v-card-text>
+        <v-container>
+          <v-row>
+            <p class="overline">Personal informations</p>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field label="Name*" placeholder="Customer full name" outlined color="#336882"></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field
+                label="Org-nummer"
+                placeholder="YYYYMMDD-NNNN"
+                outlined
+                type="number"
+                color="#336882"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field label="VAT-nummer" placeholder="VAT-nummer" outlined color="#336882"></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field
+                label="Kundnummer"
+                placeholder="Kundnummer"
+                outlined
+                type="number"
+                color="#336882"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-divider></v-divider>
+              <h1 class="overline pt-4 pb-4">Contact informations</h1>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field label="Postadress" placeholder="Postadress" outlined color="#336882"></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field
+                label="Postadress 2"
+                placeholder="Postadress 2"
+                outlined
+                color="#336882"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="6">
+              <v-text-field
+                label="Postnummer"
+                placeholder="Postnummer"
+                outlined
+                type="number"
+                color="#336882"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="6">
+              <v-text-field label="stad" placeholder="stad" outlined color="#336882"></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field
+                label="Kontaktperson"
+                placeholder="Kontaktperson"
+                outlined
+                color="#336882"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field
+                label="E-post"
+                placeholder="E-post"
+                type="email"
+                outlined
+                color="#336882"
+              ></v-text-field>
+              <v-divider></v-divider>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <p class="overline">Term</p>
+              <v-text-field
+                label="Dagar*"
+                placeholder="Dagar"
+                outlined
+                type="number"
+                color="#336882"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field
+                label="Dröjsmålsränta (%)"
+                placeholder="Dröjsmålsränta"
+                outlined
+                color="#336882"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field label="Country" placeholder="Country" outlined color="#336882"></v-text-field>
+            </v-col>
+          </v-row>
+        </v-container>
+        <small>*indicates required field</small>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+        <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 <script>
 export default {
   data() {
     return {
-      the_customer: {},
-			dialog: false
-		};
-	},
-  props: ["customerId", "customer", "state"],
-  watch: {
-    customerId(val) {
-      Object.assign(this.the_customer, this.customer);
-    },
-    state(val) {
-      this.dialog = val
-    }
+      dialog: false
+    };
   },
-	methods: {
-		async saveUser() {
-			await this.$axios
-				.$post("/customers", this.the_customer)
-				.then(res => {
-					console.log(res);
-					this.$emit("updated");
-					this.dialog = false;
-					this.the_customer = {};
-				})
-				.catch(err => console.log(err));
-		},
-		async editUser() {
-			await this.$axios.setToken(this.$auth.getToken("local"));
-			let customer = this.customer;
+  methods: {
+    async editUser() {
+      await this.$axios.setToken(this.$auth.getToken("local"));
+      let customer = this.customer;
 
-			await this.$axios
-				.$patch(`/customers/${customer._id}`, this.the_customer)
-				.then(async res => {
-          console.log(res);
-          
-          this.$emit('UserEdited');
-          this.dialog = false;
-					this.the_customer = {};
-				})
-				.catch(err => console.log(err));
-    },
-    close() {
-      this.the_customer = {};
-      this.$emit('close');
-      this.dialog = false;
+      await this.$axios
+        .$patch(`/customers/${customer._id}`, customer)
+        .then(async res => {
+          await this.getCustomer();
+        })
+        .catch(err => console.log(err));
     }
-	}
+  }
 };
 </script>
 <style>
 .overline {
-	color: #336882;
-	font-size: 25px;
+  color: #336882;
+  font-size: 25px;
 }
 </style>

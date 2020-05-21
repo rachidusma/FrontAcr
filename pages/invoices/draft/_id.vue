@@ -8,8 +8,6 @@
 <script>
 import newInvoice from "@/components/NewInvoice";
 export default {
-		middleware: "auth",
-
     layout: "admin",
 
 	data() {

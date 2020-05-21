@@ -3,24 +3,25 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _03c5c932 = () => interopDefault(import('..\\pages\\articles\\index.vue' /* webpackChunkName: "pages_articles_index" */))
-const _58374f26 = () => interopDefault(import('..\\pages\\customer\\index.vue' /* webpackChunkName: "pages_customer_index" */))
-const _6e3ff71e = () => interopDefault(import('..\\pages\\invoices\\index.vue' /* webpackChunkName: "pages_invoices_index" */))
-const _f7f0eaea = () => interopDefault(import('..\\pages\\newinvoice.vue' /* webpackChunkName: "pages_newinvoice" */))
-const _013bba21 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages_register" */))
-const _344bb47e = () => interopDefault(import('..\\pages\\settings\\index.vue' /* webpackChunkName: "pages_settings_index" */))
-const _6467f7b6 = () => interopDefault(import('..\\pages\\Signup.vue' /* webpackChunkName: "pages_Signup" */))
-const _255c3947 = () => interopDefault(import('..\\pages\\settings\\change-password.vue' /* webpackChunkName: "pages_settings_change-password" */))
-const _7c54055c = () => interopDefault(import('..\\pages\\settings\\export-data.vue' /* webpackChunkName: "pages_settings_export-data" */))
-const _b4c3afb8 = () => interopDefault(import('..\\pages\\settings\\invoice-settings.vue' /* webpackChunkName: "pages_settings_invoice-settings" */))
-const _142e847f = () => interopDefault(import('..\\pages\\settings\\personal-settings.vue' /* webpackChunkName: "pages_settings_personal-settings" */))
-const _3276f9c6 = () => interopDefault(import('..\\pages\\invoices\\draft\\_id.vue' /* webpackChunkName: "pages_invoices_draft__id" */))
-const _13a27ffe = () => interopDefault(import('..\\pages\\invoices\\overdue\\_id.vue' /* webpackChunkName: "pages_invoices_overdue__id" */))
-const _f6abcd8c = () => interopDefault(import('..\\pages\\invoices\\paid\\_id.vue' /* webpackChunkName: "pages_invoices_paid__id" */))
-const _429e9b70 = () => interopDefault(import('..\\pages\\invoices\\published\\_id.vue' /* webpackChunkName: "pages_invoices_published__id" */))
-const _3938cb8f = () => interopDefault(import('..\\pages\\articles\\_id.vue' /* webpackChunkName: "pages_articles__id" */))
-const _1b7ae30e = () => interopDefault(import('..\\pages\\customer\\_id.vue' /* webpackChunkName: "pages_customer__id" */))
-const _3349c9c4 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
+const _f4bc5de0 = () => interopDefault(import('..\\pages\\articles\\index.vue' /* webpackChunkName: "pages_articles_index" */))
+const _4087f662 = () => interopDefault(import('..\\pages\\customer\\index.vue' /* webpackChunkName: "pages_customer_index" */))
+const _1476a672 = () => interopDefault(import('..\\pages\\invoices\\index.vue' /* webpackChunkName: "pages_invoices_index" */))
+const _6903ee50 = () => interopDefault(import('..\\pages\\job.vue' /* webpackChunkName: "pages_job" */))
+const _794471c4 = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages_login" */))
+const _24902f42 = () => interopDefault(import('..\\pages\\newinvoice.vue' /* webpackChunkName: "pages_newinvoice" */))
+const _ae16ed52 = () => interopDefault(import('..\\pages\\paidsalary\\index.vue' /* webpackChunkName: "pages_paidsalary_index" */))
+const _9fb70e84 = () => interopDefault(import('..\\pages\\profile\\index.vue' /* webpackChunkName: "pages_profile_index" */))
+const _7b77bed0 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages_register" */))
+const _72758fed = () => interopDefault(import('..\\pages\\Signup.vue' /* webpackChunkName: "pages_Signup" */))
+const _60ef5648 = () => interopDefault(import('..\\pages\\uppaidsalary\\index.vue' /* webpackChunkName: "pages_uppaidsalary_index" */))
+const _3bb88c42 = () => interopDefault(import('..\\pages\\user\\index.vue' /* webpackChunkName: "pages_user_index" */))
+const _6f4bef14 = () => interopDefault(import('..\\pages\\invoices\\draft\\_id.vue' /* webpackChunkName: "pages_invoices_draft__id" */))
+const _d0026b96 = () => interopDefault(import('..\\pages\\invoices\\overdue\\_id.vue' /* webpackChunkName: "pages_invoices_overdue__id" */))
+const _abcc5b3a = () => interopDefault(import('..\\pages\\invoices\\paid\\_id.vue' /* webpackChunkName: "pages_invoices_paid__id" */))
+const _211133e7 = () => interopDefault(import('..\\pages\\invoices\\published\\_id.vue' /* webpackChunkName: "pages_invoices_published__id" */))
+const _92de5110 = () => interopDefault(import('..\\pages\\articles\\_id.vue' /* webpackChunkName: "pages_articles__id" */))
+const _ce5a2212 = () => interopDefault(import('..\\pages\\customer\\_id.vue' /* webpackChunkName: "pages_customer__id" */))
+const _a0c662a6 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -40,75 +41,79 @@ export const routerOptions = {
 
   routes: [{
     path: "/articles",
-    component: _03c5c932,
+    component: _f4bc5de0,
     name: "articles"
   }, {
     path: "/customer",
-    component: _58374f26,
+    component: _4087f662,
     name: "customer"
   }, {
     path: "/invoices",
-    component: _6e3ff71e,
+    component: _1476a672,
     name: "invoices"
   }, {
+    path: "/job",
+    component: _6903ee50,
+    name: "job"
+  }, {
+    path: "/login",
+    component: _794471c4,
+    name: "login"
+  }, {
     path: "/newinvoice",
-    component: _f7f0eaea,
+    component: _24902f42,
     name: "newinvoice"
   }, {
+    path: "/paidsalary",
+    component: _ae16ed52,
+    name: "paidsalary"
+  }, {
+    path: "/profile",
+    component: _9fb70e84,
+    name: "profile"
+  }, {
     path: "/register",
-    component: _013bba21,
+    component: _7b77bed0,
     name: "register"
   }, {
-    path: "/settings",
-    component: _344bb47e,
-    name: "settings"
-  }, {
     path: "/Signup",
-    component: _6467f7b6,
+    component: _72758fed,
     name: "Signup"
   }, {
-    path: "/settings/change-password",
-    component: _255c3947,
-    name: "settings-change-password"
+    path: "/uppaidsalary",
+    component: _60ef5648,
+    name: "uppaidsalary"
   }, {
-    path: "/settings/export-data",
-    component: _7c54055c,
-    name: "settings-export-data"
-  }, {
-    path: "/settings/invoice-settings",
-    component: _b4c3afb8,
-    name: "settings-invoice-settings"
-  }, {
-    path: "/settings/personal-settings",
-    component: _142e847f,
-    name: "settings-personal-settings"
+    path: "/user",
+    component: _3bb88c42,
+    name: "user"
   }, {
     path: "/invoices/draft/:id?",
-    component: _3276f9c6,
+    component: _6f4bef14,
     name: "invoices-draft-id"
   }, {
     path: "/invoices/overdue/:id?",
-    component: _13a27ffe,
+    component: _d0026b96,
     name: "invoices-overdue-id"
   }, {
     path: "/invoices/paid/:id?",
-    component: _f6abcd8c,
+    component: _abcc5b3a,
     name: "invoices-paid-id"
   }, {
     path: "/invoices/published/:id?",
-    component: _429e9b70,
+    component: _211133e7,
     name: "invoices-published-id"
   }, {
     path: "/articles/:id",
-    component: _3938cb8f,
+    component: _92de5110,
     name: "articles-id"
   }, {
     path: "/customer/:id",
-    component: _1b7ae30e,
+    component: _ce5a2212,
     name: "customer-id"
   }, {
     path: "/",
-    component: _3349c9c4,
+    component: _a0c662a6,
     name: "index"
   }],
 
