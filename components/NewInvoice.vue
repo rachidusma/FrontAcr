@@ -2,15 +2,40 @@
 	<v-layout>
 		<v-row>
 			<v-col cols="12">
-				<h1>Skapa en faktura</h1>
+				<v-breadcrumbs
+					class="pa-0 ma-0"
+					:items="[
+						{ text: 'invoices', href: '/invoices' },
+						{ text: 'create new invoice', disabled: true }
+					]"
+				></v-breadcrumbs>
 			</v-col>
-			<!-- {{customerNameForCustomerSection}} -->
+
+			<v-col cols="12" class="d-flex">
+				<h1 class="d-inline-block">Skapa en faktura</h1>
+				<v-spacer></v-spacer>
+				<v-menu offset-y v-if="this.draft && !this.draft.published">
+					<template v-slot:activator="{ on }">
+						<v-btn outlined class="ml-2" v-on="on">
+							More
+							<v-icon class="font1">mdi mdi-chevron-down</v-icon>
+						</v-btn>
+					</template>
+					<v-list>
+						<v-list-item v-if="this.draft" @click="deleteDraft">Delete</v-list-item>
+					</v-list>
+				</v-menu>
+			</v-col>
+
 			<!-- Start Customer -->
 			<v-col cols="12">
 				<!-- <div class="overline mb-4">Your customer:</div> -->
 				<v-card outlined class="pa-3">
 					<h3 class="text--primary pb-3">Customer:</h3>
-					<customerSection :customername="customerNameForCustomerSection" />
+					<customerSection
+						:customernameFromVuex="customer.customername"
+						:customername="customerNameForCustomerSection"
+					/>
 				</v-card>
 			</v-col>
 			<!-- End Customer -->
@@ -36,12 +61,13 @@
 									</template>
 
 									<v-card>
-										<v-card-title class="headline grey lighten-2" primary-title>
-											<h3>Add new row</h3>
+										<v-card-title>
+											<h4>Add new row</h4>
 											<v-spacer></v-spacer>
-											<v-icon class="font1" @click="addTextDialog = false">mdi mdi-close</v-icon>
+											<v-icon class="black--text" @click="addTextDialog = false">mdi mdi-close</v-icon>
 										</v-card-title>
 
+										<v-divider></v-divider>
 										<v-card-text>
 											<v-row>
 												<v-col cols="12">
@@ -52,11 +78,11 @@
 
 										<v-divider></v-divider>
 
-										<v-card-actions>
+										<v-card-actions class="grey lighten-3 pa-5">
 											<v-btn color="error" v-if="edit" @click="deleteText">Delete</v-btn>
-											<v-btn @click="addTextDialog = false">Close</v-btn>
+											<v-btn text @click="addTextDialog = false">Close</v-btn>
 											<v-spacer></v-spacer>
-											<v-btn color="primary" text @click="addText()">Add to invoice</v-btn>
+											<v-btn color="primary" :disabled="!addTextVal" @click="addText()">Add to invoice</v-btn>
 										</v-card-actions>
 									</v-card>
 								</v-dialog>
@@ -68,11 +94,12 @@
 						<v-card>
 							<!-- Start Modal Title -->
 							<v-card-title>
-								<span class="headline">Add new row</span>
+								<h4>Add new row</h4>
 								<v-spacer></v-spacer>
 								<v-icon class="font1" @click="resetModal">mdi mdi-close</v-icon>
 							</v-card-title>
 							<!-- End Modal Title -->
+							<v-divider></v-divider>
 
 							<!-- Start Modal Body -->
 							<v-card-text>
@@ -87,8 +114,9 @@
 														v-model="selection_value"
 														:items="articles"
 														@change="setQuantity"
+														placeholder="Search For saved item"
 														clearable
-														dense
+														outlined
 														color="blue-grey lighten-2"
 														label="Description"
 														item-text="artikelnamn"
@@ -102,7 +130,10 @@
 
 														<!-- Start The Create New Button in the autocomplete -->
 														<template v-slot:prepend-item>
-															<v-btn class="m-2" outlined large block @click="createNewModalfn">+ Create new</v-btn>
+															<v-btn class="m-2 justify-start" large text block @click="createNewModalfn">
+																<span>+ Create new</span>
+															</v-btn>
+															<v-divider></v-divider>
 														</template>
 														<!-- End The Create New Button in the autocomplete -->
 
@@ -120,7 +151,7 @@
 
 															<template v-else>
 																<!-- satrt An option -->
-																<div class="d-flex justify-space-between align-center" style="width: 100%">
+																<div class="d-flex justify-space-between align-center pa-3" style="width: 100%">
 																	<p class="black--text">{{ data.item.artikelnamn }}</p>
 																	<small class="grey--text">
 																		<i>pris_enhet:</i>
@@ -130,7 +161,7 @@
 																<!-- end An option -->
 															</template>
 														</template>
-														<!-- End the options -->
+														<!-- Start the options -->
 													</v-autocomplete>
 												</v-col>
 												<!-- End Autocomplete -->
@@ -145,22 +176,24 @@
 
 										<!-- Start Standard Edit -->
 										<v-row v-if="selection_value != null">
-											<!-- Strat Quantity -->
+											<!-- Strat number -->
 											<v-col cols="12" sm="6">
 												<v-text-field
-													v-model="selection_value.Quantity"
-													:value="selection_value.Quantity"
-													:suffix="selection_value.unit"
+													outlined
+													v-model="selection_value.number"
+													:value="selection_value.number"
+													:suffix="selection_value.enhet"
 													label="Quantity"
 													type="number"
 													dense
 												></v-text-field>
 											</v-col>
-											<!-- End Quantity -->
+											<!-- End number -->
 
 											<!-- Strat Price / unit ex VAT -->
 											<v-col cols="12" sm="6">
 												<v-text-field
+													outlined
 													v-model="selection_value.pris_enhet"
 													:value="selection_value.pris_enhet"
 													label="Price / unit ex VAT"
@@ -175,7 +208,7 @@
 												<p class="font-weight-black">Amount ex VAT</p>
 												<p
 													class="font-weight-medium"
-												>{{ (selection_value.pris_enhet * selection_value.Quantity) || "0,00" }} Kr</p>
+												>{{ (Number(selection_value.number) * Number(selection_value.pris_enhet) ) || "0,00" }} Kr</p>
 											</v-col>
 											<!-- End Amount ex VAT -->
 										</v-row>
@@ -190,84 +223,104 @@
 										>+ Create new</v-btn>
 									</v-row>
 									<!-- Start Existing Modal -->
+									<v-form ref="form" v-else v-model="valid">
+										<!-- Start Create new item modal -->
+										<v-row>
+											<!-- Strat Description -->
+											<v-col cols="12">
+												<v-text-field
+													outlined
+													dense
+													required
+													:rules="[rules.required, rules.min]"
+													v-model="selection_value.artikelnamn"
+													label="artikelnamn"
+												></v-text-field>
+											</v-col>
+											<!-- End Description -->
 
-									<!-- Start Create new item modal -->
-									<v-row v-else>
-										<!-- Strat Description -->
-										<v-col cols="12">
-											<v-text-field dense v-model="selection_value.artikelnamn" label="artikelnamn"></v-text-field>
-										</v-col>
-										<!-- End Description -->
+											<!-- Strat number -->
+											<v-col cols="12" sm="6">
+												<v-text-field
+													outlined
+													required
+													:rules="[rules.required]"
+													type="number"
+													dense
+													v-model="selection_value.number"
+													label="Quantity"
+												></v-text-field>
+											</v-col>
+											<!-- End number -->
 
-										<!-- Strat Quantity -->
-										<v-col cols="12" sm="6">
-											<v-text-field type="number" dense v-model="selection_value.Quantity" label="Quantity"></v-text-field>
-										</v-col>
-										<!-- End Quantity -->
+											<!-- Strat Unit -->
+											<v-col class="d-flex" cols="12" sm="6">
+												<v-select
+													v-model="selection_value.enhet"
+													:items="Unit"
+													item-text="slection"
+													item-value="slection"
+													label="Unit"
+													outlined
+													dense
+												></v-select>
+											</v-col>
+											<!-- Strat Unit -->
 
-										<!-- Strat Unit -->
-										<v-col class="d-flex" cols="12" sm="6">
-											<!-- TODO: Add UNIT HERE enhet-->
-											<v-select
-												v-model="selection_value.produktkod"
-												:items="Unit"
-												item-text="slection"
-												item-value="slection"
-												label="Unit"
-												outlined
-												dense
-											></v-select>
-										</v-col>
-										<!-- Strat Unit -->
+											<!-- Strat Price / unit ex VAT -->
+											<v-col cols="12">
+												<v-text-field
+													v-model="selection_value.pris_enhet"
+													dense
+													outlined
+													value="1"
+													required
+													:rules="[rules.required]"
+													type="number"
+													label="Price / unit ex VAT"
+												></v-text-field>
+											</v-col>
+											<!-- End Price / unit ex VAT -->
 
-										<!-- Strat Price / unit ex VAT -->
-										<v-col cols="12">
-											<v-text-field
-												v-model="selection_value.pris_enhet"
-												dense
-												value="1"
-												type="number"
-												label="Price / unit ex VAT"
-											></v-text-field>
-										</v-col>
-										<!-- End Price / unit ex VAT -->
+											<!-- Strat VAT -->
+											<v-col class="d-flex" cols="12" sm="6">
+												<v-select
+													v-model="selection_value.moms"
+													:items="Vat"
+													dense
+													:item-text="` ${Vat} %`"
+													label="VAT"
+													outlined
+												></v-select>
+											</v-col>
+											<!-- End VAT -->
 
-										<!-- Strat VAT -->
-										<v-col class="d-flex" cols="12" sm="6">
-											<v-select
-												v-model="selection_value.moms"
-												:items="Vat"
-												dense
-												:item-text="` ${Vat} %`"
-												label="VAT"
-												outlined
-											></v-select>
-										</v-col>
-										<!-- End VAT -->
+											<!-- Strat Kind -->
+											<v-col class="d-flex" cols="12" sm="6">
+												<v-select
+													v-model="selection_value.typ"
+													:items="Kind"
+													required
+													:rules="[rules.required]"
+													@change="changeCheckBoxLabel"
+													label="Kind"
+													outlined
+													dense
+												></v-select>
+											</v-col>
+											<!-- End Kind -->
 
-										<!-- Strat Kind -->
-										<v-col class="d-flex" cols="12" sm="6">
-											<v-select
-												v-model="selection_value.typ"
-												:items="Kind"
-												@change="changeCheckBoxLabel"
-												label="Kind"
-												outlined
-												dense
-											></v-select>
-										</v-col>
-										<!-- End Kind -->
-
-										<!-- Strat Amount ex VAT -->
-										<v-col cols="12">
-											<p class="font-weight-black">Amount ex VAT</p>
-											<p
-												class="font-weight-medium"
-											>{{ selection_value.pris_enhet * selection_value.Quantity || "0,00" }} Kr</p>
-										</v-col>
-										<!-- End Amount ex VAT -->
-									</v-row>
-									<!-- End Create new item modal -->
+											<!-- Strat Amount ex VAT -->
+											<v-col cols="12">
+												<p class="font-weight-black">Amount ex VAT</p>
+												<p
+													class="font-weight-medium"
+												>{{ selection_value.pris_enhet * selection_value.number || "0,00" }} Kr</p>
+											</v-col>
+											<!-- End Amount ex VAT -->
+										</v-row>
+										<!-- End Create new item modal -->
+									</v-form>
 
 									<!-- Strat Checkbox -->
 									<v-row>
@@ -313,12 +366,13 @@
 								</v-container>
 							</v-card-text>
 							<!-- End Modal Body -->
+							<v-divider></v-divider>
 
 							<!-- Start Modal Footer -->
-							<v-card-actions class="gray">
+							<v-card-actions class="grey lighten-3 pa-5">
 								<!-- Start For Add New Customar  -->
 								<div>
-									<v-btn class="mt-2" @click="resetModal">Cancel</v-btn>
+									<v-btn class="mt-2" text @click="resetModal">Cancel</v-btn>
 									<v-btn
 										class="mt-2 d-block d-sm-inline"
 										@click="saveAsItem"
@@ -326,10 +380,11 @@
 									>Save as item</v-btn>
 								</div>
 								<v-spacer></v-spacer>
+
 								<div>
 									<v-btn
 										class="mt-2"
-										:disabled="!(!!selection_value)"
+										:disabled="(!(!!selection_value)) || (!(!!selection_value) || !valid)"
 										@click="addToInvoice"
 										color="success"
 									>Add to invoice</v-btn>
@@ -353,7 +408,7 @@
 									<span class="item">moms</span>
 								</v-col>
 								<v-col cols="2" md="2">
-									<span class="item">Quantity</span>
+									<span class="item">number</span>
 								</v-col>
 								<v-col cols="2" md="2">
 									<span class="item">Unit price</span>
@@ -389,10 +444,10 @@
 											<strong class="item">{{ element.artikelnamn }}</strong>
 										</v-col>
 										<v-col cols="2" md="2">
-											<span class="item">{{ element.moms }}</span>
+											<span class="item">{{ element.moms }}%</span>
 										</v-col>
 										<v-col cols="2" md="2">
-											<span class="item">{{ element.Quantity }}</span>
+											<span class="item">{{ element.number }} {{ element.enhet }}</span>
 										</v-col>
 										<v-col cols="2" md="2">
 											<span class="item" v-if="!element.text">{{ element.pris_enhet }} Kr</span>
@@ -408,14 +463,14 @@
 						</draggable>
 						<!-- End Draggable Content -->
 
-						<v-dialog v-model="editDraggableDialog" max-width="600px">
+						<v-dialog v-model="editDraggableDialog" scrollable max-width="600px">
 							<v-card>
 								<v-card-title class="headline">
-									<h3>Edit product</h3>
+									<h4>Edit product</h4>
 									<v-spacer></v-spacer>
-									<v-icon class="font1" @click="editDraggableDialog = false">mdi mdi-close</v-icon>
+									<v-icon class="black--text" @click="editDraggableDialog = false">mdi mdi-close</v-icon>
 								</v-card-title>
-
+								<v-divider></v-divider>
 								<!-- Start Modal Body -->
 								<v-card-text>
 									<v-container>
@@ -429,17 +484,16 @@
 											</v-col>
 											<!-- End Description -->
 
-											<!-- Strat Quantity -->
+											<!-- Strat number -->
 											<v-col cols="12" sm="6">
-												<v-text-field type="number" dense v-model="selection_value.Quantity" label="Quantity"></v-text-field>
+												<v-text-field type="number" dense v-model="selection_value.number" label="Quantity"></v-text-field>
 											</v-col>
-											<!-- End Quantity -->
+											<!-- End number -->
 
 											<!-- Strat Unit -->
-											<v-col class="d-flex" cols="12" sm="6">
-												<!-- TODO: Add UNIT HERE enhet-->
+											<v-col cols="12" sm="6">
 												<v-select
-													v-model="selection_value.produktkod"
+													v-model="selection_value.enhet"
 													:items="Unit"
 													item-text="slection"
 													item-value="slection"
@@ -493,7 +547,7 @@
 												<p class="font-weight-black">Amount ex VAT</p>
 												<p
 													class="font-weight-medium"
-												>{{ selection_value.pris_enhet * selection_value.Quantity || "0,00" }} Kr</p>
+												>{{ selection_value.pris_enhet * selection_value.number || "0,00" }} Kr</p>
 											</v-col>
 											<!-- End Amount ex VAT -->
 										</v-row>
@@ -542,13 +596,14 @@
 										<!-- End Checkbox -->
 									</v-container>
 								</v-card-text>
-								<!-- End Modal Body -->
-								<v-card-actions>
-									<!-- Start For Edit Customar  -->
+								<v-divider></v-divider>
 
+								<!-- End Modal Body -->
+								<v-card-actions class="grey lighten-3 pa-5">
+									<!-- Start For Edit Customar  -->
 									<div>
 										<v-btn class="mt-2" color="error" @click="Delete">Delete</v-btn>
-										<v-btn class="mt-2" @click="resetDraggableModal">Cancel</v-btn>
+										<v-btn class="mt-2" text @click="resetDraggableModal">Cancel</v-btn>
 										<v-btn
 											class="mt-2 d-block d-sm-inline"
 											@click="saveAsItem"
@@ -629,7 +684,14 @@
 			<!-- End Product -->
 			<termSection :todatefromDraft="todatefromDraft" :datefromDraft="datesForTermSection" />
 
-			<dividerySection :calculations="calculations" :draggableItems="draggableItems" :invoiceId="invoiceId" />
+			<dividerySection
+				:calculations="calculations"
+				:draggableItems="draggableItems"
+				:invoiceId="invoiceId"
+				:userId="userId"
+				:invoiceOcr="invoiceOcr"
+				:extraInfo="addTextVal"
+			/>
 		</v-row>
 	</v-layout>
 </template>
@@ -642,8 +704,11 @@ import termSection from "@/components/invoiceTermSection";
 import ArticleModal from "@/components/ArticleModal";
 
 import { mapState } from "vuex";
+import { v1 as uuidv1 } from "uuid";
 
 export default {
+	middleware: "auth",
+
 	data: vm => ({
 		drag: false,
 		createNewModal: false,
@@ -654,7 +719,7 @@ export default {
 		addTextVal: null,
 		hideAddText: false,
 		/** Selection Options */
-		Vat: ["0%", "6%", "12%", "25%"],
+		Vat: ["0", "6", "12", "25"],
 		Unit: [
 			"hours",
 			"pound",
@@ -698,6 +763,12 @@ export default {
 		],
 		draggableItems: [],
 		editDraggableDialog: false,
+		rules: {
+			required: value => !!value || "Required.",
+			min: v => v && v.length >= 1 || "Min 1 characters",
+			passwordMatch: v => v == this.newPassword
+		},
+		valid: false,
 		checkbox: false,
 		checkBoxLabel: "Eligible as a Rot/Rut deduction ",
 		/** End Selection Options */
@@ -711,12 +782,7 @@ export default {
 			totalSumToPay: 0,
 			amountExVAT: 0,
 			RoundedSumState: false,
-			RoundedSum: 0,
-			
-			Rmindflag: false,
-			Roundfee: 60,
-			OverdueInterest: 0,
-			Total_sum: 0
+			RoundedSum: 0
 		},
 
 		oldIndex: "",
@@ -726,7 +792,9 @@ export default {
 		customerNameForCustomerSection: null,
 		datesForTermSection: null,
 		todatefromDraft: null,
-		invoiceId: null
+		invoiceId: null,
+		userId: null,
+		invoiceOcr: null
 	}),
 	components: {
 		customerSection,
@@ -765,6 +833,9 @@ export default {
 		invoiceId(val) {
 			this.addDraft();
 		},
+		userId(val) {
+			this.addDraft();
+		},
 		draft(val) {
 			this.addDraft();
 		},
@@ -782,20 +853,34 @@ export default {
 	},
 
 	methods: {
+		validate() {
+			this.$refs.form.validate();
+		},
 		async addDraft() {
 			this.customerNameForCustomerSection = this.draft.customername;
 			this.invoiceId = this.draft._id;
+			this.invoiceOcr = this.draft.ocrid;
+			this.userId = this.draft.userid;
 			this.datesForTermSection = new Date(this.draft.createdate)
 				.toISOString()
 				.substr(0, 10);
 			this.todatefromDraft = new Date(this.draft.duedate)
 				.toISOString()
 				.substr(0, 10);
-			await this.$axios.$get(`articles/invoice/${this.draft._id}`).then(res => {
-				console.log('hhhhhhhhh loool res => ', res)
-				this.draggableItems = res;
-			});
+
+			await this.$axios
+				.$get(`articles/invoice/${this.draft.ocrid}`)
+				.then(res => {
+					console.log("articles res => ", res);
+					this.draggableItems = res;
+				});
 			// this.selection_value = this.draft;
+		},
+		async deleteDraft() {
+			await this.$axios
+				.$delete(`/invoices/${this.$route.params.id}`)
+				.then(res => this.$router.push("/invoices"))
+				.catch(err => console.log(err));
 		},
 		sort() {
 			this.list = this.list.sort((a, b) => a.order - b.order);
@@ -818,12 +903,12 @@ export default {
 			this.createNewModal = true;
 			this.selection_value = {
 				artikelnamn: null,
-				produktkod: null,
+				enhet: null,
 				pris_enhet: null,
 				moms: null,
 				typ: null,
-
-				Quantity: 1,
+				produktkod: null,
+				number: 1,
 				rotRutType: null,
 				materialType: null
 			};
@@ -833,20 +918,30 @@ export default {
 			this.selection_value.materialType = null;
 		},
 		setQuantity() {
-			if (this.selection_value) this.selection_value.Quantity = 1;
+			if (this.selection_value) this.selection_value.number = 1;
 		},
 		addToInvoice() {
 			let rows = this.draggableItems;
 			var clonedObj = Object.assign({}, this.selection_value);
 			this.selection_value = null;
 
+			console.log(clonedObj);
+			delete clonedObj.materialType;
+			delete clonedObj.rotRutType;
+
 			if (this.editedIndex > -1) {
 				clonedObj.id = 0;
+				let arr = new Array();
+				clonedObj.produktkod = uuidv1(null, arr, -12).join("");
+
 				Object.assign(rows[this.editedIndex], clonedObj);
 				this.doCalculations(rows);
 			} else {
 				clonedObj.id = rows.length;
-				clonedObj.total = clonedObj.Quantity * clonedObj.pris_enhet;
+				let arr = new Array();
+				clonedObj.produktkod = uuidv1(null, arr, -12).join("");
+
+				clonedObj.total = clonedObj.number * clonedObj.pris_enhet;
 
 				rows.push(clonedObj);
 
@@ -858,20 +953,24 @@ export default {
 		async saveAsItem() {
 			await this.$axios.setToken(this.$auth.getToken("local"));
 
-			let x = this.selection_value.moms.slice(0,this.selection_value.moms.length - 1);
+			let x = this.selection_value.moms.slice(
+				0,
+				this.selection_value.moms.length - 1
+			);
+			let arr = new Array();
 			await this.$axios
 				.$post("/articlepatterns", {
 					artikelnamn: this.selection_value.artikelnamn,
-					produktkod: this.selection_value.produktkod,
+					enhet: this.selection_value.enhet,
+					produktkod: uuidv1(null, arr, -12).join(""),
 					pris_enhet: Number(this.selection_value.pris_enhet),
 					moms: x,
+					number: this.selection_value.number,
 					typ: this.selection_value.typ
 				})
 				.then(res => {
 					this.getArticles();
 					this.resetModal();
-
-					console.log("save res", res);
 				})
 				.catch(err => console.log(err));
 		},
@@ -888,7 +987,7 @@ export default {
 			var clonedObj = Object.assign({}, this.selection_value);
 			this.selection_value = null;
 
-			clonedObj.total = clonedObj.Quantity * clonedObj.pris_enhet;
+			clonedObj.total = clonedObj.number * clonedObj.pris_enhet;
 
 			let index = this.draggableItems.findIndex(i => i._id === clonedObj._id);
 			if (index > -1) {
@@ -974,9 +1073,9 @@ export default {
 				/** Ex Vat Calc */
 				calcs.amountExVAT += Number(x.total);
 
-				if (x.moms == "6%") calcs.vat6 += 0.6 * Number(x.total);
-				else if (x.moms == "12%") calcs.vat12 += 0.12 * Number(x.total);
-				else if (x.moms == "25%") calcs.vat25 += 0.25 * Number(x.total);
+				if (x.moms == "6") calcs.vat6 += 0.6 * Number(x.total);
+				else if (x.moms == "12") calcs.vat12 += 0.12 * Number(x.total);
+				else if (x.moms == "25") calcs.vat25 += 0.25 * Number(x.total);
 
 				calcs.totalSumToPay =
 					calcs.amountExVAT + calcs.vat6 + calcs.vat12 + calcs.vat25;

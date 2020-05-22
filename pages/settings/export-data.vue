@@ -20,9 +20,9 @@
 				<v-card class="mx-auto py-4" tile outlined>
 					<v-card-title>Invoices</v-card-title>
 					<v-card-text>
-						<v-btn outlined>Export All customers</v-btn>
-						<v-btn outlined>Export All Invoices</v-btn>
-						<v-btn outlined>Export All Items</v-btn>
+						<v-btn @click="exportCustomers" outlined>Export All customers</v-btn>
+						<v-btn @click="exportInvoices" outlined>Export All Invoices</v-btn>
+						<v-btn @click="exportItems" outlined>Export All Items</v-btn>
 					</v-card-text>
 				</v-card>
 			</v-col>
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { convert } from "@/plugins/jsexcel.js";
+
 export default {
 	name: "personalSettings",
 	layout: "admin",
@@ -43,7 +45,42 @@ export default {
 				{ text: "Export data", disabled: true }
 			]
 		};
-	}
+    },
+    methods: {
+        async exportCustomers(){
+            await this.$axios.$get('/customers')
+                .then(res => {
+                    res.forEach(customer => {
+                        delete customer.__v;
+                        delete customer._id;
+                    })
+                    convert(res, "customers");
+                })
+        },
+        async exportInvoices(){
+            await this.$axios.$get('/invoices')
+                .then(res => {                   
+                    res.forEach(invoice => {
+                        invoice.createdate = invoice.createdate.substr(0, 10)
+                        invoice.duedate = invoice.duedate.substr(0, 10)
+                        
+                        delete invoice.__v;
+                        delete invoice._id;
+                    })
+                    convert(res, "Invoices");
+                })
+        },
+        async exportItems(){
+            await this.$axios.$get('/articlepatterns')
+                .then(res => {                    
+                    res.forEach(article => {
+                        delete article.__v;
+                        delete article._id;
+                    })
+                    convert(res,"items");
+                })
+        },
+    }
 };
 </script>
 

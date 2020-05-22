@@ -244,7 +244,6 @@ export default {
       userrole: {}, // user role
       userblock: {}, // user block
 
-      loginUserdetail: this.$auth.$storage.getUniversal('loginuser'),
 
       simpleuserblock : {
         admin: "",
@@ -266,7 +265,7 @@ export default {
 
   methods: {
     async  getAllUsers() {
-      await this.$axios.post("/users/admin/", { admin: this.loginUserdetail.admin }).then(res => {
+      await this.$axios.post("/users/admin/", { admin: this.$auth.user.admin }).then(res => {
         this.userlist = res.data;
         console.log("customers_list", res);
       });

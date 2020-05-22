@@ -3,38 +3,43 @@ if (process.client) {
 
     let jsPDF = require('jspdf');
     require('jspdf-autotable');
-
-    exports.pdf = async function (preview, vm) {
+    let pdf_link;
+    exports.link = pdf_link;
+    exports.pdf = function (preview, vm, ocrid) {
         const doc = new jsPDF(),
-            res = doc.autoTableHtmlToJson(document.getElementById("basic-table")),
-            product = doc.autoTableHtmlToJson(
-                document.getElementById("products-table")
-            ),
             start = 20,
             end = 200,
             mid = 105;
+            let endOfTitle = 50;
 
         function header() {
+            /** Start The header */
             doc.setFont("times", "italic");
             doc.setFontSize("30");
-            doc.setTextColor(25, 212, 0);
+            doc.setTextColor(51, 104, 130);
 
             doc.text("acredit", start, 20);
             doc.setFont("Helvetica", "");
             doc.setFontSize("12");
             doc.setTextColor(0);
 
-            doc.text("invoice Title", start, 30);
-            doc.text(vm.customer.customername || "", mid, 25);
-            doc.text(vm.customer.postadress || "", mid, 30);
-            doc.text(vm.customer.postadress || "", mid, 20);
-            doc.line(start, 35, end, 35);
-            doc.autoTable(res.columns, res.data, {
-                margin: { top: 38, left: start, right: start, bottom: 10 },
-                theme: "plain"
-            });
+            /** Start customer info */
+            doc.text(`Referens: ${vm.$auth.user.name} ${vm.$auth.user.lastname}`, start, endOfTitle);
+            doc.text(vm.customer.customername || "", mid, endOfTitle - 10);
+            doc.text(vm.customer.postadress || "", mid, endOfTitle - 5);
+            doc.text(vm.customer.postadress || "", mid, endOfTitle);
+            doc.line(start, endOfTitle + 5, end, endOfTitle + 5);
 
-            doc.line(start, 70, end, 70);
+            doc.autoTable({
+                html: '#basic-table',
+
+                margin: { top: endOfTitle + 8, left: start, right: start, bottom: 10 },
+                headStyles: { fillColor: "[0, 88, 122]" },
+                theme: "plain"
+            })
+
+
+            doc.line(start, endOfTitle + 32, end, endOfTitle + 32);
         }
 
         function footer() {
@@ -52,33 +57,15 @@ if (process.client) {
 
             doc.text("Org.nr 5590303797", 85, 285);
             doc.text("VAT-nummer", 90, 290);
-
-            doc.textWithLink("Vist StackOverflow here", 150, 290, {
-                url: "https://stackoverflow.com/"
-            });
         }
 
         function pays() {
-            doc.setFillColor(164, 172, 212);
+            doc.setFillColor(0, 88, 122);
             doc.rect(start, 200, 170, 35, "f");
 
             doc.setFontStyle("bold");
             doc.setTextColor(0);
             doc.setFontSize(10);
-
-            // This part is for overdue part
-
-            let startX = 207;
-            console.log(vm.calculations.Rmindflag)
-            if (vm.calculations.Rmindflag) {
-                doc.text("Overdue Interest", 25, startX);
-                doc.text(String(vm.calculations.OverdueInterest.toFixed(2)), 85, startX);
-
-                doc.text("ÖRESAVRUNDNING", 25, 207 + 6);
-                doc.text(String(vm.calculations.RoundedSum.toFixed(2)), 85, 207 + 6);
-            }
-
-
 
             let startY = 207;
             doc.text("SUMMA EX MOMS", mid, startY);
@@ -138,15 +125,16 @@ if (process.client) {
         }
 
         pays();
-        if (vm.draggableItems.length > 15) {
+        if (vm.draggableItems.length > 13) {
             doc.text("Se fakturaspecifikation på följande sidor", start, 90);
 
             doc.addPage();
 
-            doc.autoTable(product.columns, product.data, {
-                margin: { top: 70, left: start, right: start, bottom: 60 },
+            doc.autoTable({
+                html: '#products-table',
+                margin: { top: endOfTitle+40, left: start, right: start, bottom: 60 },
                 headStyles: { fillColor: "#0d5892" }
-            });
+            })
 
             let pagesNo = doc.internal.getNumberOfPages();
             for (let i = 1; i <= pagesNo; i++) {
@@ -156,64 +144,29 @@ if (process.client) {
                 doc.setFontSize(10);
                 doc.text(`Page ${i} of ${pagesNo}`, 5, 292);
             }
-            // window.open(doc.output("bloburl"));
         } else {
             header();
-            doc.autoTable(product.columns, product.data, {
-                margin: { top: 70, left: start, right: start, bottom: 60 },
+            doc.autoTable({
+                html: '#products-table',
+                margin: { top: endOfTitle+40, left: start, right: start, bottom: 60 },
                 pageBreak: "avoid"
-            });
+            })
+
             footer();
             doc.setFontSize(10);
             doc.text(`Page 1 of 1`, 5, 292);
         }
         if (!!preview) {
-            doc.save("fixed.pdf");
+            doc.save(`${ocrid}.pdf`);
+
             return;
         } else {
-            const pdf = new File([doc.output("blob")], "filename.pdf", {
-                type: "pdf"
-            }),
-            data = new FormData();
+            const pdf = new File([doc.output("blob")], `${ocrid}.pdf`, { type: "pdf" }),
+                data = new FormData();
 
             data.append("file", pdf);
 
-            await vm.$axios
-                .$post("/profile/file-upload", data, {
-                    headers: {
-                        accept: "application/json",
-                        "Accept-Language": "en-US,en;q=0.8",
-                        "Content-Type": `multipart/form-data;`
-                    }
-                })
-                .then(response => {
-                    console.log(response.status);
-                    vm.pdf_link = response.location;
-
-                    doc.save("invoice.pdf");
-
-                    if (200 === response.status) {
-                        // If file size is larger than expected.
-                        if (response.data.error) {
-                            if ("LIMIT_FILE_SIZE" === response.data.error.code) {
-                                alert("Max size: 2MB", "red");
-                            } else {
-                                console.log(response.data);
-                                // If not the given file type
-                                alert(response.data.error, "red");
-                            }
-                        } else {
-                            // Success
-                            let fileName = response.data;
-                            console.log("filedata", fileName);
-
-                            alert("File Uploaded", "#3089cf");
-                        }
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+            return { data, doc }
         }
     }
 }

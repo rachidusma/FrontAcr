@@ -20,7 +20,7 @@
 				<v-card class="mx-auto py-4" tile outlined>
 					<v-row>
 						<v-col cols="6">
-							<v-form ref="form" v-model="valid" lazy-validation>
+							<v-form ref="form" v-model="valid">
 								<v-container>
 									<v-text-field
 										v-model="currentPassword"
@@ -40,7 +40,7 @@
 										<v-text-field
 											v-model="newPassword"
 											:append-outer-icon="showNewPassword ? 'mdi-eye' : 'mdi-eye-off'"
-											:rules="[rules.required]"
+											:rules="[rules.required, rules.min]"
 											:type="showNewPassword ? 'text' : 'password'"
 											label="Choose new password"
 											outlined
@@ -65,20 +65,19 @@
 									<v-text-field
 										v-model="confirmPassword"
 										:append-outer-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
-										:rules="[rules.passwordMatch]"
+										:rules="[rules.passwordMatch, rules.min]"
 										:type="showConfirmPassword ? 'text' : 'password'"
 										label="Confirm password"
 										outlined
 										dense
 										:hint="ConfirmPasswordHint"
 										counter
-										@input="confirm"
 										required
                                         class="mt-3"
 										@click:append-outer="showConfirmPassword = !showConfirmPassword"
 									></v-text-field>
 
-									<v-btn color="success" :disabled="!valid">save</v-btn>
+									<v-btn color="success" @click="changePassword" :disabled="!valid">save</v-btn>
 								</v-container>
 							</v-form>
 						</v-col>
@@ -136,11 +135,11 @@ export default {
 				this.newPasswordHint = "Too short";
 			} else if (length >= 8 && length < 12) {
 				this.color = "#28cdaa";
-				this.valid = true;
+				this.valid = false;
 				this.newPasswordHint = "Accepted";
 			} else if (length >= 12) {
 				this.color = "#28cdaa";
-				this.valid = true;
+				this.valid = false;
 				this.newPasswordHint = "Perfect";
 			}
         },
@@ -149,11 +148,17 @@ export default {
                 this.valid = false
             }
         },
-        confirm() {
-            if(this.confirmPassword == this.newPassword) {
-
-            } 
-        }
+		async changePassword() {
+			await this.$axios.$post('/users/pass', {
+				email: this.$auth.user.email,
+				password: this.currentPassword,
+				newpassword: this.newPassword	
+			}).then(res => {
+				console.log(res)
+			}).catch(err => {
+				console.log(err)
+			})
+		}
 	}
 };
 </script>

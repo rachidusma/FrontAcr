@@ -53,7 +53,7 @@ export default {
 				lastname: "",
 				telnumbers: null
 			}
-		};
+		};	
 	},
 	mounted() {
 		Object.assign(this.user, this.$auth.user);
@@ -66,10 +66,12 @@ export default {
 			console.log(this.user);
 			await this.$axios
 				.$patch(`/users/${this.user._id}`, this.user)
-				.then(res => {
-					console.log(res);
+				.then(async res => {
+					await this.$auth.fetchUser()
+					this.$router.push("/invoices");
+
 				});
-		}
+		},
 	}
 };
 </script>

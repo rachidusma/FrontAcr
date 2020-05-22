@@ -1,6 +1,5 @@
 <template>
 	<div>
-		{{ draft }}
 		<newInvoice :draft="draft" /> 
 	</div>
 </template>
@@ -8,6 +7,8 @@
 <script>
 import newInvoice from "@/components/NewInvoice";
 export default {
+		middleware: "auth",
+
     layout: "admin",
 
 	data() {

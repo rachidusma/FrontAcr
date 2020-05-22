@@ -19,7 +19,7 @@
                 <v-avatar color="red" size="250">
                   <span style="font-size: 150px;color: white;">
                     {{ userfirstname.charAt(0).toUpperCase() }}
-                    <span v-if="loginuserdetail.admin">
+                    <span v-if="$auth.user.admin">
                     {{ userlastname.charAt(0).toUpperCase() }}
                     </span>
                   </span>
@@ -35,7 +35,7 @@
                       placeholder="First Name"
                       outlined
                       color="#336882"
-                      v-model="userInfo.name"
+                      v-model="$auth.user.name"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6" sm="12" md="6">
@@ -44,7 +44,7 @@
                       placeholder="Last Name"
                       outlined
                       color="#336882"
-                      v-model="userInfo.lastname"
+                      v-model="$auth.user.lastname"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
@@ -54,7 +54,7 @@
                       outlined
                       type="email"
                       color="#336882"
-                      v-model="userInfo.email"
+                      v-model="$auth.user.email"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
@@ -64,7 +64,7 @@
                       outlined
                       type="text"
                       color="#336882"
-                      v-model="userInfo.telnumber"
+                      v-model="$auth.user.telnumber"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
@@ -149,28 +149,15 @@ export default {
   
   data() {
     return {
-      userInfo: {},
       // files: '',
       userfirstname: '',
       userlastname: '',
-      loginuserdetail: this.$auth.$storage.getUniversal('loginuser')
     }
   },
 
-  async beforeMount() {
-    this.getUserProfile();
-  },
 
   methods: {
-    async getUserProfile() {
-      console.log(this.loginuserdetail)
-		  await this.$axios.get(`/users/${this.loginuserdetail.id}`).then(res => {
-        this.userInfo = Object.assign({}, res.data[0]);
-        this.userfirstname = this.userInfo.name;
-        this.userlastname = this.userInfo.lastname;
-        console.log(this.userInfo)
-      });
-    },
+
     handleClick(a) {
       // this.$router.push("/customer/" + a._id);
     }

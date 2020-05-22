@@ -1,30 +1,40 @@
 <template>
 	<v-layout>
 		<v-row>
+			<!-- Strart page Header -->
+			<v-col cols="12">
+				<v-breadcrumbs class="pa-0 ma-0" :items="breadCampItems"></v-breadcrumbs>
+			</v-col>
+
 			<v-col cols="12" md="12">
 				<v-row class="pa-4">
 					<h1 class="title">Customers</h1>
 					<v-spacer></v-spacer>
-					<UserModal />
+					<v-btn color="success" @click="addCustomerModalState= true">Create Customer</v-btn>
+					<UserModal
+						@close="addCustomerModalState = false"
+						@updated="getCustomers"
+						:state="addCustomerModalState"
+					/>
 				</v-row>
 			</v-col>
+			<!-- End page Header -->
 
-			<v-col cols="12" md="12">
-				<p class="overline">All customers</p>
-				<v-card tile width="100%" class="pa-8">
+			<v-col cols="12">
+				<v-card tile outlined class="pa-5">
 					<v-row>
 						<v-spacer></v-spacer>
-						<v-text-field
-							v-model="search"
-							append-icon="mdi-magnify"
-							label="Search"
-							single-line
-							hide-details
-							solo
-							dense
-							class="mb-4 pa-4"
-							color="#336882"
-						></v-text-field>
+						<v-col cols="12" md="5">
+							<v-text-field
+								v-model="search"
+								append-icon="mdi-magnify"
+								label="Search"
+								solo
+								dense
+								class="pa-4 pb-1"
+								color="#336882"
+							></v-text-field>
+						</v-col>
 					</v-row>
 					<v-data-table
 						:headers="headers"
@@ -48,20 +58,15 @@ export default {
 	components: {
 		UserModal
 	},
-	async beforeMount() {
-		await this.$axios.get("/customers/").then(res => {
-			console.log('customers_list', res)
-			this.customers = res.data;
-		});
-	},
-	methods: {
-		handleClick(a) {
-			this.$router.push("/customer/" + a._id);
-		}
-	},
 	data() {
 		return {
+			addCustomerModalState: false,
 			search: "",
+			breadCampItems: [
+				{ text: "Invoices", href: "/invoices" },
+				{ text: "Customers", disabled: true }
+			],
+
 			headers: [
 				{
 					text: "Customer Id",
@@ -75,6 +80,19 @@ export default {
 			],
 			customers: []
 		};
+	},
+	async beforeMount() {
+		this.getCustomers();
+	},
+	methods: {
+		handleClick(a) {
+			this.$router.push("/customer/" + a._id);
+		},
+		async getCustomers() {
+			await this.$axios.get("/customers/").then(res => {
+				this.customers = res.data;
+			});
+		}
 	}
 };
 </script>
