@@ -76,7 +76,7 @@
 
 				<v-list-item to="/invoices">
 					<v-list-item-action>
-						<v-icon>mdi-file-document</v-icon>
+						<img src="/invoice.svg" alt="invoice" />
 					</v-list-item-action>
 					<v-list-item-content>
 						<v-list-item-title>invoice</v-list-item-title>
@@ -86,7 +86,7 @@
 				<div v-if="$auth.user.admin && $auth.loggedIn">
 					<v-list-item to="/user">
 						<v-list-item-action>
-							<v-icon>mdi-account-outline</v-icon>
+							<img src="/user.svg" alt="user" />
 						</v-list-item-action>
 						<v-list-item-content>
 							<v-list-item-title>Users</v-list-item-title>
@@ -96,7 +96,7 @@
 
 				<v-list-item to="/customer">
 					<v-list-item-action>
-						<v-icon>mdi-account-multiple-outline</v-icon>
+						<img src="/team.svg" alt="team" />
 					</v-list-item-action>
 					<v-list-item-content>
 						<v-list-item-title>Customer</v-list-item-title>
@@ -105,7 +105,7 @@
 
 				<v-list-item to="/articles">
 					<v-list-item-action>
-						<v-icon>mdi-folder-multiple-image</v-icon>
+						<img src="/article.svg" width="24" alt="article" />
 					</v-list-item-action>
 					<v-list-item-content>
 						<v-list-item-title>Article</v-list-item-title>
@@ -114,8 +114,11 @@
 
 				<div v-if="$auth.loggedIn">
 					<div v-if="$auth.user.admin">
-						<v-list-group prepend-icon="mdi-cash-multiple" no-action>
+						<v-list-group no-action>
 							<template v-slot:activator>
+								<v-list-item-icon>
+									<img src="/payment.svg" width="24" alt="payment" />
+								</v-list-item-icon>
 								<v-list-item-content>
 									<v-list-item-title>Salary</v-list-item-title>
 								</v-list-item-content>
@@ -152,7 +155,7 @@
 
 					<v-list-item to="/settings">
 						<v-list-item-action>
-							<v-icon>mdi-server-security</v-icon>
+							<img src="/settings.svg" width="24" alt="payment" />
 						</v-list-item-action>
 						<v-list-item-content>
 							<v-list-item-title>Settings</v-list-item-title>
@@ -162,7 +165,7 @@
 
 					<v-list-item to="/profile">
 						<v-list-item-action>
-							<v-icon>mdi-account-box-outline</v-icon>
+							<img src="/profile.svg" width="24" alt="payment" />
 						</v-list-item-action>
 						<v-list-item-content>
 							<v-list-item-title>Profile</v-list-item-title>

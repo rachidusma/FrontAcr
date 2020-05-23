@@ -1,7 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
   /*
   ** Headers of the page
   */
@@ -15,8 +15,6 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      // { href:"https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css", rel:"stylesheet"},
-
     ]
   },
   /*
