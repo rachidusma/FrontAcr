@@ -2,6 +2,7 @@
 export const state = () => ({   
     /** NEW INVOICE */
     customer: {},
+    customerEpost: null,
     invoice: {
         dagar: 0,
         dateFrom: new Date().toISOString().substr(0, 10),
@@ -14,6 +15,7 @@ export const state = () => ({
 export const mutations = {
     /** NEW INVOICE */
     setCustomer(state, customer) {
+        state.customerEpost = customer.epost;
         return Object.assign(state.customer, customer);
     },
     dateFrom(state, date) {
@@ -36,6 +38,9 @@ export const mutations = {
     },
     setDagar(state, dagar) {
         return state.invoice.dagar = dagar
+    },
+    setEmail(state, email) {
+        return state.customer.epost = email;
     }
 };
 
@@ -44,5 +49,4 @@ export const actions = {
 };
 
 export const getters = {
-
 };

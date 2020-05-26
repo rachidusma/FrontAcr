@@ -96,7 +96,7 @@
 											<v-row>
 												<v-col cols="12" md="5" sm="12">
 													<p class="overline">Type email of the customer</p>
-													<v-text-field label="Email" outlined color="#336882" dense></v-text-field>
+													<v-text-field label="Email" v-model="customerEmail" outlined color="#336882" dense></v-text-field>
 													<p class="overline">Invoice Delivery options</p>
 													<v-radio-group v-model="radioGroup">
 														<v-radio label="Send the invoice with a link to PDF" value="v" color="#336882"></v-radio>
@@ -142,7 +142,7 @@
 								<!-- End PDF Download -->
 							</v-expansion-panels>
 						</v-col>
-
+						<!-- Start Buttons -->
 						<v-col cols="12">
 							<v-btn
 								class="ma-2"
@@ -160,6 +160,7 @@
 								@click="saveInvoice"
 							>{{ deliveryMethod == 1 ? "Download and Publish" : "Publish" }}</v-btn>
 						</v-col>
+						<!-- End Buttons -->
 					</v-row>
 				</v-col>
 			</v-card-text>
@@ -195,12 +196,28 @@ export default {
 		"userId",
 		"extraInfo"
 	],
+	watch: {
+		customerEpost(val) {
+			console.log(val)
+		}
+	},
+	
 	computed: {
 		saveInvoiceBtnDisabled() {
 			if (this.deliveryMethod == 0) return false;
 			return !!!this.deliveryMethod;
 		},
-		...mapState(["customer", "invoice"])
+		customerEmail: {
+			get: function() {
+				return this.customerEpost
+			},
+			// setter
+			set: function(newValue) {
+				console.log(newValue);
+				this.$store.commit("setEmail", newValue);
+			}
+		},
+		...mapState(['customerEpost',"customer", "invoice"])
 	},
 	methods: {
 		async downloedPDF(preview, invId) {
@@ -351,6 +368,6 @@ export default {
 
 			this.dialog = true;
 		}
-	}
+	},
 };
 </script>

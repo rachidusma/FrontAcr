@@ -953,10 +953,6 @@ export default {
 		async saveAsItem() {
 			await this.$axios.setToken(this.$auth.getToken("local"));
 
-			let x = this.selection_value.moms.slice(
-				0,
-				this.selection_value.moms.length - 1
-			);
 			let arr = new Array();
 			await this.$axios
 				.$post("/articlepatterns", {
@@ -964,7 +960,7 @@ export default {
 					enhet: this.selection_value.enhet,
 					produktkod: uuidv1(null, arr, -12).join(""),
 					pris_enhet: Number(this.selection_value.pris_enhet),
-					moms: x,
+					moms:  this.selection_value.moms,
 					number: this.selection_value.number,
 					typ: this.selection_value.typ
 				})

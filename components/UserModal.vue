@@ -274,7 +274,7 @@ export default {
 			IndividualsOrCorporations: "1"
 		};
 	},
-	props: ["customerId", "customer", "state"],
+	props: ["customerId", "customer", "state", "edit"],
 	watch: {
 		customerId(val) {
 			Object.assign(this.the_customer, this.customer);
@@ -315,9 +315,11 @@ export default {
 				.catch(err => console.log(err));
 		},
 		close() {
-			this.the_customer = {};
+			if(!this.edit) {
+				this.the_customer = {};
+			}
+			
 			this.$emit("close");
-			console.log('her')
 			this.dialog = false;
 		}
 	}

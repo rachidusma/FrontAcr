@@ -66,6 +66,7 @@
 					:customerId="customer._id"
 					:customer="customer"
 					:state="dialog"
+					:edit="editUserModal"
 				/>
 			</v-row>
 		</v-col>
@@ -207,11 +208,15 @@ export default {
 			}
 		},
 		resetModal() {
-			this.initialCustomer();
+			if(!this.editUserModal) {
+				this.initialCustomer();
+				this.editUserModal = false;
+			}
 			this.dialog = false;
-			this.editUserModal = false;
 		},
 		async editUser(user) {
+			
+			this.customer = {};
 			this.getUsers();
 			Object.assign(this.customer, user);
 		}
