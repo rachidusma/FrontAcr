@@ -171,6 +171,15 @@
 							<v-list-item-title>Profile</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
+				
+					<v-list-item to="/statistics">
+						<v-list-item-action>
+							<v-icon> mdi mdi-chart-bar </v-icon>
+						</v-list-item-action>
+						<v-list-item-content>
+							<v-list-item-title>statistics</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
 					<v-divider></v-divider>
 				</div>
 			</v-list>
