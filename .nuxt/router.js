@@ -12,6 +12,7 @@ const _47171806 = () => interopDefault(import('..\\pages\\paidsalary\\index.vue'
 const _4431006f = () => interopDefault(import('..\\pages\\profile\\index.vue' /* webpackChunkName: "pages_profile_index" */))
 const _5ae349d9 = () => interopDefault(import('..\\pages\\settings\\index.vue' /* webpackChunkName: "pages_settings_index" */))
 const _810d4ec4 = () => interopDefault(import('..\\pages\\Signup.vue' /* webpackChunkName: "pages_Signup" */))
+const _2ca2afee = () => interopDefault(import('..\\pages\\statistics.vue' /* webpackChunkName: "pages_statistics" */))
 const _6f41f3cb = () => interopDefault(import('..\\pages\\uppaidsalary\\index.vue' /* webpackChunkName: "pages_uppaidsalary_index" */))
 const _0fdb8a31 = () => interopDefault(import('..\\pages\\user\\index.vue' /* webpackChunkName: "pages_user_index" */))
 const _7c8dc142 = () => interopDefault(import('..\\pages\\settings\\change-password.vue' /* webpackChunkName: "pages_settings_change-password" */))
@@ -78,6 +79,10 @@ export const routerOptions = {
     path: "/Signup",
     component: _810d4ec4,
     name: "Signup"
+  }, {
+    path: "/statistics",
+    component: _2ca2afee,
+    name: "statistics"
   }, {
     path: "/uppaidsalary",
     component: _6f41f3cb,
