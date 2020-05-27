@@ -10,20 +10,22 @@ import PieChart from "./PieChart.js";
 export default {
 	components: {
 		PieChart
-    },
-    props: ['chartData', 'chartColors', 'labels'],
+	},
+	props: ["chartData", "chartColors", "labels"],
 	data() {
 		return {
 			datacollection: {},
 
 			options: {
 				responsive: true,
-                // maintainAspectRatio: false
+				maintainAspectRatio: false
 			}
 		};
 	},
 	mounted() {
-		this.fillData();
+		this.$nextTick(() => {
+			this.fillData();
+		});
 	},
 	methods: {
 		fillData() {

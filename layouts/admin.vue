@@ -275,6 +275,9 @@ export default {
 .v-list-item__icon {
 	margin-right: 10px !important;
 }
+img {
+	width: 24px
+}
 .v-navigation-drawer__content
 	.v-list-item--active.v-list-item.v-list-item--link.theme--light,
 .v-navigation-drawer__content

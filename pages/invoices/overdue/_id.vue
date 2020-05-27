@@ -14,7 +14,7 @@
 								<h4>Amend invoice</h4>
 								<v-spacer></v-spacer>
 								<v-icon class="black--text" @click="amendInvoiceModalState = false">mdi mdi-close</v-icon>
-								</v-card-title>
+							</v-card-title>
 							<v-divider></v-divider>
 
 							<v-card-text>
@@ -34,7 +34,7 @@
 
 							<v-card-actions class="grey lighten-3 pa-5">
 								<v-spacer></v-spacer>
-								<v-btn  color="success" @click="amendInvoiceModalState = false">Done</v-btn>
+								<v-btn color="success" @click="amendInvoiceModalState = false">Done</v-btn>
 							</v-card-actions>
 						</v-card>
 					</v-dialog>
@@ -45,7 +45,7 @@
 								<h4>Undo publish?</h4>
 								<v-spacer></v-spacer>
 								<v-icon class="black--text" @click="undoModalState = false">mdi mdi-close</v-icon>
-								</v-card-title>
+							</v-card-title>
 							<v-divider></v-divider>
 							<v-card-text
 								class="py-5"
@@ -65,9 +65,7 @@
 					<!-- Start Customer Name -->
 					<v-col cols="12" md="4">
 						<h3 class="d-inline-block">{{ invoice.customername }}</h3>
-						<v-chip class="mt-3 mx-2" small color="error">
-							Overdue {{ overdueDays }} days ago
-						</v-chip>
+						<v-chip class="mt-3 mx-2" small color="error">Overdue {{ overdueDays }} days ago</v-chip>
 					</v-col>
 					<!-- End Customer Name -->
 
@@ -90,7 +88,7 @@
 					</v-col>
 				</v-row>
 			</v-col>
-			
+
 			<!-- start published at -->
 			<v-col cols="12 d-flex">
 				<v-icon class="d-none d-sm-flex text--black mr-8">mdi mdi-file-document-outline</v-icon>
@@ -111,11 +109,10 @@
 
 			<!-- start sent with email? -->
 			<v-col cols="12 d-flex">
-				<v-icon class="d-none d-sm-flex text--black mr-8"> mdi mdi-email-outline </v-icon>
+				<v-icon class="d-none d-sm-flex text--black mr-8">mdi mdi-email-outline</v-icon>
 				<v-card class="px-5 flex-grow-1" outlined tile>
 					<v-row>
 						<v-col cols="12" md="6">
-							
 							<h4 class="text--primary d-inline">Emailed to eric@dk.se</h4>
 							<span>2020-05-14, 17:05</span>
 						</v-col>
@@ -124,14 +121,13 @@
 							<span>Invoice opened</span>
 						</v-col>
 						<v-col cols="12" md="6">
-							<h4 class="text--primary d-inline">Invoice sent as </h4>
-							<span> Link and attached PDF</span>
+							<h4 class="text--primary d-inline">Invoice sent as</h4>
+							<span>Link and attached PDF</span>
 						</v-col>
 					</v-row>
 				</v-card>
 			</v-col>
 			<!-- End sent with email? -->
-
 		</v-row>
 		<!-- End header -->
 
@@ -173,7 +169,7 @@ export default {
 				{ text: "invoices", href: "/invoices" },
 				{ text: this.invoice._id, disabled: true }
 			];
-		},
+		}
 	},
 
 	methods: {
@@ -195,7 +191,9 @@ export default {
 			res[0].createdate = new Date(res[0].createdate)
 				.toISOString()
 				.substring(0, 10);
-			this.overdueDays = Math.round(new Date(res[0].createdate) - new Date(res[0].duedate));
+			this.overdueDays = Math.round(
+				new Date(res[0].createdate) - new Date(res[0].duedate)
+			) / 86400000;
 			this.invoice = res[0];
 		});
 	}

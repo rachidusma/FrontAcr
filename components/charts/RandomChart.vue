@@ -13,7 +13,7 @@ export default {
 	},
 	data() {
 		return {
-            datacollection: null,
+            datacollection: {},
             labels: [],
             options: {
                 responsive: true,
@@ -44,7 +44,6 @@ export default {
 
 		for (let i = 0; i < 13; i++) {
 			currentMonth = theMonths[aMonth];
-			console.log(`${currentMonth} ${aYear.toString().slice(2,4)}`);  
 
             this.labels.push(`${currentMonth} ${aYear.toString().slice(2,4)}`)
 			aMonth--;

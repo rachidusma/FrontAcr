@@ -89,29 +89,24 @@
 			<v-col>
 				<v-card>
 					<v-card-title class="justify-space-between d-flex">
-						<h4>Top 5 customers/items</h4>
+						<h4>Top 5 customers</h4>
 						<v-spacer></v-spacer>
-						<nuxt-link to="/">View Customers</nuxt-link>
+						<small>
+							<nuxt-link to="/">View Customers</nuxt-link>
+						</small>
 					</v-card-title>
 					<v-card-text>
 						<v-row>
-							<v-col cols="12" md="6">
+							<v-col cols="12" md="6" v-if="customerChartDate">
 								<PieChart
-									:chartColors="['green', 'blue']"
-									:chartData="[30,120 ]"
-									:labels="['green', 'blue']"
+									:chartColors="['#2d2d3b', '#ffccc7', '#b66d60', '#ecb278', '#983e3e ']"
+									:chartData="customerChartDate"
+									:labels="customerChartLables"
 								/>
 							</v-col>
 
 							<v-col cols="12" md="6" class="d-flex align-center justify-center">
 								<div>
-									<v-radio-group v-model="radios" color="primary" row>
-										<v-radio label="Customers" value="customers"></v-radio>
-										<v-radio label="Item" value="item"></v-radio>
-									</v-radio-group>
-
-									<v-divider></v-divider>
-
 									<div class="my-2">
 										<div class="d-flex justify-between align-center">
 											<v-list-item-avatar tile class="ma-0 mx-2" size="10" color="green"></v-list-item-avatar>
@@ -135,7 +130,6 @@
 					</v-card-text>
 				</v-card>
 			</v-col>
-			<!-- Start Top 5  customers/items< -->
 		</v-row>
 		<!-- End Top 5 charts -->
 
@@ -245,42 +239,101 @@ export default {
 	data() {
 		return {
 			radios: "customers",
+			customerChartDate: null,
+			customerChartLables: null,
 			cards: [
-				{
-					title: { text: "Invoices owed to you", money: "97 671" },
-					infos: [
-						{ label: "Overdue", money: "55 654" },
-						{ label: "Due today", money: "0" },
-						{ label: "1 -7 days", money: "0" },
-						{ label: "8-14 days", money: "41 017" },
-						{ label: "15-21 days", money: "0" },
-						{ label: "> 21 days", money: "1000" }
-					],
-					actions: {
-						btn: { text: "Create Invoice", url: "/newinvoice" },
-						text: { text: "View all active invoices", url: "/invoices" }
-					}
-				},
-				{
-					title: { text: "Supplier invoices you need to pay", money: "0" },
-					infos: [
-						{ label: "Overdue", money: "0" },
-						{ label: "Due today", money: "0" },
-						{ label: "1-7 days", money: "0" },
-						{ label: "8-14 days", money: "0" },
-						{ label: "15-21 days", money: "0" },
-						{ label: "> 21 days", money: "0" }
-					],
-					actions: {
-						btn: { text: "New supplier invoice", url: "/newinvoice" },
-						text: {
-							text: "View all active supplier invoices",
-							url: "/invoices"
-						}
-					}
-				}
 			]
 		};
+	},
+	async mounted() {
+		const promises = [
+			this.$axios.$get("/customers"),
+			this.$axios.$get("/invoices"),
+			this.$axios.$get("/articlepatterns")
+		];
+		await Promise.all(promises).then(res => {
+			 console.log(res);
+			let customers = res[0],
+				invoices = res[1],
+				articles = res[2],
+				invoicesCustomers = [];
+
+			/** extrach name in another array */
+			invoices.forEach(invoice => {
+				if (invoice.customername !== "undefined")
+					invoicesCustomers.push(invoice.customername);
+			});
+			this.invoicesCalculations(invoices);
+			this.getMostRepeatedValue(invoicesCustomers);
+		});
+	},
+	methods: {
+		getMostRepeatedValue(arr) {
+			let array = arr.sort(),
+				item = null,
+				times = 0,
+				finalArr = [],
+				names = [],
+				frequanty = [];
+
+			array.forEach(e => {
+				if (finalArr.length == 0) {
+					finalArr.push({ name: e, times: times });
+					names.push(e);
+					frequanty.push(times);
+					item = e;
+				} else if (item == e) {
+					frequanty[frequanty.length - 1]++; /** increase the  */
+				} else if (finalArr.length < 5 && item !== e) {
+					times = 1;
+					item = e;
+					finalArr.push({ name: e, times: times });
+					names.push(e);
+					frequanty.push(times);
+				}
+			});
+
+			console.log(finalArr);
+			this.customerChartDate = frequanty;
+			this.customerChartLables = names;
+		},
+		invoicesCalculations(arr) {
+			let summation = 0,
+				Overdue = 0,
+				to_7 = 0,
+				to_14 = 0,
+				to_21 = 0,
+				plus21 = 0;
+
+			arr.forEach(invoice => {
+				summation += invoice.total;
+				let days = Math.round( (new Date(invoice.duedate) - new Date(invoice.createdate)  )  / 86400000) ;
+
+				if(days < 0) {Overdue += invoice.total}
+				else if(days > 0 && days <= 7) {to_7 += invoice.total}
+				else if(days > 7 && days <= 14) {to_14 += invoice.total}
+				else if(days > 14 && days <= 21) {to_21 += invoice.total}
+				else if(days > 21) {plus21 += invoice.total}
+				console.log(days);
+				
+			});
+
+			this.cards.unshift({
+				title: { text: "Invoices owed to you", money: summation },
+				infos: [
+					{ label: "Overdue", money: Overdue },
+					{ label: "Due today", money: "0" },
+					{ label: "1 -7 days", money: to_7 },
+					{ label: "8-14 days", money: to_14 },
+					{ label: "15-21 days", money: to_21 },
+					{ label: "> 21 days", money: plus21 }
+				],
+				actions: {
+					btn: { text: "Create Invoice", url: "/newinvoice" },
+					text: { text: "View all active invoices", url: "/invoices" }
+				}
+			})
+		}
 	}
 };
 </script>
