@@ -1,6 +1,6 @@
 <template>
-	<v-layout>
-		<v-row>
+	
+		<v-row class="flex-wrap">
 			<v-col cols="12">
 				<p class="py-0 my-0 black--text headline">Settings</p>
 			</v-col>
@@ -40,7 +40,7 @@
 				</v-card>
 			</v-col>
 		</v-row>
-	</v-layout>
+	
 </template>
 
 <script>

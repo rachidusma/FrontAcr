@@ -222,6 +222,7 @@
 											@click="createNewModalfn"
 										>+ Create new</v-btn>
 									</v-row>
+
 									<!-- Start Existing Modal -->
 									<v-form ref="form" v-else v-model="valid">
 										<!-- Start Create new item modal -->
@@ -370,26 +371,29 @@
 
 							<!-- Start Modal Footer -->
 							<v-card-actions class="grey lighten-3 pa-5">
-								<!-- Start For Add New Customar  -->
-								<div>
-									<v-btn class="mt-2" text @click="resetModal">Cancel</v-btn>
-									<v-btn
-										class="mt-2 d-block d-sm-inline"
-										@click="saveAsItem"
-										:disabled="saveAsItemBtnState"
-									>Save as item</v-btn>
-								</div>
-								<v-spacer></v-spacer>
+								<v-row>
+									<!-- Start For Add New Customar  -->
+									<v-col cols="12" md="6">
+										<v-btn text @click="resetModal">Cancel</v-btn>
+										<v-btn
+											class="mt-2 d-block d-sm-inline"
+											@click="saveAsItem"
+											:disabled="saveAsItemBtnState"
+										>Save as item</v-btn>
+									</v-col>
+									<v-spacer></v-spacer>
 
-								<div>
-									<v-btn
-										class="mt-2"
-										:disabled="(!(!!selection_value)) || (!(!!selection_value) || !valid)"
-										@click="addToInvoice"
-										color="success"
-									>Add to invoice</v-btn>
-								</div>
-								<!-- End For Add New Customar  -->
+									<v-col  class="d-flex justify-md-end" cols="12" md="6">
+										<v-btn
+											
+											:disabled="!addToInvoiceBtnState"
+											@click="addToInvoice"
+											color="success"
+										>Add to invoice</v-btn>
+									</v-col>
+									<!-- End For Add New Customar  -->
+
+								</v-row>
 							</v-card-actions>
 							<!-- End Modal Footer -->
 						</v-card>
@@ -474,7 +478,6 @@
 								<!-- Start Modal Body -->
 								<v-card-text>
 									<v-container>
-										<!-- Start Existing Modal -->
 
 										<!-- Start Create new item modal -->
 										<v-row v-if="selection_value">
@@ -719,7 +722,7 @@ export default {
 		addTextVal: null,
 		hideAddText: false,
 		/** Selection Options */
-		Vat: ["0", "6", "12", "25"],
+		Vat: [0, 6, 12, 25],
 		Unit: [
 			"hours",
 			"pound",
@@ -814,6 +817,9 @@ export default {
 			};
 		},
 
+		addToInvoiceBtnState(){
+			return this.selection_value && this.valid
+		},
 		saveAsItemBtnState() {
 			if (this.selection_value && this.createNewModal == true)
 				return (
@@ -918,7 +924,10 @@ export default {
 			this.selection_value.materialType = null;
 		},
 		setQuantity() {
-			if (this.selection_value) this.selection_value.number = 1;
+			if (this.selection_value) {
+				this.selection_value.number = 1;
+				this.valid= true
+			}
 		},
 		addToInvoice() {
 			let rows = this.draggableItems;
