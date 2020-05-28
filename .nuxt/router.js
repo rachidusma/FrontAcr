@@ -17,6 +17,7 @@ const _6f41f3cb = () => interopDefault(import('..\\pages\\uppaidsalary\\index.vu
 const _0fdb8a31 = () => interopDefault(import('..\\pages\\user\\index.vue' /* webpackChunkName: "pages_user_index" */))
 const _7c8dc142 = () => interopDefault(import('..\\pages\\settings\\change-password.vue' /* webpackChunkName: "pages_settings_change-password" */))
 const _3beca12c = () => interopDefault(import('..\\pages\\settings\\export-data.vue' /* webpackChunkName: "pages_settings_export-data" */))
+const _29afb09e = () => interopDefault(import('..\\pages\\settings\\forgetPassword.vue' /* webpackChunkName: "pages_settings_forgetPassword" */))
 const _d643f5e8 = () => interopDefault(import('..\\pages\\settings\\invoice-settings.vue' /* webpackChunkName: "pages_settings_invoice-settings" */))
 const _0cea4497 = () => interopDefault(import('..\\pages\\settings\\personal-settings.vue' /* webpackChunkName: "pages_settings_personal-settings" */))
 const _7273a3f6 = () => interopDefault(import('..\\pages\\invoices\\draft\\_id.vue' /* webpackChunkName: "pages_invoices_draft__id" */))
@@ -99,6 +100,10 @@ export const routerOptions = {
     path: "/settings/export-data",
     component: _3beca12c,
     name: "settings-export-data"
+  }, {
+    path: "/settings/forgetPassword",
+    component: _29afb09e,
+    name: "settings-forgetPassword"
   }, {
     path: "/settings/invoice-settings",
     component: _d643f5e8,

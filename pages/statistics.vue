@@ -54,58 +54,26 @@
 
 		<!-- Start Top 5 charts -->
 		<v-row>
-			<!-- Start Top 5 expenditures -->
-			<v-col>
-				<v-card>
+			<v-col md="6" :key="index" v-for="(chart, index) in charts">
+				<v-card v-if="chart.chartData">
 					<v-card-title class="justify-space-between d-flex">
-						<h4>Top 5 expenditures</h4>
-						<small>
-							<nuxt-link to="/">View Profit & Loss report</nuxt-link>
-						</small>
-					</v-card-title>
-
-					<v-card-text>
-						<v-row>
-							<v-col cols="12" md="6">
-								<PieChart
-									:chartColors="['rgba(0,0,0,0.3)','rgba(0,0,0,0.3)','rgba(0,0,0,0.3)','rgba(0,0,0,0.3)','rgba(0,0,0,0.3)']"
-									:chartData="[30,120,548,50,90]"
-								/>
-							</v-col>
-
-							<v-col cols="12" md="6" class="d-flex align-center justify-center">
-								<div>
-									<p>As soon as you've started recording some expenses, you'll see your top 5 expenses here</p>
-									<v-btn color="success" class="mt-3">Record expenses</v-btn>
-								</div>
-							</v-col>
-						</v-row>
-					</v-card-text>
-				</v-card>
-			</v-col>
-			<!-- End Top 5 expenditures -->
-
-			<!-- Start Top 5  customers/items< -->
-			<v-col>
-				<v-card>
-					<v-card-title class="justify-space-between d-flex">
-						<h4>Top 5 customers</h4>
+						<h4>{{ chart.title.text }}</h4>
 						<v-spacer></v-spacer>
 						<small>
-							<nuxt-link to="/">View Customers</nuxt-link>
+							<nuxt-link :to="chart.title.url">{{ chart.title.urlText }}</nuxt-link>
 						</small>
 					</v-card-title>
 					<v-card-text>
 						<v-row>
-							<v-col cols="12" md="6" v-if="customerChartDate">
+							<v-col cols="12">
 								<PieChart
-									:chartColors="['#2d2d3b', '#ffccc7', '#b66d60', '#ecb278', '#983e3e ']"
-									:chartData="customerChartDate"
-									:labels="customerChartLables"
+									:chartColors="chart.chartColors"
+									:chartData="chart.chartData"
+									:labels="chart.chartLabel"
 								/>
 							</v-col>
 
-							<v-col cols="12" md="6" class="d-flex align-center justify-center">
+							<!-- <v-col cols="12" md="6" class="d-flex align-center justify-center">
 								<div>
 									<div class="my-2">
 										<div class="d-flex justify-between align-center">
@@ -125,10 +93,14 @@
 										</div>
 									</div>
 								</div>
-							</v-col>
+							</v-col>-->
 						</v-row>
 					</v-card-text>
 				</v-card>
+
+				<v-sheet v-else color="grey lighten-4" class="px-3 pt-3 pb-3">
+					<v-skeleton-loader class="mx-auto"  type="card"></v-skeleton-loader>
+				</v-sheet>
 			</v-col>
 		</v-row>
 		<!-- End Top 5 charts -->
@@ -241,30 +213,68 @@ export default {
 			radios: "customers",
 			customerChartDate: null,
 			customerChartLables: null,
-			cards: [
+			ItemChartData: null,
+			ItemChartLabels: null,
+
+			cards: [],
+			charts: [
+				{
+					title: {
+						text: "Top 5 Items",
+						url: "/articles",
+						urlText: "View Items"
+					},
+					chartColors: ["#2d2d3b", "#ffccc7", "#b66d60", "#ecb278", "#983e3e "],
+					chartData: null,
+					chartLabel: null
+				},
+				{
+					title: {
+						text: "Top 5 customers",
+						url: "/customer",
+						urlText: "View Customers"
+					},
+					chartColors: ["#2d2d3b", "#ffccc7", "#b66d60", "#ecb278", "#983e3e "],
+					chartData: null,
+					chartLabel: null
+				}
 			]
 		};
 	},
 	async mounted() {
+		var t0 = performance.now();
+
 		const promises = [
 			this.$axios.$get("/customers"),
 			this.$axios.$get("/invoices"),
 			this.$axios.$get("/articlepatterns")
 		];
-		await Promise.all(promises).then(res => {
-			 console.log(res);
+		await Promise.all(promises).then(async res => {
 			let customers = res[0],
 				invoices = res[1],
-				articles = res[2],
-				invoicesCustomers = [];
+				articlePatterns = res[2],
+				invoicesCustomers = [],
+				allArticles = [];
 
-			/** extrach name in another array */
-			invoices.forEach(invoice => {
+			for (let i = 0; i < invoices.length; i++) {
+				const invoice = invoices[i];
+
+				/** extrach name in another array */
 				if (invoice.customername !== "undefined")
 					invoicesCustomers.push(invoice.customername);
-			});
+
+				/** Get articles for each invoice */
+				await this.$axios
+					.$get(`articles/invoice/${invoice.ocrid}`)
+					.then(res => allArticles.push(...res));
+			}
+
 			this.invoicesCalculations(invoices);
 			this.getMostRepeatedValue(invoicesCustomers);
+			this.getMostRepeatedItem(articlePatterns, allArticles);
+
+			var t1 = performance.now();
+			console.log("Mount takes: " + (t1 - t0) + " milliseconds.");
 		});
 	},
 	methods: {
@@ -293,9 +303,8 @@ export default {
 				}
 			});
 
-			console.log(finalArr);
-			this.customerChartDate = frequanty;
-			this.customerChartLables = names;
+			this.charts[1].chartData = frequanty;
+			this.charts[1].chartLabel = names;
 		},
 		invoicesCalculations(arr) {
 			let summation = 0,
@@ -307,15 +316,21 @@ export default {
 
 			arr.forEach(invoice => {
 				summation += invoice.total;
-				let days = Math.round( (new Date(invoice.duedate) - new Date(invoice.createdate)  )  / 86400000) ;
+				let days = Math.round(
+					(new Date(invoice.duedate) - new Date(invoice.createdate)) / 86400000
+				);
 
-				if(days < 0) {Overdue += invoice.total}
-				else if(days > 0 && days <= 7) {to_7 += invoice.total}
-				else if(days > 7 && days <= 14) {to_14 += invoice.total}
-				else if(days > 14 && days <= 21) {to_21 += invoice.total}
-				else if(days > 21) {plus21 += invoice.total}
-				console.log(days);
-				
+				if (days < 0) {
+					Overdue += invoice.total;
+				} else if (days > 0 && days <= 7) {
+					to_7 += invoice.total;
+				} else if (days > 7 && days <= 14) {
+					to_14 += invoice.total;
+				} else if (days > 14 && days <= 21) {
+					to_21 += invoice.total;
+				} else if (days > 21) {
+					plus21 += invoice.total;
+				}
 			});
 
 			this.cards.unshift({
@@ -332,7 +347,40 @@ export default {
 					btn: { text: "Create Invoice", url: "/newinvoice" },
 					text: { text: "View all active invoices", url: "/invoices" }
 				}
-			})
+			});
+		},
+		getMostRepeatedItem(patterns, allItems) {
+			let data = [],
+				labels = [];
+
+			patterns.forEach(pattern => {
+				/** Check if we have already 5 items */
+				allItems.forEach(article => {
+					if (pattern.artikelnamn == article.artikelnamn) {
+						if (data.length == 0) {
+							/** If this is the first element */
+							data.push(1);
+							labels.push(pattern.artikelnamn);
+						} else {
+							/** check if we already have it */
+							let i = labels.indexOf(pattern.artikelnamn);
+							if (i != -1) {
+								/** If existed increase its number*/
+								data[i]++;
+							} else {
+								if (data.length < 5) {
+									/** If not existed */
+									labels.push(pattern.artikelnamn);
+									data.push(1);
+								}
+							}
+						}
+					}
+				});
+			});
+
+			this.charts[0].chartData = data;
+			this.charts[0].chartLabel = labels;
 		}
 	}
 };
