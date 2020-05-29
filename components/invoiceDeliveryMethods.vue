@@ -16,7 +16,7 @@
 
 					<v-btn color="success" :to="invoiceLink">Visit it</v-btn>
 
-					<v-btn color="success" to="/newinvoice">Create new one</v-btn>
+					<v-btn color="primary" @click="reload">Create new one</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -220,6 +220,9 @@ export default {
 		...mapState(['customerEpost',"customer", "invoice"])
 	},
 	methods: {
+		reload() {
+			window.location.reload(true)
+		},
 		async downloedPDF(preview, invId) {
 			let location,
 				vm = this;

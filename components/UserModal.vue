@@ -310,15 +310,14 @@ export default {
 					this.$emit("UserEdited", res);
 					this.dialog = false;
 					this.$emit("close");
-
 				})
 				.catch(err => console.log(err));
 		},
 		close() {
-			if(!this.edit) {
+			if (!this.edit) {
 				this.the_customer = {};
 			}
-			
+
 			this.$emit("close");
 			this.dialog = false;
 		}

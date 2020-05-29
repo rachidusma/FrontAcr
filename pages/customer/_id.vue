@@ -21,6 +21,7 @@
 						@close="editUserDialog = false"
 						:customerId="customer._id"
 						:customer="customer"
+						:edit="true"
 					/>
 					<!-- End Edit Dialog -->
 

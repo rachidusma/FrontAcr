@@ -116,18 +116,18 @@
 
 					<v-col cols="12" lg="2">
 						<p class="py-0 my-0">Days</p>
-						{{ (invoice.dagar > 0 ) ? invoice.dagar : days }}
+						{{ (invoice.dagar > 0 ) ? invoice.dagar : days || "-"}}
 					</v-col>
 				</v-row>
 
 				<v-row>
 					<v-col cols="12" sm="auto">
 						<p class="text--secondary">Delivery</p>
-						<span class="text--primary">{{ delivery }}</span>
+						<span class="text--primary">{{ invoice.Delivery || "-" }}</span>
 					</v-col>
 					<v-col cols="12" sm="auto">
 						<p class="text--secondary">Interest on overdue payment</p>
-						<span class="text--primary">{{ overduePayment }}</span>
+						<span class="text--primary">{{ (invoice.OverduePayment) ?  `${invoice.OverduePayment} %` :  "-" }}</span>
 					</v-col>
 				</v-row>
 			</v-card-text>
@@ -149,8 +149,7 @@ export default {
 	data: vm => ({
 		date: new Date().toISOString().substr(0, 10),
 		toDate: !!todate ? todate : new Date().toISOString().substr(0, 10),
-		delivery: "Fritt vårt lager",
-		overduePayment: "12",
+		
 		menu1: false,
 		menu2: false,
 		dialog: false
@@ -183,12 +182,26 @@ export default {
 			}
 			return this.formatDate(todate);
 		},
+		overduePayment: {
+			get: function () {
+				return this.$store.state.invoice.OverduePayment
+			},
+			set: function(val) {
+				this.$store.commit('setOverduePayment',val)
+			}
+		},
+		delivery: {
+			get: function () {
+				return this.$store.state.invoice.Delivery
+			},
+			set: function(val) {
+				this.$store.commit('setDelivery',val)
+			}
+		},
 		...mapState(["invoice"])
 	},
 
 	mounted() {
-		this.delivery = "Fritt vårt lager";
-		this.overduePayment = "12%";
 
 		if (!!this.fromDraft) this.assignDates(this.fromDraft);
 	},

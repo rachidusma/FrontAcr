@@ -77,25 +77,25 @@
 				<v-col cols="12" sm="auto" class="align-center d-flex px-8" v-if="customer.orgnummer != ''">
 					<div class="d-inline-block">
 						<p class="my-0 py-0 caption">Org-number</p>
-						<b>{{customer.orgnummer}}</b>
+						<b>{{customer.orgnummer || '-'}}</b>
 					</div>
 				</v-col>
 				<v-col cols="12" sm="auto" class="align-center d-flex px-8" v-if="customer.vatnummer != ''">
 					<div class="d-inline-block">
 						<p class="my-0 py-0 caption">VAT number</p>
-						<b>{{customer.vatnummer}}</b>
+						<b>{{customer.vatnummer || '-'}}</b>
 					</div>
 				</v-col>
 				<v-col cols="12" sm="auto" class="align-center d-flex px-8" v-if="customer.epost != ''">
 					<div class="d-inline-block">
 						<p class="my-0 py-0 caption">Email</p>
-						<b>{{customer.epost}}</b>
+						<b>{{customer.epost || '-'}}</b>
 					</div>
 				</v-col>
 				<v-col cols="12" sm="auto" class="align-center d-flex px-8" v-if="customer.postadress != ''">
 					<div class="d-inline-block">
 						<p class="my-0 py-0 caption">Address</p>
-						<b>{{customer.postadress}}</b>
+						<b>{{customer.postadress || '-'}}</b>
 					</div>
 				</v-col>
 			</v-row>
@@ -208,17 +208,15 @@ export default {
 			}
 		},
 		resetModal() {
-			if(!this.editUserModal) {
+			if (!this.editUserModal) {
 				this.initialCustomer();
 				this.editUserModal = false;
 			}
 			this.dialog = false;
 		},
 		async editUser(user) {
-			
 			this.customer = {};
 			this.getUsers();
-			Object.assign(this.customer, user);
 		}
 	}
 };

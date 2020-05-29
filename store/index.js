@@ -4,11 +4,11 @@ export const state = () => ({
     customer: {},
     customerEpost: null,
     invoice: {
-        dagar: 0,
+        dagar: null,
         dateFrom: new Date().toISOString().substr(0, 10),
         dateTo: new Date().toISOString().substr(0, 10),
-        Delivery: 'Fritt vårt lager',
-        OverduePayment: 0,
+        Delivery: null,
+        OverduePayment: null,
     }
 });
 
