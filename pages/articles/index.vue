@@ -63,6 +63,7 @@
 
 					<v-data-table
 						:headers="headers"
+						light="false"
 						:items="articles"
 						:items-per-page="5"
 						class="elevation-1"
@@ -175,3 +176,4 @@ export default {
 	}
 };
 </script>
+

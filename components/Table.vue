@@ -85,3 +85,8 @@ export default {
     }
 
 </script>
+
+<style scoped>
+  tr:nth-child(even) {background: #CCC !important }
+  tr:nth-child(odd) {background: #FFF !important }
+</style>

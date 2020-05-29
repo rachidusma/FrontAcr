@@ -136,7 +136,8 @@
 				<v-icon class="font1">mdi mdi-download</v-icon>
 			</v-btn>
 			<no-ssr>
-				<vuePDF :src="invoice.pdf_link"></vuePDF>
+				<vuePDF v-for="i in numPages" :key="i" :src="invoice.pdf_link" :page="i"></vuePDF>
+				
 			</no-ssr>
 		</div>
 	</div>
@@ -160,7 +161,9 @@ export default {
 			invoice: {},
 			overdueDays: 0,
 			amendInvoiceModalState: false,
-			undoModalState: false
+			undoModalState: false,
+			numPages: undefined,
+
 		};
 	},
 	computed: {
@@ -195,6 +198,9 @@ export default {
 				new Date(res[0].createdate) - new Date(res[0].duedate)
 			) / 86400000;
 			this.invoice = res[0];
+		});
+		var loadingTask = vuePDF.createLoadingTask(this.invoice.pdf_link).then(pdf => {
+			this.numPages = pdf.numPages;
 		});
 	}
 };

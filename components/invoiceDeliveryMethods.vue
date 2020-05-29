@@ -198,10 +198,10 @@ export default {
 	],
 	watch: {
 		customerEpost(val) {
-			console.log(val)
+			console.log(val);
 		}
 	},
-	
+
 	computed: {
 		saveInvoiceBtnDisabled() {
 			if (this.deliveryMethod == 0) return false;
@@ -209,7 +209,7 @@ export default {
 		},
 		customerEmail: {
 			get: function() {
-				return this.customerEpost
+				return this.customerEpost;
 			},
 			// setter
 			set: function(newValue) {
@@ -217,11 +217,11 @@ export default {
 				this.$store.commit("setEmail", newValue);
 			}
 		},
-		...mapState(['customerEpost',"customer", "invoice"])
+		...mapState(["customerEpost", "customer", "invoice"])
 	},
 	methods: {
 		reload() {
-			window.location.reload(true)
+			window.location.reload(true);
 		},
 		async downloedPDF(preview, invId) {
 			let location,
@@ -310,7 +310,10 @@ export default {
 
 			/** Generate the pdf and get its link */
 			vm.downloedPDF(null, ocrid).then(async res => {
-				res.save(`${ocrid}.pdf`);
+				if (deliveryMethod !== "e-invoice") {
+					res.save(`${ocrid}.pdf`);
+				}
+
 				/** If there is an Invoice Edit it */
 				if (!!vm.$route.params.id) {
 					invoice_obj.pdf_link = vm.pdf_link;
@@ -371,6 +374,6 @@ export default {
 
 			this.dialog = true;
 		}
-	},
+	}
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
-	<v-row no-gutters>
+<div>
+<v-row no-gutters>
     <LeftSide />
 		<v-col cols="12" md="5" style="padding-top : 30px">
 			<h6 class="display-2 bold" align="center" style="color :#336882">Create Account</h6>
@@ -93,15 +94,20 @@
 			<v-btn color="white" text @click="snackbar = false">Close</v-btn>
 		</v-snackbar>
 	</v-row>
+	<Form />
+</div>
 </template>
+
 <script>
+import Form from "@/components/loginForm.vue";
 import LeftSide from "@/components/LeftSide";
 
 export default {
-	 components: {
-LeftSide
-  },
-	data: () => ({
+	components: {
+		Form,
+		LeftSide
+	},
+		data: () => ({
 		snackbar: false,
 		timeout: 5000,
 		text: "",
@@ -161,9 +167,12 @@ LeftSide
 		}
 	},
 	beforeMount() {
-		if(this.$auth.loggedIn) this.$router.push('/invoices')
+		if(this.$auth.loggedIn) this.$router.push('/invoices');
+		
 	}
-};
+}
 </script>
-<style  scoped>
+
+<style>
+
 </style>

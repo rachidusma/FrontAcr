@@ -107,7 +107,11 @@
 			<v-btn outlined small class="ma-5" target="_blank" :href="invoice.pdf_link">
 				<v-icon class="font1">mdi mdi-download</v-icon>
 			</v-btn>
+			<no-ssr>
+
 			<vuePDF v-for="i in numPages" :key="i" :src="invoice.pdf_link" :page="i"></vuePDF>
+			</no-ssr>
+
 		</div>
 	</div>
 </template>

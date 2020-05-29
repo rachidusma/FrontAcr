@@ -171,10 +171,10 @@
 							<v-list-item-title>Profile</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
-				
+
 					<v-list-item to="/statistics">
 						<v-list-item-action>
-							<v-icon> mdi mdi-chart-bar </v-icon>
+							<v-icon>mdi mdi-chart-bar</v-icon>
 						</v-list-item-action>
 						<v-list-item-content>
 							<v-list-item-title>statistics</v-list-item-title>
@@ -271,12 +271,42 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+@media screen and (max-width: 600px) {
+	.v-data-table__wrapper table tbody tr:nth-child(2n + 1),
+	.v-data-table__wrapper
+		table
+		tbody
+		tr.v-data-table__mobile-table-row:nth-child(2n + 1),
+	.v-data-table__wrapper table tbody tr:nth-child(2n),
+	.v-data-table__wrapper
+		table
+		tbody
+		tr.v-data-table__mobile-table-row:nth-child(2n) {
+		display: table-row;
+	}
+}
+.v-data-table__wrapper table tbody tr:nth-child(2n + 1),
+.v-data-table__wrapper
+	table
+	tbody
+	tr.v-data-table__mobile-table-row:nth-child(2n + 1) {
+	background-color: #fff !important;
+}
+
+.v-data-table__wrapper table tbody tr:nth-child(2n),
+.v-data-table__wrapper
+	table
+	tbody
+	tr.v-data-table__mobile-table-row:nth-child(2n) {
+	background-color: #ccc !important;
+}
+
 .v-list-item__icon {
 	margin-right: 10px !important;
 }
 img {
-	width: 24px
+	width: 24px;
 }
 .v-navigation-drawer__content
 	.v-list-item--active.v-list-item.v-list-item--link.theme--light,
