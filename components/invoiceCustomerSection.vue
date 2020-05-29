@@ -172,12 +172,15 @@ export default {
 					if (!!this.customername || this.customer.customername) {
 						let m = res.filter(x => x.customername == this.customername);
 						this.$store.commit("setCustomer", m[0]);
+						this.editUserModal = true;
 
 						Object.assign(this.customer, m[0]);
 					} else if (!!this.customernameFromVuex) {
 						let m = res.filter(
 							x => x.customername == this.customernameFromVuex
 						);
+						
+						this.editUserModal = true;
 						this.$store.commit("setCustomer", m[0]);
 
 						Object.assign(this.customer, m[0]);

@@ -93,23 +93,23 @@
 			<v-row>
 				<v-col cols="12" md="2">
 					<p class="text--secondary pa-0 ma-0">Customer type</p>
-					<p class="text--primary pa-0 ma-0">{{ (!!customer.orgnummer) ? 'Company' : "Individuals" }}</p>
+					<p class="text--primary pa-0 ma-0">{{ (!!customer.orgnummer) ? 'Company' : "Individuals" || '-' }}</p>
 				</v-col>
 				<v-col cols="12" md="2">
 					<p class="text--secondary pa-0 ma-0" v-if="!!customer.orgnummer">Org-number</p>
-					<p class="text--primary pa-0 ma-0">{{ customer.orgnummer }}</p>
+					<p class="text--primary pa-0 ma-0">{{ customer.orgnummer || '-' }}</p>
 				</v-col>
 				<v-col cols="12" md="2">
 					<p class="text--secondary pa-0 ma-0" v-if="!!customer.epost">Email</p>
-					<p class="text--primary pa-0 ma-0">{{ customer.epost }}</p>
+					<p class="text--primary pa-0 ma-0">{{ customer.epost || '-' }}</p>
 				</v-col>
 				<v-col cols="12" md="3">
 					<p class="text--secondary pa-0 ma-0" v-if="!!customer.postadress">Address</p>
-					<p class="text--primary pa-0 ma-0">{{ customer.postadress }}</p>
+					<p class="text--primary pa-0 ma-0">{{ customer.postadress || '-' }}</p>
 				</v-col>
-				<v-col cols="12" md="2">
-					<p class="text--secondary pa-0 ma-0" v-if="!!customer.vatnummer">VAT number</p>
-					<p class="text--primary pa-0 ma-0">{{ customer.vatnummer }}</p>
+				<v-col cols="12" md="2" v-if="!!customer.vatnummer">
+					<p class="text--secondary pa-0 ma-0" >VAT number</p>
+					<p class="text--primary pa-0 ma-0">{{ customer.vatnummer || '-' }}</p>
 				</v-col>
 			</v-row>
 		</v-card>

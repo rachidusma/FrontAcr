@@ -16,6 +16,10 @@ export const mutations = {
     /** NEW INVOICE */
     setCustomer(state, customer) {
         state.customerEpost = customer.epost;
+        
+        state.invoice.dagar = customer.dagar;
+        state.invoice.OverduePayment = customer.overdueinterest;
+
         return Object.assign(state.customer, customer);
     },
     dateFrom(state, date) {

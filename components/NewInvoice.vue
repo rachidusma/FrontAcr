@@ -29,7 +29,6 @@
 
 			<!-- Start Customer -->
 			<v-col cols="12">
-				<!-- <div class="overline mb-4">Your customer:</div> -->
 				<v-card outlined class="pa-3">
 					<h3 class="text--primary pb-3">Customer:</h3>
 					<customerSection
@@ -42,10 +41,8 @@
 
 			<!-- Start Product -->
 			<v-col cols="12">
-				<!-- <div class="overline mb-4">Articles :</div> -->
 				<v-card outlined class="pa-5">
 					<h3 class="mb-3">Items/services:</h3>
-					<!-- <v-divider class="mb-4"></v-divider> -->
 					<!-- Start Add row MODAL -->
 
 					<v-dialog v-model="dialog" persistent scrollable max-width="600px">
@@ -879,7 +876,12 @@ export default {
 				.then(res => {
 					console.log("articles res => ", res);
 					this.draggableItems = res;
+					(this.draggableItems).map(x => {
+						x.total = x.number * x.pris_enhet
+					})
+					this.doCalculations(this.draggableItems);
 				});
+				
 			// this.selection_value = this.draft;
 		},
 		async deleteDraft() {
@@ -1062,7 +1064,11 @@ export default {
 			if (calcs.RoundedSumState)
 				calcs.totalSumToPay = Math.round(calcs.totalSumToPay);
 		},
+		/** do the Calculattions under the draggable 
+		 * @param { Array } arr
+		 */
 		doCalculations(arr) {
+			
 			let calcs = this.calculations;
 			calcs.amountExVAT = 0;
 			calcs.vat6 = 0;
@@ -1075,6 +1081,8 @@ export default {
 				if (x.text) {
 					return;
 				}
+				console.log('x', x);
+				
 				/** Ex Vat Calc */
 				calcs.amountExVAT += Number(x.total);
 
