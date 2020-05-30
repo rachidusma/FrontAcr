@@ -299,7 +299,7 @@ export default {
 	table
 	tbody
 	tr.v-data-table__mobile-table-row:nth-child(2n) {
-	background-color: #ccc !important;
+	background-color: #eee !important;
 }
 
 .v-list-item__icon {

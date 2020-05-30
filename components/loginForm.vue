@@ -1,32 +1,130 @@
 <template>
 	<div class="body">
 		<div class="container" id="container">
-
 			<div class="form-container sign-up-container">
-				<form action="#">
-					<h1>Create Account</h1>
+				<v-form v-model="signUpValid" ref="form">
+					<v-row align-content="center">
+						<v-col cols="12">
+							<h1>Create Account</h1>
+						</v-col>
+						<v-col cols="12" md="6">
+							<v-text-field
+								outlined
+								:rules="[rules.required]"
+								label="First Name"
+								placeholder="First Name"
+								v-model="signUpUserInfo.first"
+								type="text"
+								dense
+							></v-text-field>
+						</v-col>
+						<v-col cols="12" md="6">
+							<v-text-field
+								outlined
+								:rules="[rules.required]"
+								label="Last Name"
+								placeholder="Last Name"
+								v-model="signUpUserInfo.last"
+								type="text"
+								dense
+							></v-text-field>
+						</v-col>
+						<v-col cols="12" md="6">
+							<v-text-field
+								outlined
+								label="Email"
+								:rules="[rules.emailRules, rules.required]"
+								v-model="signUpUserInfo.email"
+								type="email"
+								dense
+								placeholder="Email"
+							></v-text-field>
+						</v-col>
+						<v-col cols="12" md="6">
+							<v-text-field
+								outlined
+								label="Numebr"
+								v-model="signUpUserInfo.number"
+								:rules="[rules.required]"
+								type="number"
+								dense
+								placeholder="Numebr"
+							></v-text-field>
+						</v-col>
+						<v-col cols="12" md="6">
+							<v-text-field
+								v-model="signUpUserInfo.password"
+								autocomplete="current-password"
+								:value="signUpUserInfo.password"
+								label="Password"
+								dense
+								:append-icon="!showPass ? 'mdi-eye' : 'mdi-eye-off'"
+								@click:append="showPass = !showPass"
+								:type="!showPass ? 'password' : 'text'"
+								@input="_=>userPassword=_"
+								:rules="[rules.passRules]"
+							></v-text-field>
+						</v-col>
 
-					<input type="text" placeholder="Name" />
-					<input type="email" placeholder="Email" />
-					<input type="password" placeholder="Password" />
-					<button>Sign Up</button>
-					<br>
-					<a id="signIn2">Already have account?</a>
-				</form>
+						<v-col cols="12" md="6">
+							<v-text-field
+								v-model="signUpUserInfo.confirmPass"
+								autocomplete="confirm-password"
+								:value="signUpUserInfo.confirmPass"
+								label="Confirm Password"
+								dense
+								:rules="[rules.confirmPasswordRules]"
+								:append-icon="!showConfirm ? 'mdi-eye' : 'mdi-eye-off'"
+								@click:append="showConfirm = !showConfirm"
+								:type="!showConfirm ? 'password' : 'text'"
+								@input="checkValid"
+							></v-text-field>
+						</v-col>
+						<v-col cols="12">
+							<v-btn color="primary" @click="userRegister" :disabled="!(signUpValid && checkValid)">Sign Up</v-btn>
+							<br />
+							<a id="signIn2">Already have account?</a>
+						</v-col>
+					</v-row>
+				</v-form>
 			</div>
 
 			<div class="form-container sign-in-container">
-				<form action="#">
-					<h1>Sign in</h1>
-
-					<input type="email" v-model="userInfo.email" placeholder="Email" />
-					<input type="password" v-model="userInfo.password" placeholder="Password" />
-					<a href="#">Forgot your password?</a>
-					<button @click="userLogin">Sign In</button>
-					<br>
-					<a id="signUp2">Don't have account?</a>
-
-				</form>
+				<v-form v-model="valid" ref="form">
+					<v-row align-content="center">
+						<v-col cols="12">
+							<h1>Sign in</h1>
+						</v-col>
+						<v-col cols="12">
+							<v-text-field
+								dense
+								outlined
+								:rules="rules.emailRules"
+								type="email"
+								v-model="userInfo.email"
+								label="Email"
+								placeholder="Email"
+							/>
+							<v-text-field
+								dense
+								outlined
+								type="password"
+								:rules="rules.passRules"
+								v-model="userInfo.password"
+								label="Password"
+								placeholder="Password"
+							/>
+						</v-col>
+						<v-col cols="12">
+							<a href="#">Forgot your password?</a>
+						</v-col>
+						<v-col cols="12">
+							<v-btn color="primary" :disabled="!valid" class="mb-2" @click="userLogin">Sign In</v-btn>
+							<br />
+							<a id="signUp2">Don't have account?</a>
+						</v-col>
+					</v-row>
+				</v-form>
 			</div>
 			<div class="overlay-container">
 				<div class="overlay">
@@ -43,6 +141,11 @@
 				</div>
 			</div>
 		</div>
+
+		<v-snackbar v-model="snackbar">
+			{{ text }}
+			<v-btn color="white" text @click="snackbar = false">Close</v-btn>
+		</v-snackbar>
 	</div>
 </template>
 <script>
@@ -51,21 +154,73 @@ export default {
 	data() {
 		return {
 			valid: false,
+			signUpValid: false,
 			snackbar: false,
 			showPassword: false,
 			text: "Wrong email or password",
-			emailRules: [
-				v => !!v || "E-mail is required",
-				v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-			],
-			passRules: [v => !!v || "Password is required"],
+			rules: {
+				emailRules: [
+					v => !!v || "E-mail is required",
+					v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+				],
+				passRules: [v => !!v || "Password is required"],
+				required: v => !!v || "required",
+				confirmPasswordRules: v => v == this.signUpUserInfo.password
+			},
 			userInfo: {
 				email: "eric1@gmail.com",
 				password: "123456"
-			}
+			},
+
+			signUpUserInfo: {
+				first: "rachid",
+				last: "ouannas",
+				number: "123123",
+				email: "usmarachid9@gmail.com",
+				password: "123123",
+				confirmPass: "123123"
+			},
+			snackbar: false,
+			timeout: 5000,
+			color: "",
+			showPass: false,
+			showConfirm: false
 		};
 	},
+	computed: {
+		passwordConfirmationRule() {
+			return () =>
+				this.userInfo.password === this.userInfo.confirmPass ||
+				"Password must match";
+		},
+		checkValid() {
+			return this.signUpUserInfo.confirmPass == this.signUpUserInfo.password;
+		}
+	},
 	methods: {
+		validate() {
+			this.$refs.form.validate();
+		},
+		async userRegister(userInfo) {
+			try {
+				const name = userInfo.first;
+				const lastname = userInfo.last;
+				const email = userInfo.email;
+				const password = userInfo.password;
+				let response = await this.$axios.post(
+					"http://localhost:5000/api/users",
+					{ name: name, lastname: lastname, email: email, password: password }
+				);
+				this.text = "Registration success";
+				this.color = "success";
+				this.snackbar = true;
+				this.$router.push("/register");
+			} catch {
+				this.text = "Registration failed, Email already used";
+				this.color = "error";
+				this.snackbar = true;
+			}
+		},
 		async userLogin() {
 			try {
 				await this.$auth
@@ -74,9 +229,13 @@ export default {
 						this.$router.push("/invoices");
 					})
 					.catch(err => {
+						console.log(err);
+
 						this.snackbar = true;
 					});
 			} catch (err) {
+				console.log(err);
+
 				this.snackbar = true;
 			}
 		},
@@ -91,14 +250,13 @@ export default {
 		const signUpButton = document.getElementById("signUp");
 		const signInButton = document.getElementById("signIn");
 		const container = document.getElementById("container");
-			
-			
+
 		if (this.$route.name == "index") {
 			container.classList.remove("right-panel-active");
-		} else {			
+		} else {
 			container.classList.add("right-panel-active");
 		}
-		
+
 		signIn2.addEventListener("click", () => {
 			container.classList.remove("right-panel-active");
 		});
@@ -118,10 +276,6 @@ export default {
 
 
 <style scoped>
-* {
-	box-sizing: border-box;
-}
-
 .body {
 	background-image: linear-gradient(
 		to right top,
@@ -143,34 +297,6 @@ export default {
 	align-items: center;
 	flex-direction: column;
 	height: 100vh;
-}
-
-h1 {
-	font-weight: bold;
-	margin: 0;
-}
-
-h2 {
-	text-align: center;
-}
-
-p {
-	font-size: 14px;
-	font-weight: 100;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
-}
-
-span {
-	font-size: 12px;
-}
-
-a {
-	color: #333;
-	font-size: 14px;
-	text-decoration: none;
-	margin: 15px 0;
 }
 
 button {
@@ -210,23 +336,14 @@ form {
 	text-align: center;
 }
 
-input {
-	background-color: #eee;
-	border: none;
-	padding: 12px 15px;
-	margin: 8px 0;
-	width: 100%;
-}
-
 .container {
 	background-color: #fff;
-	border-radius: 10px;
-	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+	border-radius: 0px;
+	box-shadow: 0 px;
 	position: relative;
 	overflow: hidden;
-	width: 768px;
 	max-width: 100%;
-	min-height: 480px;
+	height: 100%;
 }
 
 .form-container {
@@ -289,10 +406,18 @@ input {
 	transform: translateX(-100%);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
+	h1 {
+		font-size: 22px;
+	}
 
 	.body {
-		padding: 0 50px !important;
+		padding: 0 10px !important;
+	}
+	.container {
+		max-height: 90%;
+		max-width: 100%;
+		overflow-y: scroll;
 	}
 	.sign-in-container {
 		top: 0;
@@ -319,9 +444,7 @@ input {
 }
 
 .overlay {
-	background: rgb(84, 140, 168);
-	background: -webkit-linear-gradient(to right, #336882, rgb(84, 140, 168));
-	background: linear-gradient(to right, rgb(51, 104, 130), #548ca8);
+	background-image: url("~assets/loginImage.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
