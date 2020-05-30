@@ -19,10 +19,10 @@
 				<form action="#">
 					<h1>Sign in</h1>
 
-					<input type="email" placeholder="Email" />
-					<input type="password" placeholder="Password" />
+					<input type="email" v-model="userInfo.email" placeholder="Email" />
+					<input type="password" v-model="userInfo.password" placeholder="Password" />
 					<a href="#">Forgot your password?</a>
-					<button>Sign In</button>
+					<button @click="userLogin">Sign In</button>
 					<br>
 					<a id="signUp2">Don't have account?</a>
 
@@ -92,7 +92,6 @@ export default {
 		const signInButton = document.getElementById("signIn");
 		const container = document.getElementById("container");
 			
-			console.log(this.$route.name);
 			
 		if (this.$route.name == "index") {
 			container.classList.remove("right-panel-active");
