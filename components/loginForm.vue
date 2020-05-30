@@ -251,7 +251,7 @@ export default {
 		const signInButton = document.getElementById("signIn");
 		const container = document.getElementById("container");
 
-		if (this.$route.name == "index") {
+		if (this.$route.name == "index" || this.$route.name == "login") {
 			container.classList.remove("right-panel-active");
 		} else {
 			container.classList.add("right-panel-active");

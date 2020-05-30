@@ -2,7 +2,8 @@
 	<v-dialog v-model="dialog" persistent scrollable max-width="600px">
 		<v-card>
 			<v-card-title>
-				<h4>Add user Profile</h4>
+				<h4 v-if="!edit">Add Customer</h4>
+				<h4 v-else>Edit customer</h4>
 				<v-spacer></v-spacer>
 				<v-icon class="black--text" @click="close">mdi mdi-close</v-icon>
 			</v-card-title>
@@ -288,6 +289,7 @@ export default {
 			this.$refs.form.validate();
 		},
 		async saveUser() {
+			if(this.the_customer.dagar) this.the_customer.dagar = Number(this.the_customer.dagar);
 			await this.$axios
 				.$post("/customers", this.the_customer)
 				.then(res => {
@@ -305,9 +307,10 @@ export default {
 			await this.$axios
 				.$patch(`/customers/${customer._id}`, this.the_customer)
 				.then(async res => {
-					console.log(res);
 
-					this.$emit("UserEdited", res);
+						this.$store.commit("setCustomer",this.the_customer);
+						this.$store.commit("setDagar", this.the_customer.dagar);
+					this.$emit("UserEdited", this.the_customer);
 					this.dialog = false;
 					this.$emit("close");
 				})

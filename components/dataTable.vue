@@ -35,11 +35,11 @@
 				</v-col>
 				<!-- End state input -->
 
-				<!-- Start types input -->
+				<!-- Start types input 
 				<v-col cols="12" sm="3">
 					<v-select :items="types" item-text="text" item-value="value" label="All types" solo dense></v-select>
 				</v-col>
-				<!-- End types input -->
+				End types input -->
 			</v-row>
 
 			<!-- Start The data table -->

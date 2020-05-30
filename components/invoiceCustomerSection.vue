@@ -61,7 +61,7 @@
 
 				<userModal
 					@close="dialog = false"
-					@UserEdited="dialog = false;editUser()"
+					@UserEdited="dialog = false;editUser($event)"
 					@updated="dialog = false; getUsers()"
 					:customerId="customer._id"
 					:customer="customer"
@@ -171,16 +171,22 @@ export default {
 					this.items = res;
 					if (!!this.customername || this.customer.customername) {
 						let m = res.filter(x => x.customername == this.customername);
+						console.log('here');
+						
 						this.$store.commit("setCustomer", m[0]);
 						this.editUserModal = true;
 
 						Object.assign(this.customer, m[0]);
 					} else if (!!this.customernameFromVuex) {
+						console.log(res);
+						
 						let m = res.filter(
-							x => x.customername == this.customernameFromVuex
+							x => x._id == this._id
 						);
 						
 						this.editUserModal = true;
+						console.log(m);
+						
 						this.$store.commit("setCustomer", m[0]);
 
 						Object.assign(this.customer, m[0]);
@@ -218,8 +224,11 @@ export default {
 			this.dialog = false;
 		},
 		async editUser(user) {
+			console.log('user', user);
+			
 			this.customer = {};
-			this.getUsers();
+			await this.getUsers();
+			this.customer = user
 		}
 	}
 };

@@ -1,5 +1,5 @@
 
-export const state = () => ({   
+export const state = () => ({
     /** NEW INVOICE */
     customer: {},
     customerEpost: null,
@@ -15,24 +15,29 @@ export const state = () => ({
 export const mutations = {
     /** NEW INVOICE */
     setCustomer(state, customer) {
-        state.customerEpost = customer.epost;
-        
-        state.invoice.dagar = customer.dagar;
+
+        if (customer.epost)
+            state.customerEpost = customer.epost;
+
         state.invoice.OverduePayment = customer.overdueinterest;
 
         return Object.assign(state.customer, customer);
     },
     dateFrom(state, date) {
         state.invoice.dateFrom = date;
-        state.invoice.dagar = (new Date(state.invoice.dateTo) - new Date(state.invoice.dateFrom))/ 86400000;
+        if (!updateDagar) {
+            state.invoice.dagar = (new Date(state.invoice.dateTo) - new Date(state.invoice.dateFrom)) / 86400000;
+        }
+
         return
     },
-    dateTo(state, date) {
+    dateTo(state, date, updateDagar) {
         state.invoice.dateTo = date;
+        if (!updateDagar) {
+            state.invoice.dagar = (new Date(state.invoice.dateTo) - new Date(state.invoice.dateFrom)) / 86400000;
+        }
 
-        state.invoice.dagar = (new Date(state.invoice.dateTo) - new Date(state.invoice.dateFrom))/ 86400000;
-
-        return 
+        return
     },
     setDelivery(state, delivery) {
         return state.invoice.Delivery = delivery

@@ -116,9 +116,9 @@
 					<div v-if="$auth.user.admin">
 						<v-list-group no-action>
 							<template v-slot:activator>
-								<v-list-item-icon>
+								<v-list-item-action>
 									<img src="/payment.svg" width="24" alt="payment" />
-								</v-list-item-icon>
+								</v-list-item-action>
 								<v-list-item-content>
 									<v-list-item-title>Salary</v-list-item-title>
 								</v-list-item-content>
@@ -143,15 +143,7 @@
 					</div>
 
 					<v-divider></v-divider>
-					<v-list-item to="/docment">
-						<v-list-item-action>
-							<v-icon>mdi-folder-multiple-image</v-icon>
-						</v-list-item-action>
-						<v-list-item-content>
-							<v-list-item-title>Document</v-list-item-title>
-						</v-list-item-content>
-					</v-list-item>
-					<v-divider></v-divider>
+
 
 					<v-list-item to="/settings">
 						<v-list-item-action>
@@ -163,14 +155,6 @@
 					</v-list-item>
 					<v-divider></v-divider>
 
-					<v-list-item to="/profile">
-						<v-list-item-action>
-							<img src="/profile.svg" width="24" alt="payment" />
-						</v-list-item-action>
-						<v-list-item-content>
-							<v-list-item-title>Profile</v-list-item-title>
-						</v-list-item-content>
-					</v-list-item>
 
 					<v-list-item to="/statistics">
 						<v-list-item-action>
@@ -190,7 +174,7 @@
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
 			<v-toolbar-title>
-				<nuxt-link to="/" class="link">Acredit</nuxt-link>
+				<nuxt-link to="/" class="white--text link">Acredit</nuxt-link>
 			</v-toolbar-title>
 			<v-spacer />
 			<v-spacer></v-spacer>
@@ -206,7 +190,9 @@
 					offset-x
 				>
 					<template v-slot:activator="{ on }">
-						<v-btn outlined v-on="on">{{ $auth.user.name }}</v-btn>
+						<v-btn outlined v-on="on">{{ $auth.user.name }} 
+							<v-icon> mdi mdi-chevron-down </v-icon>
+						</v-btn>
 					</template>
 					<v-list class="pa-0">
 						<v-list-item class="grey lighten-4 pa-5">

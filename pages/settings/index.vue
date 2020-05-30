@@ -54,7 +54,6 @@ export default {
         accountLinks: [
           {text: "Personal settings", link:"/settings/personal-settings"},
           {text: "Change password", link:"/settings/change-password"},
-          {text: "Export data", link:"/settings/export-data"},
         ]
     }
   },

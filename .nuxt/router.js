@@ -7,16 +7,15 @@ const _73263f7f = () => interopDefault(import('..\\pages\\articles\\index.vue' /
 const _657f1984 = () => interopDefault(import('..\\pages\\customer\\index.vue' /* webpackChunkName: "pages_customer_index" */))
 const _396dc994 = () => interopDefault(import('..\\pages\\invoices\\index.vue' /* webpackChunkName: "pages_invoices_index" */))
 const _26d965c7 = () => interopDefault(import('..\\pages\\job.vue' /* webpackChunkName: "pages_job" */))
+const _6b3c4ef3 = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages_login" */))
 const _442e3773 = () => interopDefault(import('..\\pages\\newinvoice.vue' /* webpackChunkName: "pages_newinvoice" */))
 const _47171806 = () => interopDefault(import('..\\pages\\paidsalary\\index.vue' /* webpackChunkName: "pages_paidsalary_index" */))
-const _4431006f = () => interopDefault(import('..\\pages\\profile\\index.vue' /* webpackChunkName: "pages_profile_index" */))
 const _5ae349d9 = () => interopDefault(import('..\\pages\\settings\\index.vue' /* webpackChunkName: "pages_settings_index" */))
 const _810d4ec4 = () => interopDefault(import('..\\pages\\Signup.vue' /* webpackChunkName: "pages_Signup" */))
 const _2ca2afee = () => interopDefault(import('..\\pages\\statistics.vue' /* webpackChunkName: "pages_statistics" */))
 const _6f41f3cb = () => interopDefault(import('..\\pages\\uppaidsalary\\index.vue' /* webpackChunkName: "pages_uppaidsalary_index" */))
 const _0fdb8a31 = () => interopDefault(import('..\\pages\\user\\index.vue' /* webpackChunkName: "pages_user_index" */))
 const _7c8dc142 = () => interopDefault(import('..\\pages\\settings\\change-password.vue' /* webpackChunkName: "pages_settings_change-password" */))
-const _3beca12c = () => interopDefault(import('..\\pages\\settings\\export-data.vue' /* webpackChunkName: "pages_settings_export-data" */))
 const _29afb09e = () => interopDefault(import('..\\pages\\settings\\forgetPassword.vue' /* webpackChunkName: "pages_settings_forgetPassword" */))
 const _d643f5e8 = () => interopDefault(import('..\\pages\\settings\\invoice-settings.vue' /* webpackChunkName: "pages_settings_invoice-settings" */))
 const _0cea4497 = () => interopDefault(import('..\\pages\\settings\\personal-settings.vue' /* webpackChunkName: "pages_settings_personal-settings" */))
@@ -61,6 +60,10 @@ export const routerOptions = {
     component: _26d965c7,
     name: "job"
   }, {
+    path: "/login",
+    component: _6b3c4ef3,
+    name: "login"
+  }, {
     path: "/newinvoice",
     component: _442e3773,
     name: "newinvoice"
@@ -68,10 +71,6 @@ export const routerOptions = {
     path: "/paidsalary",
     component: _47171806,
     name: "paidsalary"
-  }, {
-    path: "/profile",
-    component: _4431006f,
-    name: "profile"
   }, {
     path: "/settings",
     component: _5ae349d9,
@@ -96,10 +95,6 @@ export const routerOptions = {
     path: "/settings/change-password",
     component: _7c8dc142,
     name: "settings-change-password"
-  }, {
-    path: "/settings/export-data",
-    component: _3beca12c,
-    name: "settings-export-data"
   }, {
     path: "/settings/forgetPassword",
     component: _29afb09e,
