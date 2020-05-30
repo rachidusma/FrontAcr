@@ -12,6 +12,12 @@ export const state = () => ({
     }
 });
 
+Date.prototype.addDays = function (days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+};
+
 export const mutations = {
     /** NEW INVOICE */
     setCustomer(state, customer) {
@@ -23,20 +29,12 @@ export const mutations = {
 
         return Object.assign(state.customer, customer);
     },
-    dateFrom(state, date) {
+    dateFrom(state,  date) {
         state.invoice.dateFrom = date;
-        if (!updateDagar) {
-            state.invoice.dagar = (new Date(state.invoice.dateTo) - new Date(state.invoice.dateFrom)) / 86400000;
-        }
 
-        return
-    },
-    dateTo(state, date, updateDagar) {
-        state.invoice.dateTo = date;
-        if (!updateDagar) {
             state.invoice.dagar = (new Date(state.invoice.dateTo) - new Date(state.invoice.dateFrom)) / 86400000;
-        }
-
+            state.invoice.dateTo = new Date(state.invoice.dateFrom).addDays( state.invoice.dagar).toISOString()
+            .substr(0, 10);
         return
     },
     setDelivery(state, delivery) {
@@ -46,7 +44,17 @@ export const mutations = {
         return state.invoice.OverduePayment = payment
     },
     setDagar(state, dagar) {
-        return state.invoice.dagar = dagar
+        console.log('here setDagar =>', dagar);
+        
+        state.invoice.dagar = dagar;
+        console.log('before',new Date(state.invoice.dateFrom).toISOString()
+        .substr(0, 10));
+        
+        console.log('after', new Date(state.invoice.dateFrom).addDays(Number(dagar) ).toISOString()
+        .substr(0, 10));
+        state.invoice.dateTo = new Date(state.invoice.dateFrom).addDays(Number(dagar) ).toISOString()
+        .substr(0, 10)
+        return
     },
     setEmail(state, email) {
         return state.customer.epost = email;

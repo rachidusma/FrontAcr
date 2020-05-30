@@ -191,7 +191,6 @@ export default {
     },
     toDate(val) {
       this.toDateFormatted = this.formatDate(this.toDate);
-      this.$store.commit("dateTo", val);
     }
   },
 

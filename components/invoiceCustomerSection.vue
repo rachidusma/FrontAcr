@@ -143,7 +143,7 @@ export default {
 			this.getUsers();
 		},
 		customer(val) {
-			if (val != "undefined") {
+			if (val != "undefined" && !!val.dagar && !!val.epost) {				
 				this.$store.commit("setCustomer", val);
 				this.$store.commit("setDagar", val.dagar);
 				this.$store.commit("setOverduePayment", val.overdueinterest);
@@ -168,10 +168,11 @@ export default {
 			await this.$axios
 				.$get("/customers")
 				.then(res => {
+					console.log("res", res);
+
 					this.items = res;
 					if (!!this.customername || this.customer.customername) {
 						let m = res.filter(x => x.customername == this.customername);
-						console.log('here');
 						
 						this.$store.commit("setCustomer", m[0]);
 						this.editUserModal = true;
@@ -179,15 +180,14 @@ export default {
 						Object.assign(this.customer, m[0]);
 					} else if (!!this.customernameFromVuex) {
 						console.log(res);
-						
-						let m = res.filter(
-							x => x._id == this._id
-						);
-						
+
+						let m = res.filter(x => x.customername == this.customername);
+
 						this.editUserModal = true;
-						console.log(m);
-						
+						console.log(das,m);
+
 						this.$store.commit("setCustomer", m[0]);
+						
 
 						Object.assign(this.customer, m[0]);
 					}
@@ -224,11 +224,10 @@ export default {
 			this.dialog = false;
 		},
 		async editUser(user) {
-			console.log('user', user);
-			
 			this.customer = {};
 			await this.getUsers();
-			this.customer = user
+			this.customer = user;
+			this.$store.commit("setDagar", user.dagar);
 		}
 	}
 };

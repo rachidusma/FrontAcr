@@ -75,9 +75,9 @@
 						>
 							<template v-slot:activator="{ on }">
 								<v-text-field
-									v-model="computedDateFormatted"
+									v-model="date"
 									label="From Date"
-									hint="MM/DD/YYYY format"
+									hint="YYYY-MM-DD format"
 									persistent-hint
 									readonly
 									dense
@@ -100,9 +100,9 @@
 						>
 							<template v-slot:activator="{ on }">
 								<v-text-field
-									v-model="computedToDateFormatted"
+									v-model="toDate"
 									label="To Date"
-									hint="MM/DD/YYYY format"
+									hint="YYYY-MM-DD format"
 									persistent-hint
 									readonly
 									dense
@@ -110,13 +110,13 @@
 									v-on="on"
 								></v-text-field>
 							</template>
-							<v-date-picker v-model="toDate" no-title @input="menu1 = false"></v-date-picker>
+							<v-date-picker v-model="toDate" no-title @input="menu1 = false; toDateChanged($event)"></v-date-picker>
 						</v-menu>
 					</v-col>
 
 					<v-col cols="12" lg="2">
 						<p class="py-0 my-0">Days</p>
-						{{ (invoice.dagar > 0 ) ? invoice.dagar : days || "-"}}
+						{{ (invoice.dagar > 0 ) ? invoice.dagar :  "-"}}
 					</v-col>
 				</v-row>
 
@@ -163,25 +163,6 @@ export default {
 			}
 			return 0;
 		},
-		computedDateFormatted() {
-			return this.formatDate(this.date);
-		},
-		computedToDateFormatted() {
-			if (this.invoice.dagar > 0) {
-				console.log(this.invoice.dagar);
-				let m = new Date(this.date);
-				todate = m
-					.addDays(this.invoice.dagar)
-					.toISOString()
-					.substr(0, 10);
-				this.$store.commit("dateTo", todate);
-
-				console.log(this.invoice.dagar);
-
-				return this.formatDate(todate);
-			}
-			return this.formatDate(todate);
-		},
 		overduePayment: {
 			get: function () {
 				return this.$store.state.invoice.OverduePayment
@@ -197,6 +178,10 @@ export default {
 			set: function(val) {
 				this.$store.commit('setDelivery',val)
 			}
+		},
+		dagar(){
+				
+			return this.invoice.dagar;
 		},
 		...mapState(["invoice"])
 	},
@@ -221,21 +206,27 @@ export default {
 		date(val) {
 			this.$store.commit("dateFrom", val);
 		},
-		toDate(val) {
-			this.$store.commit("dateTo", val);
+		dagar(val) {
+			
+			console.log("val",val);
+			console.log(this.toDate);
+			this.toDate = this.invoice.dateTo
+			
 		}
 	},
 
 	methods: {
+		toDateChanged(val) {
+			console.log("dsaasd",val);
+			
+			let dagar = (new Date(this.toDate) - new Date(this.date)) / 86400000;
+			console.log("dagar", dagar);
+			
+			this.$store.commit("setDagar", dagar);
+		},
 		assignDates() {
 			this.toDate = this.todatefromDraft;
 			this.date = this.datefromDraft;
-		},
-		formatDate(date) {
-			if (!date) return null;
-
-			const [year, month, day] = date.split("-");
-			return `${month}/${day}/${year}`;
 		}
 	}
 };

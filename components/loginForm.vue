@@ -58,6 +58,7 @@
 								:value="signUpUserInfo.password"
 								label="Password"
 								dense
+								outlined
 								:append-icon="!showPass ? 'mdi-eye' : 'mdi-eye-off'"
 								@click:append="showPass = !showPass"
 								:type="!showPass ? 'password' : 'text'"
@@ -73,6 +74,7 @@
 								:value="signUpUserInfo.confirmPass"
 								label="Confirm Password"
 								dense
+								outlined
 								:rules="[rules.confirmPasswordRules]"
 								:append-icon="!showConfirm ? 'mdi-eye' : 'mdi-eye-off'"
 								@click:append="showConfirm = !showConfirm"
@@ -80,8 +82,27 @@
 								@input="checkValid"
 							></v-text-field>
 						</v-col>
+
+							<v-col cols="12">
+								<v-checkbox
+									v-model="permession1"
+									label="By creating an account I approve ACREDIT  General  Terms and Conditions "
+									color="#336882"
+									hide-details
+								></v-checkbox>
+							</v-col>
+
+							<v-col cols="12" >
+								<v-checkbox
+									v-model="permession2"
+									label="I consent to the processing of my personal data in accordance with  ACREDIT Privacy Policy"
+									color="#336882"
+									hide-details
+								></v-checkbox>
+							</v-col>
+							
 						<v-col cols="12">
-							<v-btn color="primary" @click="userRegister" :disabled="!(signUpValid && checkValid)">Sign Up</v-btn>
+							<v-btn color="primary" @click="userRegister" :disabled="!(permession1 && permession2 && signUpValid && checkValid)">Sign Up</v-btn>
 							<br />
 							<a id="signIn2">Already have account?</a>
 						</v-col>
@@ -128,6 +149,7 @@
 			</div>
 			<div class="overlay-container">
 				<div class="overlay">
+					<img src="@/assets/loginImage.jpg" alt="login">
 					<div class="overlay-panel overlay-left">
 						<h1>Welcome Back!</h1>
 						<p>To keep connected with us please login with your personal info</p>
@@ -184,7 +206,9 @@ export default {
 			timeout: 5000,
 			color: "",
 			showPass: false,
-			showConfirm: false
+			showConfirm: false,
+			permession1: false,
+			permession2: false,
 		};
 	},
 	computed: {
@@ -257,17 +281,21 @@ export default {
 			container.classList.add("right-panel-active");
 		}
 
-		signIn2.addEventListener("click", () => {
+		signIn2.addEventListener("click", () => {			
+			container.scrollTo(0,0);
 			container.classList.remove("right-panel-active");
 		});
 		signUp2.addEventListener("click", () => {
+			
 			container.classList.add("right-panel-active");
 		});
 		signUpButton.addEventListener("click", () => {
+			
 			container.classList.add("right-panel-active");
 		});
 
 		signInButton.addEventListener("click", () => {
+			
 			container.classList.remove("right-panel-active");
 		});
 	}
@@ -410,15 +438,26 @@ form {
 	h1 {
 		font-size: 22px;
 	}
-
+	.form-container.sign-up-container > .v-form {
+		justify-content: start;
+	}
+	.form-container.sign-in-container {
+		height: 100%;
+	}
 	.body {
 		padding: 0 10px !important;
+
 	}
 	.container {
 		max-height: 90%;
 		max-width: 100%;
+		height: 100%;
+	}
+	
+	.container.right-panel-active {
 		overflow-y: scroll;
 	}
+
 	.sign-in-container {
 		top: 0;
 		width: 100%;
@@ -434,6 +473,7 @@ form {
 	}
 
 	.container.right-panel-active .sign-up-container {
+		visibility: visible;
 		transform: translateX(0%);
 		height: 100%;
 	}
@@ -443,11 +483,14 @@ form {
 	}
 }
 
-.overlay {
-	background-image: url("~assets/loginImage.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
+.overlay img{ 
+	filter: brightness(50%);
 	background-position: 0 0;
+	height: 100%;
+	width: 100%;
+}
+
+.overlay {
 	color: #ffffff;
 	position: relative;
 	left: -100%;

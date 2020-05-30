@@ -308,8 +308,7 @@ export default {
 				.$patch(`/customers/${customer._id}`, this.the_customer)
 				.then(async res => {
 
-						this.$store.commit("setCustomer",this.the_customer);
-						this.$store.commit("setDagar", this.the_customer.dagar);
+					this.$store.commit("setCustomer",this.the_customer);
 					this.$emit("UserEdited", this.the_customer);
 					this.dialog = false;
 					this.$emit("close");
