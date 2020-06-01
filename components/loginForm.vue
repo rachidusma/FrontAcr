@@ -2,8 +2,8 @@
 	<div class="body">
 		<div class="container" id="container">
 			<div class="form-container sign-up-container">
-				<v-form v-model="signUpValid" ref="form">
-					<v-row align-content="center">
+				<v-form class="justify-md-center" v-model="signUpValid" ref="form">
+					<v-row align-content="center" v-if="!signedUp">
 						<v-col cols="12">
 							<h1>Create Account</h1>
 						</v-col>
@@ -13,7 +13,7 @@
 								:rules="[rules.required]"
 								label="First Name"
 								placeholder="First Name"
-								v-model="signUpUserInfo.first"
+								v-model="signUpUserInfo.name"
 								type="text"
 								dense
 							></v-text-field>
@@ -24,7 +24,7 @@
 								:rules="[rules.required]"
 								label="Last Name"
 								placeholder="Last Name"
-								v-model="signUpUserInfo.last"
+								v-model="signUpUserInfo.lastname"
 								type="text"
 								dense
 							></v-text-field>
@@ -44,7 +44,7 @@
 							<v-text-field
 								outlined
 								label="Numebr"
-								v-model="signUpUserInfo.number"
+								v-model="signUpUserInfo.telnumber"
 								:rules="[rules.required]"
 								type="number"
 								dense
@@ -83,30 +83,40 @@
 							></v-text-field>
 						</v-col>
 
-							<v-col cols="12">
-								<v-checkbox
-									v-model="permession1"
-									label="By creating an account I approve ACREDIT  General  Terms and Conditions "
-									color="#336882"
-									hide-details
-								></v-checkbox>
-							</v-col>
-
-							<v-col cols="12" >
-								<v-checkbox
-									v-model="permession2"
-									label="I consent to the processing of my personal data in accordance with  ACREDIT Privacy Policy"
-									color="#336882"
-									hide-details
-								></v-checkbox>
-							</v-col>
-							
 						<v-col cols="12">
-							<v-btn color="primary" @click="userRegister" :disabled="!(permession1 && permession2 && signUpValid && checkValid)">Sign Up</v-btn>
+							<v-checkbox
+								v-model="permession1"
+								label="By creating an account I approve ACREDIT  General  Terms and Conditions "
+								color="#336882"
+								hide-details
+							></v-checkbox>
+						</v-col>
+
+						<v-col cols="12">
+							<v-checkbox
+								v-model="permession2"
+								label="I consent to the processing of my personal data in accordance with  ACREDIT Privacy Policy"
+								color="#336882"
+								hide-details
+							></v-checkbox>
+						</v-col>
+
+						<v-col cols="12">
+							<v-btn
+								color="primary"
+								@click="userRegister"
+								:disabled="!(permession1 && permession2 && signUpValid && checkValid)"
+							>Sign Up</v-btn>
 							<br />
 							<a id="signIn2">Already have account?</a>
 						</v-col>
 					</v-row>
+					<v-card outlinde tile class="ma-auto" v-else>
+						<v-card-text>
+							Thank you for registration with us , your account have been created
+							<a id="signIn3">Signin</a> into your account
+						</v-card-text>
+					</v-card>
 				</v-form>
 			</div>
 
@@ -149,7 +159,7 @@
 			</div>
 			<div class="overlay-container">
 				<div class="overlay">
-					<img src="@/assets/loginImage.jpg" alt="login">
+					<img src="@/assets/loginImage.jpg" alt="login" />
 					<div class="overlay-panel overlay-left">
 						<h1>Welcome Back!</h1>
 						<p>To keep connected with us please login with your personal info</p>
@@ -164,7 +174,7 @@
 			</div>
 		</div>
 
-		<v-snackbar v-model="snackbar">
+		<v-snackbar v-model="snackbar" :color="color">
 			{{ text }}
 			<v-btn color="white" text @click="snackbar = false">Close</v-btn>
 		</v-snackbar>
@@ -195,9 +205,9 @@ export default {
 			},
 
 			signUpUserInfo: {
-				first: "rachid",
-				last: "ouannas",
-				number: "123123",
+				name: "rachid",
+				lastname: "ouannas",
+				telnumber: "123123",
 				email: "usmarachid9@gmail.com",
 				password: "123123",
 				confirmPass: "123123"
@@ -208,7 +218,8 @@ export default {
 			showPass: false,
 			showConfirm: false,
 			permession1: false,
-			permession2: false,
+			signedUp: false,
+			permession2: false
 		};
 	},
 	computed: {
@@ -225,22 +236,36 @@ export default {
 		validate() {
 			this.$refs.form.validate();
 		},
-		async userRegister(userInfo) {
+		async userRegister() {
 			try {
-				const name = userInfo.first;
-				const lastname = userInfo.last;
-				const email = userInfo.email;
-				const password = userInfo.password;
-				let response = await this.$axios.post(
-					"http://localhost:5000/api/users",
-					{ name: name, lastname: lastname, email: email, password: password }
-				);
-				this.text = "Registration success";
-				this.color = "success";
-				this.snackbar = true;
-				this.$router.push("/register");
+				await this.$axios
+					.post("users", this.signUpUserInfo)
+					.then(res => {
+
+						this.text = "Registration success";
+						this.color = "success";
+						this.snackbar = true;
+						this.signedUp = true;
+
+						this.userInfo.email = this.signUpUserInfo.email;
+						this.userInfo.password = this.signUpUserInfo.password;
+
+						this.signUpUserInfo = {};
+						this.$nextTick(_ => {
+							let signIn3 = document.getElementById("signIn3");
+							signIn3.addEventListener("click", () => {
+								container.scrollTo(0, 0);
+								container.classList.remove("right-panel-active");
+							});
+						});
+					})
+					.catch(err => {
+						this.text = err.response.data.msg;
+						this.color = "error";
+						this.snackbar = true;
+					});
 			} catch {
-				this.text = "Registration failed, Email already used";
+				this.text = "Check your connection";
 				this.color = "error";
 				this.snackbar = true;
 			}
@@ -271,33 +296,39 @@ export default {
 		if (this.$auth.loggedIn) this.$router.push("/invoices");
 	},
 	mounted() {
-		const signUpButton = document.getElementById("signUp");
-		const signInButton = document.getElementById("signIn");
-		const container = document.getElementById("container");
+		const signUpButton = document.getElementById("signUp"),
+			signInButton = document.getElementById("signIn"),
+			signIn2 = document.getElementById("signIn2"),
+			signUp2 = document.getElementById("signUp2"),
+			container = document.getElementById("container");
 
-		if (this.$route.name == "index" || this.$route.name == "login") {
+		if (this.$route.name == "index" || this.$route.name == "login")
 			container.classList.remove("right-panel-active");
-		} else {
-			container.classList.add("right-panel-active");
-		}
+		else container.classList.add("right-panel-active");
 
-		signIn2.addEventListener("click", () => {			
-			container.scrollTo(0,0);
-			container.classList.remove("right-panel-active");
-		});
-		signUp2.addEventListener("click", () => {
-			
-			container.classList.add("right-panel-active");
-		});
-		signUpButton.addEventListener("click", () => {
-			
-			container.classList.add("right-panel-active");
-		});
+		if (signIn2)
+			signIn2.addEventListener("click", () => {
+				container.scrollTo(0, 0);
+				container.classList.remove("right-panel-active");
+			});
 
-		signInButton.addEventListener("click", () => {
-			
-			container.classList.remove("right-panel-active");
-		});
+		if (signUp2)
+			signUp2.addEventListener("click", () => {
+				container.classList.add("right-panel-active");
+				this.signedUp = false;
+			});
+
+		if (signUpButton)
+			signUpButton.addEventListener("click", () => {
+				container.classList.add("right-panel-active");
+				this.signedUp = false;
+			});
+
+		if (signInButton)
+			signInButton.addEventListener("click", () => {
+				container.scrollTo(0, 0);
+				container.classList.remove("right-panel-active");
+			});
 	}
 };
 </script>
@@ -446,14 +477,13 @@ form {
 	}
 	.body {
 		padding: 0 10px !important;
-
 	}
 	.container {
 		max-height: 90%;
 		max-width: 100%;
 		height: 100%;
 	}
-	
+
 	.container.right-panel-active {
 		overflow-y: scroll;
 	}
@@ -483,7 +513,7 @@ form {
 	}
 }
 
-.overlay img{ 
+.overlay img {
 	filter: brightness(50%);
 	background-position: 0 0;
 	height: 100%;

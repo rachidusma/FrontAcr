@@ -77,7 +77,7 @@ export default {
   ** Build configuration
   */
   build: {
-    vendor: ['vue-pdf', 'js2excel'],
+    vendor: ['vue-pdf'],
     /*
     ** You can extend webpack config here
     */
