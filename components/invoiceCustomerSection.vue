@@ -72,27 +72,27 @@
 		</v-col>
 
 		<!-- Start User Details -->
-		<v-col cols="12" md="6" v-if="customer.customername != ''">
+		<v-col cols="12" md="9" v-if="customer.customername != ''">
 			<v-row>
-				<v-col cols="12" sm="auto" class="align-center d-flex px-8" v-if="customer.orgnummer != ''">
+				<v-col cols="12" sm="3" class="align-center d-flex px-8" v-if="customer.orgnummer != ''">
 					<div class="d-inline-block">
 						<p class="my-0 py-0 caption">Org-number</p>
 						<b>{{customer.orgnummer || '-'}}</b>
 					</div>
 				</v-col>
-				<v-col cols="12" sm="auto" class="align-center d-flex px-8" v-if="customer.vatnummer != ''">
+				<v-col cols="12" sm="3" class="align-center d-flex px-8" v-if="customer.vatnummer != ''">
 					<div class="d-inline-block">
 						<p class="my-0 py-0 caption">VAT number</p>
 						<b>{{customer.vatnummer || '-'}}</b>
 					</div>
 				</v-col>
-				<v-col cols="12" sm="auto" class="align-center d-flex px-8" v-if="customer.epost != ''">
+				<v-col cols="12" sm="3" class="align-center d-flex px-8" v-if="customer.epost != ''">
 					<div class="d-inline-block">
 						<p class="my-0 py-0 caption">Email</p>
 						<b>{{customer.epost || '-'}}</b>
 					</div>
 				</v-col>
-				<v-col cols="12" sm="auto" class="align-center d-flex px-8" v-if="customer.postadress != ''">
+				<v-col cols="12" sm="3" class="align-center d-flex px-8" v-if="customer.postadress != ''">
 					<div class="d-inline-block">
 						<p class="my-0 py-0 caption">Address</p>
 						<b>{{customer.postadress || '-'}}</b>

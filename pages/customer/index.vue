@@ -36,6 +36,7 @@
 							></v-text-field>
 						</v-col>
 					</v-row>
+
 					<v-data-table
 						:headers="headers"
 						:items="customers"
@@ -43,7 +44,11 @@
 						class="elevation-1"
 						:search="search"
 						@click:row="handleClick"
-					></v-data-table>
+					>
+					<template v-slot:item.overdueinterest="{ item }">
+						{{ item.overdueinterest }} %
+					</template>
+					</v-data-table>
 				</v-card>
 			</v-col>
 		</v-row>

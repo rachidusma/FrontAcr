@@ -53,6 +53,9 @@
 				<template v-slot:item.ocrid="{ item }">
 					<P class="blue--text">#{{ item.ocrid }}</p>
 				</template>
+				<template v-slot:item.summa="{ item }">
+					{{ item.summa }} Kr
+				</template>
 				<template v-slot:item.status="{ item }">
 					<v-chip :color="getColor(item.status)" dark>{{ item.status }}</v-chip>
 				</template>

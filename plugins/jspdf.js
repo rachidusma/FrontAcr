@@ -60,38 +60,38 @@ if (process.client) {
         }
 
         function pays() {
-            doc.setFillColor(0, 88, 122);
+            doc.setFillColor(28, 137, 181);
             doc.rect(start, 200, 170, 35, "f");
 
             doc.setFontStyle("bold");
-            doc.setTextColor(0);
+            doc.setTextColor('white');
             doc.setFontSize(10);
 
             let startY = 207;
             doc.text("SUMMA EX MOMS", mid, startY);
-            doc.text(String(vm.calculations.amountExVAT.toFixed(2)), mid + 60, startY);
+            doc.text(`${String(vm.calculations.amountExVAT.toFixed(2))} kr`, mid + 60, startY);
 
             let x = startY;
             if (vm.calculations.vat6) {
                 doc.text("MOMS 25%", mid, x + 6);
-                doc.text(String(vm.calculations.vat6.toFixed(2)), mid + 60, x + 6);
+                doc.text(`${String(vm.calculations.vat6.toFixed(2))} kr`, mid + 60, x + 6);
                 x += 6;
             }
 
             if (vm.calculations.vat12) {
                 doc.text("MOMS 12%", mid, x + 6);
-                doc.text(String(vm.calculations.vat12.toFixed(2)), mid + 60, x + 6);
+                doc.text(`${String(vm.calculations.vat12.toFixed(2))} kr`, mid + 60, x + 6);
                 x += 6;
             }
 
             if (vm.calculations.vat25) {
                 doc.text("MOMS 6%", mid, x + 6);
-                doc.text(String(vm.calculations.vat25.toFixed(2)), mid + 60, x + 6);
+                doc.text(`${String(vm.calculations.vat25.toFixed(2))} kr`, mid + 60, x + 6);
                 x += 6;
             }
 
             doc.text("ÖRESAVRUNDNING", mid, x + 6);
-            doc.text(String(vm.calculations.RoundedSum.toFixed(2)), mid + 60, x + 6);
+            doc.text(`${String(vm.calculations.RoundedSum.toFixed(2))} kr`, mid + 60, x + 6);
 
             doc.setFillColor(54, 64, 107);
             doc.rect(start, startY + 25, 170, 6, "f");

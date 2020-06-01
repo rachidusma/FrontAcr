@@ -95,7 +95,7 @@
 						</v-col>
 						<v-col cols="12" md="6">
 							<h4 class="text--primary d-inline">Invoice amount (inc VAT):</h4>
-							<span>{{ invoice.total }}</span>
+							<span>{{ invoice.total }} Kr</span>
 						</v-col>
 					</v-row>
 				</v-card>
