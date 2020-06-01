@@ -13,8 +13,8 @@
 				<v-card-text>
 					<v-radio-group v-model="language">
 						<div class="d-flex mb-5 align-center">
-							<img src="/uk.svg" width="30" class="mr-3" alt="Uk" />
-							<v-radio value="uk" class="d-inline-block" label="English"></v-radio>
+							<img src="/en.svg" width="30" class="mr-3" alt="en" />
+							<v-radio value="en" class="d-inline-block" label="English"></v-radio>
 						</div>
 						<div class="d-flex align-center">
 							<img src="/sw.svg" width="30" class="mr-3" alt="Uk" />
@@ -26,7 +26,7 @@
 				<v-card-actions class="grey lighten-3 pa-5">
 					<v-spacer></v-spacer>
 
-					<v-btn color="success" depressed @click="langDialog = false">Change langauge</v-btn>
+					<v-btn color="success" depressed @click="changeLang">Change langauge</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -74,41 +74,41 @@
 				</div>
 				<v-divider></v-divider>
 
-				<v-list-item to="/invoices">
+				<v-list-item :to="$t('navigationDrewer.invoice.url')">
 					<v-list-item-action>
 						<img src="/invoice.svg" alt="invoice" />
 					</v-list-item-action>
 					<v-list-item-content>
-						<v-list-item-title>invoice</v-list-item-title>
+						<v-list-item-title>{{$t('navigationDrewer.invoice.text')}}</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
 
 				<div v-if="$auth.user.admin && $auth.loggedIn">
-					<v-list-item to="/user">
+					<v-list-item :to="$t('navigationDrewer.user.url')">
 						<v-list-item-action>
 							<img src="/user.svg" alt="user" />
 						</v-list-item-action>
 						<v-list-item-content>
-							<v-list-item-title>Users</v-list-item-title>
+							<v-list-item-title>{{$t('navigationDrewer.user.text')}}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 				</div>
 
-				<v-list-item to="/customer">
+				<v-list-item :to="$t('navigationDrewer.customer.url')">
 					<v-list-item-action>
 						<img src="/team.svg" alt="team" />
 					</v-list-item-action>
 					<v-list-item-content>
-						<v-list-item-title>Customer</v-list-item-title>
+						<v-list-item-title>{{$t('navigationDrewer.customer.text')}}</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
 
-				<v-list-item to="/articles">
+				<v-list-item :to="$t('navigationDrewer.article.url')">
 					<v-list-item-action>
 						<img src="/article.svg" width="24" alt="article" />
 					</v-list-item-action>
 					<v-list-item-content>
-						<v-list-item-title>Article</v-list-item-title>
+						<v-list-item-title>{{$t('navigationDrewer.article.text')}}</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
 
@@ -120,23 +120,23 @@
 									<img src="/payment.svg" width="24" alt="payment" />
 								</v-list-item-action>
 								<v-list-item-content>
-									<v-list-item-title>Salary</v-list-item-title>
+									<v-list-item-title>{{$t('navigationDrewer.salary.main.text')}}</v-list-item-title>
 								</v-list-item-content>
 							</template>
-							<v-list-item to="/uppaidsalary">
+							<v-list-item :to="$t('navigationDrewer.salary.unpaid.url')">
 								<v-list-item-icon>
 									<v-icon>mdi-account-cash</v-icon>
 								</v-list-item-icon>
 								<v-list-item-content>
-									<v-list-item-title>Unpaid Salary</v-list-item-title>
+									<v-list-item-title>{{$t('navigationDrewer.salary.unpaid.text')}}</v-list-item-title>
 								</v-list-item-content>
 							</v-list-item>
-							<v-list-item to="/paidsalary">
+							<v-list-item :to="$t('navigationDrewer.salary.paid.url')">
 								<v-list-item-icon>
 									<v-icon>mdi-account-cash-outline</v-icon>
 								</v-list-item-icon>
 								<v-list-item-content>
-									<v-list-item-title>Paid Salary</v-list-item-title>
+									<v-list-item-title>{{$t('navigationDrewer.salary.paid.text')}}</v-list-item-title>
 								</v-list-item-content>
 							</v-list-item>
 						</v-list-group>
@@ -144,24 +144,22 @@
 
 					<v-divider></v-divider>
 
-
-					<v-list-item to="/settings">
+					<v-list-item :to="$t('navigationDrewer.settings.url')">
 						<v-list-item-action>
 							<img src="/settings.svg" width="24" alt="payment" />
 						</v-list-item-action>
 						<v-list-item-content>
-							<v-list-item-title>Settings</v-list-item-title>
+							<v-list-item-title>{{$t('navigationDrewer.settings.text')}}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 					<v-divider></v-divider>
 
-
-					<v-list-item to="/statistics">
+					<v-list-item :to="$t('navigationDrewer.statistics.url')">
 						<v-list-item-action>
 							<v-icon>mdi mdi-chart-bar</v-icon>
 						</v-list-item-action>
 						<v-list-item-content>
-							<v-list-item-title>statistics</v-list-item-title>
+							<v-list-item-title>{{$t('navigationDrewer.statistics.text')}}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 					<v-divider></v-divider>
@@ -190,8 +188,9 @@
 					offset-x
 				>
 					<template v-slot:activator="{ on }">
-						<v-btn outlined v-on="on">{{ $auth.user.name }} 
-							<v-icon> mdi mdi-chevron-down </v-icon>
+						<v-btn outlined v-on="on">
+							{{ $auth.user.name }}
+							<v-icon>mdi mdi-chevron-down</v-icon>
 						</v-btn>
 					</template>
 					<v-list class="pa-0">
@@ -204,10 +203,15 @@
 							</v-list-item-title>
 						</v-list-item>
 
-						<v-list-item class="py-2" exact to="/settings/personal-settings">Personal Settings</v-list-item>
+						<v-list-item class="py-2" exact :to="$t('appBar.personalSettings.url')">{{ $t('appBar.personalSettings.text') }}</v-list-item>
 						<v-divider></v-divider>
 
-						<v-list-item class="py-2" @click="langDialog = true">Change language</v-list-item>
+						<v-list-item class="py-2" @click="langDialog = true">
+							<span>Change language</span>
+							<v-spacer></v-spacer>
+							<img :src="require(`static/${$i18n.locale}.svg`)" width="30" class="mr-3" :alt="$i18n.locale" />
+
+						</v-list-item>
 
 						<v-list-item @click="$auth.logout()" class="grey lighten-4" style="color: red !important">
 							<img src="/logout.svg" width="20" class="mr-3" alt="logout" />
@@ -243,7 +247,7 @@ export default {
 			miniVariant: false,
 			right: true,
 			langDialog: false,
-			language: "uk",
+			language: null,
 			rightDrawer: false,
 			title: "Acredit"
 		};
@@ -252,7 +256,14 @@ export default {
 	methods: {
 		async logOut() {
 			await this.$auth.logout();
+		},
+		changeLang() {
+			this.langDialog = false;
+			this.$i18n.setLocale(this.language);
 		}
+	},
+	mounted() {
+		this.language = this.$i18n.locale;
 	}
 };
 </script>

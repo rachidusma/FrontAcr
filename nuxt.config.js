@@ -44,7 +44,24 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    ['nuxt-i18n', {
+      locales: [
+        {
+          code: 'en',
+          file: 'en.js'
+        },
+        {
+          code: 'sw',
+          file: 'sw.js'
+        },
+      ],
+      lazy: true,
+      langDir: 'lang/',
+      defaultLocale: 'en',
+
+    }],
   ],
+
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
@@ -82,7 +99,7 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-      
+
     }
   },
   auth: {

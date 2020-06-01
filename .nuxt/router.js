@@ -13,6 +13,7 @@ const _47171806 = () => interopDefault(import('..\\pages\\paidsalary\\index.vue'
 const _5ae349d9 = () => interopDefault(import('..\\pages\\settings\\index.vue' /* webpackChunkName: "pages_settings_index" */))
 const _810d4ec4 = () => interopDefault(import('..\\pages\\Signup.vue' /* webpackChunkName: "pages_Signup" */))
 const _2ca2afee = () => interopDefault(import('..\\pages\\statistics.vue' /* webpackChunkName: "pages_statistics" */))
+const _bcd6a848 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 const _6f41f3cb = () => interopDefault(import('..\\pages\\uppaidsalary\\index.vue' /* webpackChunkName: "pages_uppaidsalary_index" */))
 const _0fdb8a31 = () => interopDefault(import('..\\pages\\user\\index.vue' /* webpackChunkName: "pages_user_index" */))
 const _7c8dc142 = () => interopDefault(import('..\\pages\\settings\\change-password.vue' /* webpackChunkName: "pages_settings_change-password" */))
@@ -25,7 +26,6 @@ const _49d37152 = () => interopDefault(import('..\\pages\\invoices\\paid\\_id.vu
 const _bafedb50 = () => interopDefault(import('..\\pages\\invoices\\published\\_id.vue' /* webpackChunkName: "pages_invoices_published__id" */))
 const _0dec15a7 = () => interopDefault(import('..\\pages\\articles\\_id.vue' /* webpackChunkName: "pages_articles__id" */))
 const _1fa3a5b4 = () => interopDefault(import('..\\pages\\customer\\_id.vue' /* webpackChunkName: "pages_customer__id" */))
-const _bcd6a848 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -46,95 +46,187 @@ export const routerOptions = {
   routes: [{
     path: "/articles",
     component: _73263f7f,
-    name: "articles"
+    name: "articles___en"
   }, {
     path: "/customer",
     component: _657f1984,
-    name: "customer"
+    name: "customer___en"
   }, {
     path: "/invoices",
     component: _396dc994,
-    name: "invoices"
+    name: "invoices___en"
   }, {
     path: "/job",
     component: _26d965c7,
-    name: "job"
+    name: "job___en"
   }, {
     path: "/login",
     component: _6b3c4ef3,
-    name: "login"
+    name: "login___en"
   }, {
     path: "/newinvoice",
     component: _442e3773,
-    name: "newinvoice"
+    name: "newinvoice___en"
   }, {
     path: "/paidsalary",
     component: _47171806,
-    name: "paidsalary"
+    name: "paidsalary___en"
   }, {
     path: "/settings",
     component: _5ae349d9,
-    name: "settings"
+    name: "settings___en"
   }, {
     path: "/Signup",
     component: _810d4ec4,
-    name: "Signup"
+    name: "Signup___en"
   }, {
     path: "/statistics",
     component: _2ca2afee,
-    name: "statistics"
+    name: "statistics___en"
+  }, {
+    path: "/sw",
+    component: _bcd6a848,
+    name: "index___sw"
   }, {
     path: "/uppaidsalary",
     component: _6f41f3cb,
-    name: "uppaidsalary"
+    name: "uppaidsalary___en"
   }, {
     path: "/user",
     component: _0fdb8a31,
-    name: "user"
+    name: "user___en"
   }, {
     path: "/settings/change-password",
     component: _7c8dc142,
-    name: "settings-change-password"
+    name: "settings-change-password___en"
   }, {
     path: "/settings/forgetPassword",
     component: _29afb09e,
-    name: "settings-forgetPassword"
+    name: "settings-forgetPassword___en"
   }, {
     path: "/settings/invoice-settings",
     component: _d643f5e8,
-    name: "settings-invoice-settings"
+    name: "settings-invoice-settings___en"
   }, {
     path: "/settings/personal-settings",
     component: _0cea4497,
-    name: "settings-personal-settings"
+    name: "settings-personal-settings___en"
+  }, {
+    path: "/sw/articles",
+    component: _73263f7f,
+    name: "articles___sw"
+  }, {
+    path: "/sw/customer",
+    component: _657f1984,
+    name: "customer___sw"
+  }, {
+    path: "/sw/invoices",
+    component: _396dc994,
+    name: "invoices___sw"
+  }, {
+    path: "/sw/job",
+    component: _26d965c7,
+    name: "job___sw"
+  }, {
+    path: "/sw/login",
+    component: _6b3c4ef3,
+    name: "login___sw"
+  }, {
+    path: "/sw/newinvoice",
+    component: _442e3773,
+    name: "newinvoice___sw"
+  }, {
+    path: "/sw/paidsalary",
+    component: _47171806,
+    name: "paidsalary___sw"
+  }, {
+    path: "/sw/settings",
+    component: _5ae349d9,
+    name: "settings___sw"
+  }, {
+    path: "/sw/Signup",
+    component: _810d4ec4,
+    name: "Signup___sw"
+  }, {
+    path: "/sw/statistics",
+    component: _2ca2afee,
+    name: "statistics___sw"
+  }, {
+    path: "/sw/uppaidsalary",
+    component: _6f41f3cb,
+    name: "uppaidsalary___sw"
+  }, {
+    path: "/sw/user",
+    component: _0fdb8a31,
+    name: "user___sw"
+  }, {
+    path: "/sw/settings/change-password",
+    component: _7c8dc142,
+    name: "settings-change-password___sw"
+  }, {
+    path: "/sw/settings/forgetPassword",
+    component: _29afb09e,
+    name: "settings-forgetPassword___sw"
+  }, {
+    path: "/sw/settings/invoice-settings",
+    component: _d643f5e8,
+    name: "settings-invoice-settings___sw"
+  }, {
+    path: "/sw/settings/personal-settings",
+    component: _0cea4497,
+    name: "settings-personal-settings___sw"
+  }, {
+    path: "/sw/invoices/draft/:id?",
+    component: _7273a3f6,
+    name: "invoices-draft-id___sw"
+  }, {
+    path: "/sw/invoices/overdue/:id?",
+    component: _0c35de34,
+    name: "invoices-overdue-id___sw"
+  }, {
+    path: "/sw/invoices/paid/:id?",
+    component: _49d37152,
+    name: "invoices-paid-id___sw"
+  }, {
+    path: "/sw/invoices/published/:id?",
+    component: _bafedb50,
+    name: "invoices-published-id___sw"
   }, {
     path: "/invoices/draft/:id?",
     component: _7273a3f6,
-    name: "invoices-draft-id"
+    name: "invoices-draft-id___en"
   }, {
     path: "/invoices/overdue/:id?",
     component: _0c35de34,
-    name: "invoices-overdue-id"
+    name: "invoices-overdue-id___en"
   }, {
     path: "/invoices/paid/:id?",
     component: _49d37152,
-    name: "invoices-paid-id"
+    name: "invoices-paid-id___en"
   }, {
     path: "/invoices/published/:id?",
     component: _bafedb50,
-    name: "invoices-published-id"
+    name: "invoices-published-id___en"
+  }, {
+    path: "/sw/articles/:id",
+    component: _0dec15a7,
+    name: "articles-id___sw"
+  }, {
+    path: "/sw/customer/:id",
+    component: _1fa3a5b4,
+    name: "customer-id___sw"
   }, {
     path: "/articles/:id",
     component: _0dec15a7,
-    name: "articles-id"
+    name: "articles-id___en"
   }, {
     path: "/customer/:id",
     component: _1fa3a5b4,
-    name: "customer-id"
+    name: "customer-id___en"
   }, {
     path: "/",
     component: _bcd6a848,
-    name: "index"
+    name: "index___en"
   }],
 
   fallback: false

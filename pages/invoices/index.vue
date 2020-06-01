@@ -5,21 +5,22 @@
 			<v-col cols="12">
 				<v-breadcrumbs class="pa-0 ma-0" :items="breadCampItems"></v-breadcrumbs>
 			</v-col>
-			
+
 			<v-col cols="12" sm="12">
 				<div class="d-flex justify-space-between align-center" style="width: 100%">
-					<p class="py-0 my-0 black--text headline">Invoices</p>
-					<v-btn color="success" to="/newinvoice">New invoice</v-btn>
+					<p class="py-0 my-0 black--text headline">{{$t('invoice.title')}}</p>
+					<v-btn color="success" to="/newinvoice">{{$t('invoice.newinvoiceBtn')}}</v-btn>
 				</div>
 			</v-col>
-		<calculations :overdue="overdueSum" />
+			<calculations :overdue="overdueSum" />
 
-		<v-col cols="12" sm="12">
-			<dateTable :allItems.sync="invoices" />
-		</v-col>
+			<v-col cols="12" sm="12">
+				<dateTable :allItems.sync="invoices" />
+			</v-col>
 		</v-row>
 	</v-layout>
 </template>
+
 <script>
 import dateTable from "@/components/dataTable.vue";
 import calculations from "@/components/calculationSection.vue";
@@ -36,10 +37,7 @@ export default {
 		return {
 			invoices: [],
 			overdueSum: 0,
-			breadCampItems: [
-				{ text: "Invoices", href: "/invoices" },
-				{ text: "Invoice", disabled: true }
-			],
+			breadCampItems: this.$t('invoice.breadCampItems')
 		};
 	},
 	methods: {},

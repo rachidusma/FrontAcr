@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<v-row>
-			<v-btn text small :color="activeclass" @click="activeinvoices">Active invoices</v-btn>
-			<v-btn text small :color="allclass" @click="allinvoices">All invoices</v-btn>
+			<v-btn text small :color="activeclass" @click="activeinvoices">{{ $t('invoice.table.activeInvoices') }}</v-btn>
+			<v-btn text small :color="allclass" @click="allinvoices">{{ $t('invoice.table.allInvoices') }}</v-btn>
 		</v-row>
 		<v-card class="pa-8">
 			<v-row class="pa-4">
@@ -89,17 +89,17 @@ export default {
 			allclass: "normal",
 			headers: [
 				{
-					text: "Invoice number",
+					text: this.$t('invoice.table.header.no'),
 					align: "start",
 					sortable: false,
 					value: "ocrid"
 				},
-				{ text: "Customer", value: "customername" },
-				{ text: "Invoice amount (inc VAT)", value: "summa" },
-				{ text: "status", value: "status" },
-				{ text: "Date of invoice", value: "fromDate" },
-				{ text: "Due date", value: "duedate" },
-				{ text: "Delivery  date", value: "deliveryDate" }
+				{ text: this.$t('invoice.table.header.customer'), value: "customername" },
+				{ text: this.$t('invoice.table.header.amount'), value: "summa" },
+				{ text: this.$t('invoice.table.header.status'), value: "status" },
+				{ text: this.$t('invoice.table.header.doi'), value: "fromDate" },
+				{ text: this.$t('invoice.table.header.due'), value: "duedate" },
+				{ text: this.$t('invoice.table.header.delivery'), value: "deliveryDate" }
 			],
 			displaiedInvoices: []
 		};
@@ -154,7 +154,7 @@ export default {
 		}
 	},
 	mounted() {
-    this.displaiedInvoices = this.allItems;
+	this.displaiedInvoices = this.allItems;
     this.allinvoices();
 	}
 };
