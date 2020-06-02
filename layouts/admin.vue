@@ -4,7 +4,7 @@
 		<v-dialog v-model="langDialog" max-width="500">
 			<v-card>
 				<v-card-title class="headline">
-					<h4>Change language</h4>
+					<h4>{{ $t('appBar.changeLang') }}</h4>
 					<v-spacer></v-spacer>
 					<v-icon class="black--text" @click="langDialog = false">mdi mdi-close</v-icon>
 				</v-card-title>
@@ -26,7 +26,7 @@
 				<v-card-actions class="grey lighten-3 pa-5">
 					<v-spacer></v-spacer>
 
-					<v-btn color="success" depressed @click="changeLang">Change langauge</v-btn>
+					<v-btn color="success" depressed @click="changeLang">{{ $t('appBar.changeLang') }}</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -207,7 +207,7 @@
 						<v-divider></v-divider>
 
 						<v-list-item class="py-2" @click="langDialog = true">
-							<span>Change language</span>
+							<span>{{ $t('appBar.changeLang') }}</span>
 							<v-spacer></v-spacer>
 							<img :src="require(`static/${$i18n.locale}.svg`)" width="30" class="mr-3" :alt="$i18n.locale" />
 
@@ -215,7 +215,7 @@
 
 						<v-list-item @click="$auth.logout()" class="grey lighten-4" style="color: red !important">
 							<img src="/logout.svg" width="20" class="mr-3" alt="logout" />
-							Log out
+							{{ $t('appBar.logout') }}
 						</v-list-item>
 					</v-list>
 				</v-menu>

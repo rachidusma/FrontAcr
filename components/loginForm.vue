@@ -2,7 +2,7 @@
 	<div class="body">
 		<div class="container" id="container">
 			<div class="form-container sign-up-container">
-				<v-form class="justify-md-center" v-model="signUpValid" ref="form">
+				<v-form class="justify-start justify-md-center" v-model="signUpValid" ref="form">
 					<v-row align-content="center" v-if="!signedUp">
 						<v-col cols="12">
 							<h1>Create Account</h1>
@@ -302,7 +302,9 @@ export default {
 			signUp2 = document.getElementById("signUp2"),
 			container = document.getElementById("container");
 
-		if (this.$route.name == "index" || this.$route.name == "login")
+		console.log(this.$route.name);
+		
+		if (this.$route.name == "index___en" || this.$route.name == "index___sw" || this.$route.name == "login___en" || this.$route.name == "login___sw")
 			container.classList.remove("right-panel-active");
 		else container.classList.add("right-panel-active");
 
