@@ -1,33 +1,36 @@
 
 export default {
   continue: "Fortsätta",
+  save: "spara",
+  upadte: "uppdatering",
   cancle: "Avbryt",
-
+  filter: "Filtrera",
+  rowsForTable: "Rader per sida:",
   appBar: {
-    personalSettings: { text: "Personliga inställningar", url: '/sv/settings/personal-settings' },
+    personalSettings: { text: "Personliga inställningar", url: '/settings/personal-settings' },
     changeLang: "Byt språk",
     logout: "Logga ut"
   },
   navigationDrewer: {
-    invoice: { text: "Fakturor", url: "/sv/invoices" },
-    customer: { text: "Kunder", url: "/sv/user" },
-    user: { text: "Användare", url: "/sv/customer" },
-    article: { text: "Artiklar", url: "/sv/articles" },
+    invoice: { text: "Fakturor", url: "/invoices" },
+    customer: { text: "Användare", url: "/user" },
+    user: { text: "Kunder", url: "/customer" },
+    article: { text: "Artiklar", url: "/articles" },
     salary: {
       main: { text: "löner" },
-      unpaid: { text: "Obetalda löner", url: "/sv/uppaidsalary" },
-      paid: { text: "Betalade löner", url: "/sv/paidsalary" }
+      unpaid: { text: "Obetalda löner", url: "/uppaidsalary" },
+      paid: { text: "Betalade löner", url: "/paidsalary" }
     },
-    settings: { text: "Inställningar", url: "/sv/settings" },
-    statistics: { text: "Statistik", url: "/sv/statistics" }
+    settings: { text: "Inställningar", url: "/settings" },
+    statistics: { text: "Statistik", url: "/statistics" }
   },
   invoice: {
     breadCampItems: [
-      { text: "Fakturering", href: "/sv/invoices" },
+      { text: "Fakturering", href: "/invoices" },
       { text: "Fakturor", disabled: true }
     ],
     title: "Fakturor",
-    newinvoiceBtn: { text: 'Ny faktura', url: "/sv/newinvoice" },
+    newinvoiceBtn: { text: 'Ny faktura', url: "/newinvoice" },
     overdueSection: {
       Overpaid: 'Överbetald (inkl moms)',
       Overdue: 'Försenat (inkl moms)',
@@ -37,7 +40,6 @@ export default {
       activeInvoices: "Pågående fakturor",
       allInvoices: "Alla fakturor",
       filters: {
-        textPlaceholder: "Filtrera",
         invoiceTypes: {
           all: " Alla tillstånd",
           draft: "Utkast",
@@ -47,10 +49,10 @@ export default {
         }
       },
       links: {
-        paid: "/sv/invoices/paid/",
-        overdue: "/sv/invoices/overdue/",
-        draft: "/sv/invoices/draft/",
-        published: "/sv/invoices/published/",
+        paid: "/invoices/paid/",
+        overdue: "/invoices/overdue/",
+        draft: "/invoices/draft/",
+        published: "/invoices/published/",
       },
       header: {
         no: "Fakturanr",
@@ -64,9 +66,9 @@ export default {
     }
   },
   oneInvoice: {
-    draftLink: "/sv/invoices/draft/",
+    draftLink: "/invoices/draft/",
     breadCampItems: [
-      { text: "Fakturor", href: "/sv/invoices" },
+      { text: "Fakturor", href: "/invoices" },
       { text: "Faktura nr. " }
     ],
     dropDown: {
@@ -95,5 +97,72 @@ export default {
       dop: "Fakturan är publicerad:",
       amount: "Fakturabelopp (inkl. Moms):"
     },
+  },
+  customer: {
+    userModal: {
+      title: {
+        add: "Lägg till kund",
+        edit: "Redigera kund",
+      },
+      form: {
+        radio: {
+          person: "individer",
+          company: "företag"
+        },
+
+        name: {
+          nameLabel: "Namn",
+          companyLabel: "Företag",
+          placeholder: "Kundens fulla namn",
+        },
+        number: {
+          label: "personligt nummer",
+          placeholder: "YYYYMMDD-NNNN",
+        },
+        orgNumber: {
+          label: "Org. nummer",
+          placeholder: "YYYYMMDD-NNNN"
+        },
+        vatNumber: "VAT nummer",
+        customerNumber: "Customer number",
+
+        postAdress: "postadress",
+        zipCode: "postnummer",
+        city: "Stad",
+
+        contctInfo: "Kontakta information",
+        country: "Land",
+        contactPerson: "Kontaktperson",
+        email: "E-post",
+
+        terms: "Villkor",
+        days: {
+          label: "dagar",
+          hint: "Antal dagar innan betalning förfaller."
+        },
+        overdue: {
+          label: "Ränta på försenad betalning",
+          hint: "Det är här du definierar räntan som läggs till när en betalning är försenad. Kom ihåg att du måste skapa en ny faktura med den tillagda räntan och skicka den till din kund. Fakturor med räntor måste också registreras manuellt."
+        },
+        delivery: {
+          label: "Leverans",
+          hint: "Definiera hur varorna levereras. Ex-lager betyder att risken tas över av kunden så snart varorna lämnar lagret."
+        }
+      }
+    },
+    breadCampItems: [
+      { text: "Fakturering", href: "/invoices" },
+      { text: "kunder", disabled: true }
+    ],
+    title: "kunder",
+    newCustomerbtnText: "+ ny kund",
+    table: {
+      headers: {
+        id: "Kundnummer",
+        name: "Namn",
+        vat: "Summa inkl moms",
+        interset: "försenat intresse (%)"
+      }
+    }
   }
 }

@@ -7,12 +7,12 @@
 			<v-card-title class="py-3 my-1">
 				<h4 v-if="editItemId">Edit article</h4>
 				<h4 v-else>Add article</h4>
-				<v-spacer></v-spacer>
+				<v-spacer/>
 
 				<v-icon class="black--text" @click="close">mdi mdi-close</v-icon>
 			</v-card-title>
 
-			<v-divider></v-divider>
+			<v-divider />
 
 			<v-form ref="form" v-model="valid">
 				<v-card-text class="py-2">
@@ -64,7 +64,7 @@
 
 				<v-card-actions class="grey lighten-3 pa-5">
 					<v-btn depressed @click="close">Close</v-btn>
-					<v-spacer></v-spacer>
+					<v-spacer/>
 					<v-btn
 						v-if="editItemId"
 						depressed

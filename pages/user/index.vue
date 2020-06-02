@@ -4,14 +4,14 @@
       <v-col cols="12" md="12">
         <v-row class="pa-4">
           <h1 class="title">Users</h1>
-          <v-spacer></v-spacer>
+          <v-spacer/>
         </v-row>
       </v-col>
       <v-col cols="12" md="12">
         <p class="overline">All users</p>
         <v-card tile width="100%" class="pa-8">
           <v-row>
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <v-text-field
               v-model="search_user"
               append-icon="mdi-magnify"
@@ -54,7 +54,7 @@
         </v-card>
       </v-col>
     </v-row>
-    
+
     <!-- This modal is for admin role -->
     <div justify="center">
       <v-dialog v-model="role_change_flag" persistent max-width="260">
@@ -66,7 +66,7 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <v-btn color="green darken-1" text @click=" role_change_flag = false">
               <v-icon>mdi-close-circle-outline</v-icon>
             </v-btn>
@@ -78,7 +78,7 @@
       </v-dialog>
     </div>
     <!-- warnning role part -->
-    
+
     <!-- This modal is for delete part -->
     <div justify="center">
       <v-dialog v-model="user_delete_flag" persistent max-width="260">
@@ -90,7 +90,7 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <v-btn color="green darken-1" text @click="user_delete_flag = false, userID = ''">
               <v-icon>mdi-close-circle-outline</v-icon>
             </v-btn>
@@ -114,7 +114,7 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <v-btn color="green darken-1" text @click="user_block_flag = false, userID = ''">
               <v-icon>mdi-close-circle-outline</v-icon>
             </v-btn>
@@ -133,7 +133,7 @@
         <v-card-title>
           <span class="overline">Edit user</span>
         </v-card-title>
-        <v-divider></v-divider>
+        <v-divider />
         <v-card-text>
           <v-container>
             <v-row>
@@ -141,7 +141,7 @@
               <v-row>
                 <v-col cols="6" sm="12" md="6">
                   <template >
-                    <v-switch 
+                    <v-switch
                       v-model="useredit.admin"
                       label="User Role"
                     ></v-switch>
@@ -149,7 +149,7 @@
                 </v-col>
                 <v-col cols="6" sm="12" md="6">
                   <template >
-                    <v-switch 
+                    <v-switch
                       v-model="useredit.block"
                       label="User Block"
                     ></v-switch>
@@ -158,17 +158,17 @@
               </v-row>
               <v-row>
                 <v-col cols="6" sm="6" md="6">
-                  <v-text-field 
-                    label="User Name" 
-                    placeholder="User Name" 
+                  <v-text-field
+                    label="User Name"
+                    placeholder="User Name"
                     outlined color="#336882"
                     v-model="useredit.name"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="6" sm="6" md="6">
-                  <v-text-field 
-                    label="User Name" 
-                    placeholder="User Name" 
+                  <v-text-field
+                    label="User Name"
+                    placeholder="User Name"
                     outlined color="#336882"
                     v-model="useredit.lastname"
                   ></v-text-field>
@@ -201,7 +201,7 @@
           <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn color="blue darken-1" text @click="user_edit_flag = false">Close</v-btn>
           <v-btn color="blue darken-1" text @click="userDetailUpdateAxios()">Save</v-btn>
         </v-card-actions>
@@ -308,7 +308,7 @@ export default {
     },
     // End edit
 
-    // Delete user 
+    // Delete user
     deleteUser(item) {
       this.userID = item._id;
       this.user_delete_flag = true;
@@ -317,7 +317,7 @@ export default {
       console.log(id);
       await this.$axios
         .$delete(`/users/${id}`)
-        .then(res => { 
+        .then(res => {
           console.log(res);
           this.user_delete_flag = false;
           this.userID = '';
@@ -326,7 +326,7 @@ export default {
         .catch(err => console.log(err));
     },
     // End delete
-  
+
     // Block user part
     blockUser(item) {
       this.userblock = Object.assign({}, item);

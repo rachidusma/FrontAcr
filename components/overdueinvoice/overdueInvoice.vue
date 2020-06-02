@@ -37,7 +37,7 @@
 									<v-card>
 										<v-card-title class="headline grey lighten-2" primary-title>
 											<h3>Add new row</h3>
-											<v-spacer></v-spacer>
+											<v-spacer/>
 											<v-icon class="font1" @click="addTextDialog = false">mdi mdi-close</v-icon>
 										</v-card-title>
 
@@ -49,12 +49,12 @@
 											</v-row>
 										</v-card-text>
 
-										<v-divider></v-divider>
+										<v-divider />
 
 										<v-card-actions>
 											<v-btn color="error" v-if="edit" @click="deleteText">Delet</v-btn>
 											<v-btn @click="addTextDialog = false">Close</v-btn>
-											<v-spacer></v-spacer>
+											<v-spacer/>
 											<v-btn color="primary" text @click="addText()">Add to invoice</v-btn>
 										</v-card-actions>
 									</v-card>
@@ -71,7 +71,7 @@
 							<!-- Start Modal Title -->
 							<v-card-title>
 								<span class="headline">Add new row</span>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-icon class="font1" @click="resetModal">mdi mdi-close</v-icon>
 							</v-card-title>
 							<!-- End Modal Title -->
@@ -327,7 +327,7 @@
 										:disabled="saveAsItemBtnState"
 									>Save as item</v-btn>
 								</div>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<div>
 									<v-btn
 										class="mt-2"
@@ -414,7 +414,7 @@
 							<v-card>
 								<v-card-title class="headline">
 									<h3>Edit product</h3>
-									<v-spacer></v-spacer>
+									<v-spacer/>
 									<v-icon class="font1" @click="editDraggableDialog = false">mdi mdi-close</v-icon>
 								</v-card-title>
 
@@ -557,7 +557,7 @@
 											:disabled="saveAsItemBtnState"
 										>Save as item</v-btn>
 									</div>
-									<v-spacer></v-spacer>
+									<v-spacer/>
 
 									<div>
 										<v-btn class="mt-2" @click="update" color="success">Update</v-btn>
@@ -625,21 +625,21 @@
 						</v-col>
 						<!-- End Draggable Footer -->
             <v-row>
-						  <v-col cols="12" class="flex-wrap" v-if="calculations.Rmindflag">              
+						  <v-col cols="12" class="flex-wrap" v-if="calculations.Rmindflag">
 								<v-col  class="align-center d-flex">
 									<div class="d-inline-block">
 										<p class="my-0 py-0 caption">Rounded Fee</p>
 										<b>{{ this.calculations.Roundfee }} kr</b>
 									</div>
 								</v-col>
-                
+
 								<v-col  class="align-center d-flex">
 									<div class="d-inline-block">
 										<p class="my-0 py-0 caption">Overdue _interest</p>
 										<b>{{ this.calculations.OverdueInterest }} kr</b>
 									</div>
 								</v-col>
-                
+
 								<v-col  class="align-center d-flex">
 									<div class="d-inline-block">
 										<p class="my-0 py-0 caption">Total sum to pay</p>
@@ -754,13 +754,13 @@ export default {
 		datesForTermSection: null,
 		todatefromDraft: null,
     invoiceId: null,
-    
+
     // Add remind flag
     addremindFlag: false,
     // Current Select user
     overdueUser: {}
   }),
-  
+
 	components: {
     overdueCustomerSection,
     overdueTermSectionVue,
@@ -768,7 +768,7 @@ export default {
 		overdueDeliveryMethods,
 		draggable
   },
-  
+
 	props: ["overdueID"],
 	computed: {
 		dragOptions() {
@@ -820,7 +820,7 @@ export default {
     async currentSelectUser() {
       await this.$axios.$get(`/invoices/${this.overdueID}`).then(async res => {
         Object.assign(this.overdueUser, res[0])
-        console.log(res)   
+        console.log(res)
       });
     },
 

@@ -4,10 +4,10 @@
 			<v-card>
 				<v-card-title class="headline">
 					<h4>Edit product</h4>
-					<v-spacer></v-spacer>
+					<v-spacer/>
 					<v-icon class="black--text" @click="editDraggableDialogState = false">mdi mdi-close</v-icon>
 				</v-card-title>
-				<v-divider></v-divider>
+				<v-divider />
 				<!-- Start Modal Body -->
 				<v-card-text>
 					<v-container>
@@ -140,7 +140,7 @@
 						<!-- End Checkbox -->
 					</v-container>
 				</v-card-text>
-				<v-divider></v-divider>
+				<v-divider />
 
 				<!-- End Modal Body -->
 				<v-card-actions class="grey lighten-3 pa-5">

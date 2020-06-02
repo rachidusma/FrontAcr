@@ -28,10 +28,10 @@
             <v-card>
               <v-card-title>
                 <span class="overline">Add user Profile</span>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-icon class="font1" @click="dialog=false ">mdi mdi-close</v-icon>
               </v-card-title>
-              <v-divider></v-divider>
+              <v-divider />
               <v-card-text v-if="customer">
                 <!-- Start company or indidviduals -->
                 <v-radio-group v-model="IndividualsOrCorporations" row>
@@ -110,7 +110,7 @@
                     <!-- End kundnummer -->
 
                     <v-col class="py-0" cols="12">
-                      <v-divider></v-divider>
+                      <v-divider />
                       <h1 class="overline pt-4 pb-4">Contact informations</h1>
                     </v-col>
 
@@ -185,7 +185,7 @@
                         outlined
                         dense
                       ></v-text-field>
-                      <v-divider></v-divider>
+                      <v-divider />
                     </v-col>
                     <!-- End epost -->
 
@@ -205,7 +205,7 @@
                 <small>*indicates required field</small>
               </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <div>
                   <v-btn color="blue darken-1" text @click="dialog= false;">Close</v-btn>
                   <v-btn color="success" @click="editUser">Edit</v-btn>

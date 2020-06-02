@@ -12,10 +12,10 @@
 						<v-card>
 							<v-card-title>
 								<h4>{{ $t('oneInvoice.dropDown.amend') }}</h4>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-icon class="black--text" @click="amendInvoiceModalState= false">mdi mdi-close</v-icon>
 							</v-card-title>
-							<v-divider></v-divider>
+							<v-divider />
 
 							<v-card-text>
 								<div class="py-5">
@@ -26,7 +26,7 @@
 										@click="undoModalState = !undoModalState"
 									>{{ $t('oneInvoice.modal.undo.btnText') }}</v-btn>
 								</div>
-								<v-divider></v-divider>
+								<v-divider />
 								<div class="py-5">
 									<h3 class="text--primary">{{ $t('oneInvoice.modal.edit.title') }}</h3>
 									<p>{{ $t('oneInvoice.modal.edit.text') }}</p>
@@ -36,10 +36,10 @@
 									>{{ $t('oneInvoice.modal.edit.btnText') }}</v-btn>
 								</div>
 							</v-card-text>
-							<v-divider></v-divider>
+							<v-divider />
 
 							<v-card-actions class="grey lighten-3 pa-5">
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-btn @click="amendInvoiceModalState = false">{{ $t('oneInvoice.modal.btnText') }}</v-btn>
 							</v-card-actions>
 						</v-card>
@@ -48,13 +48,13 @@
 					<v-dialog v-model="undoModalState" max-width="500px">
 						<v-card>
 							<v-card-title>{{ $t('oneInvoice.modal.undoConfirm.title') }}</v-card-title>
-							<v-divider></v-divider>
+							<v-divider />
 							<v-card-text
 								class="py-5"
 							>{{ $t('oneInvoice.modal.undoConfirm.text') }}</v-card-text>
 							<v-card-actions>
 								<v-btn depressed @click="undoModalState = false">{{ $t('cancle') }}</v-btn>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-btn color="success" @click="undo">{{ $t('continue') }}</v-btn>
 							</v-card-actions>
 						</v-card>

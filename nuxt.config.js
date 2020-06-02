@@ -57,7 +57,7 @@ export default {
       ],
       lazy: true,
       langDir: 'lang/',
-      defaultLocale: 'en',
+      defaultLocale: 'sv',
 
     }],
   ],

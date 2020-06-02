@@ -4,15 +4,15 @@
 			<v-card>
 				<v-card-title class="headline">
 					<h6>Created Successfuly</h6>
-					<v-spacer></v-spacer>
+					<v-spacer/>
 					<v-icon class="font1" @click="dialog = false">mdi mdi-close</v-icon>
 				</v-card-title>
-				<v-divider></v-divider>
+				<v-divider />
 
 				<v-card-text class="pa-5 text-center">The invoice saved.</v-card-text>
 
 				<v-card-actions class="grey lighten-3 pa-5">
-					<v-spacer></v-spacer>
+					<v-spacer/>
 
 					<v-btn color="success" :to="invoiceLink">Visit it</v-btn>
 
@@ -90,7 +90,7 @@
 										</v-row>
 									</v-expansion-panel-header>
 
-									<v-divider></v-divider>
+									<v-divider />
 									<v-expansion-panel-content class="gray">
 										<v-container>
 											<v-row>
@@ -125,7 +125,7 @@
 											</v-col>
 										</v-row>
 									</v-expansion-panel-header>
-									<v-divider></v-divider>
+									<v-divider />
 
 									<v-expansion-panel-content class="gray pa-5">
 										<v-row>

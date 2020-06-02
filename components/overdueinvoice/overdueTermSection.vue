@@ -23,19 +23,19 @@
             </span>
           </v-tooltip>
         </h3>
-        <v-spacer></v-spacer>
+        <v-spacer/>
         <v-dialog v-model="dialog" width="500">
           <template v-slot:activator="{ on }">
-            <!-- <v-spacer></v-spacer> -->
+            <!-- <v-spacer/> -->
             <v-btn color="success" dark right v-on="on">Edit</v-btn>
           </template>
           <v-card>
             <v-card-title class="headline white lighten-2" primary-title>
               <h3>Terms</h3>
-              <v-spacer></v-spacer>
+              <v-spacer/>
               <v-icon class="font1" @click="dialog = false">mdi mdi-close</v-icon>
             </v-card-title>
-            <v-divider></v-divider>
+            <v-divider />
 
             <v-card-text>
               <v-col cols="12">
@@ -46,11 +46,11 @@
               </v-col>
             </v-card-text>
 
-            <v-divider></v-divider>
+            <v-divider />
 
             <v-card-actions>
               <v-btn depressed text @click="dialog = false">Close</v-btn>
-              <v-spacer></v-spacer>
+              <v-spacer/>
               <v-btn color="primary" text @click="dialog = false">Save</v-btn>
             </v-card-actions>
           </v-card>

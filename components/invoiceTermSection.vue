@@ -23,19 +23,19 @@
 						</span>
 					</v-tooltip>
 				</h3>
-				<v-spacer></v-spacer>
+				<v-spacer/>
 				<v-dialog v-model="dialog" width="500">
 					<template v-slot:activator="{ on }">
-						<!-- <v-spacer></v-spacer> -->
+						<!-- <v-spacer/> -->
 						<v-btn color="success" dark right v-on="on">Edit</v-btn>
 					</template>
 					<v-card>
 						<v-card-title>
 							<h4>Terms</h4>
-							<v-spacer></v-spacer>
+							<v-spacer/>
 							<v-icon class="black--text" @click="dialog = false">mdi mdi-close</v-icon>
 						</v-card-title>
-						<v-divider></v-divider>
+						<v-divider />
 
 						<v-card-text>
 							<v-col cols="12">
@@ -51,11 +51,11 @@
 							</v-col>
 						</v-card-text>
 
-						<v-divider></v-divider>
+						<v-divider />
 
 						<v-card-actions class="grey lighten-3 pa-5">
 							<v-btn text @click="dialog = false">Close</v-btn>
-							<v-spacer></v-spacer>
+							<v-spacer/>
 							<v-btn color="success" @click="dialog = false">Save</v-btn>
 						</v-card-actions>
 					</v-card>
@@ -149,7 +149,7 @@ export default {
 	data: vm => ({
 		date: new Date().toISOString().substr(0, 10),
 		toDate: !!todate ? todate : new Date().toISOString().substr(0, 10),
-		
+
 		menu1: false,
 		menu2: false,
 		dialog: false
@@ -180,7 +180,7 @@ export default {
 			}
 		},
 		dagar(){
-				
+
 			return this.invoice.dagar;
 		},
 		...mapState(["invoice"])
@@ -207,21 +207,21 @@ export default {
 			this.$store.commit("dateFrom", val);
 		},
 		dagar(val) {
-			
+
 			console.log("val",val);
 			console.log(this.toDate);
 			this.toDate = this.invoice.dateTo
-			
+
 		}
 	},
 
 	methods: {
 		toDateChanged(val) {
 			console.log("dsaasd",val);
-			
+
 			let dagar = (new Date(this.toDate) - new Date(this.date)) / 86400000;
 			console.log("dagar", dagar);
-			
+
 			this.$store.commit("setDagar", dagar);
 		},
 		assignDates() {

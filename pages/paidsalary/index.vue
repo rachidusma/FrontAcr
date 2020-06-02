@@ -4,7 +4,7 @@
       <v-col cols="12" md="12">
         <v-row class="pa-4">
           <h1 class="title">Salary</h1>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <UserModal />
         </v-row>
       </v-col>
@@ -30,7 +30,7 @@
         <p class="overline">All Salary</p>
         <v-card tile width="100%" class="pa-8">
           <v-row>
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <v-text-field
               v-model="search"
               append-icon="mdi-magnify"
@@ -71,7 +71,7 @@ export default {
   components: {
     UserModal
   },
-  
+
   data() {
     return {
       search: "",

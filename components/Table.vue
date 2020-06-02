@@ -7,7 +7,7 @@
           >
           <v-row>
            <p class="overline"> All Articles</p>
-           <v-spacer></v-spacer>
+           <v-spacer/>
              <v-text-field
                v-model="search"
                append-icon="mdi-magnify"
@@ -62,7 +62,7 @@ export default {
       console.log(e)
      }
     },
-    
+
     data () {
       return {
         all : [],

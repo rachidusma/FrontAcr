@@ -5,10 +5,10 @@
 			<v-card>
 				<v-card-title class="headline">
 					<h4>{{ $t('appBar.changeLang') }}</h4>
-					<v-spacer></v-spacer>
+					<v-spacer/>
 					<v-icon class="black--text" @click="langDialog = false">mdi mdi-close</v-icon>
 				</v-card-title>
-				<v-divider></v-divider>
+				<v-divider />
 
 				<v-card-text>
 					<v-radio-group v-model="language">
@@ -24,7 +24,7 @@
 				</v-card-text>
 
 				<v-card-actions class="grey lighten-3 pa-5">
-					<v-spacer></v-spacer>
+					<v-spacer/>
 
 					<v-btn color="success" depressed @click="changeLang">{{ $t('appBar.changeLang') }}</v-btn>
 				</v-card-actions>
@@ -72,7 +72,7 @@
 						</v-list-item-content>
 					</v-list-item>
 				</div>
-				<v-divider></v-divider>
+				<v-divider />
 
 				<v-list-item :to="$t('navigationDrewer.invoice.url')">
 					<v-list-item-action>
@@ -142,7 +142,7 @@
 						</v-list-group>
 					</div>
 
-					<v-divider></v-divider>
+					<v-divider />
 
 					<v-list-item :to="$t('navigationDrewer.settings.url')">
 						<v-list-item-action>
@@ -152,7 +152,7 @@
 							<v-list-item-title>{{$t('navigationDrewer.settings.text')}}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
-					<v-divider></v-divider>
+					<v-divider />
 
 					<v-list-item :to="$t('navigationDrewer.statistics.url')">
 						<v-list-item-action>
@@ -162,7 +162,7 @@
 							<v-list-item-title>{{$t('navigationDrewer.statistics.text')}}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
-					<v-divider></v-divider>
+					<v-divider />
 				</div>
 			</v-list>
 		</v-navigation-drawer>
@@ -175,7 +175,7 @@
 				<nuxt-link to="/" class="white--text link">Acredit</nuxt-link>
 			</v-toolbar-title>
 			<v-spacer />
-			<v-spacer></v-spacer>
+			<v-spacer/>
 
 			<!-- Start user dropdown -->
 			<div class="text-center mx-2">
@@ -204,11 +204,11 @@
 						</v-list-item>
 
 						<v-list-item class="py-2" exact :to="$t('appBar.personalSettings.url')">{{ $t('appBar.personalSettings.text') }}</v-list-item>
-						<v-divider></v-divider>
+						<v-divider />
 
 						<v-list-item class="py-2" @click="langDialog = true">
 							<span>{{ $t('appBar.changeLang') }}</span>
-							<v-spacer></v-spacer>
+							<v-spacer/>
 							<img :src="require(`static/${$i18n.locale}.svg`)" width="30" class="mr-3" :alt="$i18n.locale" />
 
 						</v-list-item>

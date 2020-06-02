@@ -30,19 +30,19 @@
 						<v-card>
 							<v-card-title>
 								<h4>Deleting customer {{ customer.customername }}</h4>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-icon class="black--text" @click="deleteDialog = false">mdi mdi-close</v-icon>
 							</v-card-title>
-							<v-divider></v-divider>
+							<v-divider />
 							<v-card-text
 								class="py-3"
 							>Are you sure you want to remove customer Marika Bengtsson? This cannot be undone!</v-card-text>
 
-							<v-divider></v-divider>
+							<v-divider />
 
 							<v-card-actions class="grey lighten-3 pa-5">
 								<v-btn text @click="deleteDialog = false">close</v-btn>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-btn color="error" depressed @click="deleteCustomer">Yes, delete</v-btn>
 							</v-card-actions>
 						</v-card>

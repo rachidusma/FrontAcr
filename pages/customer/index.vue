@@ -8,9 +8,12 @@
 
 			<v-col cols="12" md="12">
 				<v-row class="pa-4">
-					<h1 class="title">Customers</h1>
-					<v-spacer></v-spacer>
-					<v-btn color="success" @click="addCustomerModalState= true">Create Customer</v-btn>
+					<h1 class="title">{{ $t('customer.title') }}</h1>
+					<v-spacer/>
+					<v-btn
+						color="success"
+						@click="addCustomerModalState= true"
+					>{{ $t('customer.newCustomerbtnText') }}</v-btn>
 					<UserModal
 						@close="addCustomerModalState = false"
 						@updated="getCustomers"
@@ -23,12 +26,12 @@
 			<v-col cols="12">
 				<v-card tile outlined class="pa-5">
 					<v-row>
-						<v-spacer></v-spacer>
+						<v-spacer/>
 						<v-col cols="12" md="5">
 							<v-text-field
 								v-model="search"
 								append-icon="mdi-magnify"
-								label="Search"
+								:label="$t('filter')"
 								solo
 								dense
 								class="pa-4 pb-1"
@@ -41,13 +44,14 @@
 						:headers="headers"
 						:items="customers"
 						:items-per-page="5"
+						:footer-props="{
+                itemsPerPageText: $t('rowsForTable')
+              }"
 						class="elevation-1"
 						:search="search"
 						@click:row="handleClick"
 					>
-					<template v-slot:item.overdueinterest="{ item }">
-						{{ item.overdueinterest }} %
-					</template>
+						<template v-slot:item.overdueinterest="{ item }">{{ item.overdueinterest }} %</template>
 					</v-data-table>
 				</v-card>
 			</v-col>
@@ -67,21 +71,21 @@ export default {
 		return {
 			addCustomerModalState: false,
 			search: "",
-			breadCampItems: [
-				{ text: "Invoices", href: "/invoices" },
-				{ text: "Customers", disabled: true }
-			],
+			breadCampItems: this.$t("customer.breadCampItems"),
 
 			headers: [
 				{
-					text: "Customer Id",
+					text: this.$t("customer.table.headers.id"),
 					align: "start",
 					sortable: false,
 					value: "_id"
 				},
-				{ text: "customername", value: "customername" },
-				{ text: "vatnummer", value: "vatnummer" },
-				{ text: "overdueinterest (%)", value: "overdueinterest" }
+				{ text: this.$t("customer.table.headers.name"), value: "customername" },
+				{ text: this.$t("customer.table.headers.vat"), value: "vatnummer" },
+				{
+					text: this.$t("customer.table.headers.interset"),
+					value: "overdueinterest"
+				}
 			],
 			customers: []
 		};

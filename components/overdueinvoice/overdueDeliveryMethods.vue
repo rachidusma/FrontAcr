@@ -67,7 +67,7 @@
                     </v-row>
                   </v-expansion-panel-header>
 
-                  <v-divider></v-divider>
+                  <v-divider />
                   <v-expansion-panel-content class="gray">
                     <v-container>
                       <v-row>
@@ -112,7 +112,7 @@
                       </v-col>
                     </v-row>
                   </v-expansion-panel-header>
-                  <v-divider></v-divider>
+                  <v-divider />
 
                   <v-expansion-panel-content class="gray pa-5">
                     <v-row>

@@ -7,7 +7,7 @@
 				<nuxt-link to="/" class="link">Acredit</nuxt-link>
 			</v-toolbar-title>
 
-			<v-spacer></v-spacer>
+			<v-spacer/>
 
 			<div v-if="$auth.loggedIn">
 				<v-btn outlined @click="$auth.logout()">Logout</v-btn>

@@ -9,7 +9,7 @@
 			<v-col cols="12" md="12">
 				<v-row class="pa-4">
 					<h1 class="title">Articles</h1>
-					<v-spacer></v-spacer>
+					<v-spacer/>
 					<ArticleModal
 						@closed="reset()"
 						@updated="getArticles();"
@@ -25,7 +25,7 @@
 				<v-card outlined tile class="pa-5">
 					<!-- Start Search bar -->
 					<v-row>
-						<v-spacer></v-spacer>
+						<v-spacer/>
 						<v-col cols="12" md="5">
 							<v-text-field
 								v-model="search"
@@ -46,15 +46,15 @@
 						<v-card>
 							<v-card-title>
 								<h4>Delete Items</h4>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-icon class="black--text" @click="deleteDialog = false">mdi mdi-close</v-icon>
 							</v-card-title>
-							<v-divider></v-divider>
+							<v-divider />
 							<v-card-text class="pa-5 text-center text-primary">Are you sure you want to delete this item?</v-card-text>
 
 							<v-card-actions class="grey lighten-3 pa-5">
 								<v-btn depressed @click="deleteDialog = false">Cancel</v-btn>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-btn depressed color="error" @click="deleteItem">Delete</v-btn>
 							</v-card-actions>
 						</v-card>

@@ -14,7 +14,7 @@
 								</div>
 							</v-col>
 							<v-col cols="12" md="1">
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-divider vertical></v-divider>
 							</v-col>
 
@@ -37,7 +37,7 @@
 				<v-card class="mx-auto" tile outlined>
 					<v-card-title>
 						<h4>Income and expenses</h4>
-						<v-spacer></v-spacer>
+						<v-spacer/>
 						<div class="mx-2">
 							<v-list-item-avatar tile class="ma-0" size="10" color="blue"></v-list-item-avatar>
 							<small>Income</small>
@@ -58,7 +58,7 @@
 				<v-card v-if="chart.chartData">
 					<v-card-title class="justify-space-between d-flex">
 						<h4>{{ chart.title.text }}</h4>
-						<v-spacer></v-spacer>
+						<v-spacer/>
 						<small>
 							<nuxt-link :to="chart.title.url">{{ chart.title.urlText }}</nuxt-link>
 						</small>
@@ -79,7 +79,7 @@
 										<div class="d-flex justify-between align-center">
 											<v-list-item-avatar tile class="ma-0 mx-2" size="10" color="green"></v-list-item-avatar>
 											<p class="d-inline pa-0 ma-0">Income</p>
-											<v-spacer></v-spacer>
+											<v-spacer/>
 											<p class="d-inline pa-0 ma-0">31 000 kr</p>
 										</div>
 									</div>
@@ -88,7 +88,7 @@
 										<div class="d-flex justify-between align-center">
 											<v-list-item-avatar tile class="ma-0 mx-2" size="10" color="blue"></v-list-item-avatar>
 											<p class="d-inline pa-0 ma-0">Income</p>
-											<v-spacer></v-spacer>
+											<v-spacer/>
 											<p class="d-inline pa-0 ma-0">31 000 kr</p>
 										</div>
 									</div>
@@ -118,16 +118,16 @@
 						<div :key="index" v-for="(info, index) in card.infos" class="pa-1">
 							<div class="my-1 d-flex">
 								<span>{{ info.label }}</span>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<span>{{ info.money }} Kr</span>
 							</div>
-							<v-divider></v-divider>
+							<v-divider />
 						</div>
 					</v-card-text>
 
 					<v-card-actions>
 						<v-btn color="success" :to="card.actions.btn.url">{{ card.actions.btn.text }}</v-btn>
-						<v-spacer></v-spacer>
+						<v-spacer/>
 						<nuxt-link :to="card.actions.text.text">{{card.actions.text.text}}</nuxt-link>
 					</v-card-actions>
 				</v-card>
@@ -153,7 +153,7 @@
 						<p class="green--text">31 564.00 Kr</p>
 					</v-card-title>
 
-					<v-divider></v-divider>
+					<v-divider />
 
 					<v-card-text>
 						<div class="py-2 d-flex align-center justify-space-between">
@@ -173,7 +173,7 @@
 						<p class="red--text">0,00 Kr</p>
 					</v-card-title>
 
-					<v-divider></v-divider>
+					<v-divider />
 
 					<v-card-text>
 						<div class="d-flex py-2 align-center justify-space-between">

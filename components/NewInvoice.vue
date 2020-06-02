@@ -13,7 +13,7 @@
 
 			<v-col cols="12" class="d-flex">
 				<h1 class="d-inline-block">Skapa en faktura</h1>
-				<v-spacer></v-spacer>
+				<v-spacer/>
 				<v-menu offset-y v-if="this.draft && !this.draft.published">
 					<template v-slot:activator="{ on }">
 						<v-btn outlined class="ml-2" v-on="on">
@@ -60,11 +60,11 @@
 									<v-card>
 										<v-card-title>
 											<h4>Add new row</h4>
-											<v-spacer></v-spacer>
+											<v-spacer/>
 											<v-icon class="black--text" @click="addTextDialog = false">mdi mdi-close</v-icon>
 										</v-card-title>
 
-										<v-divider></v-divider>
+										<v-divider />
 										<v-card-text>
 											<v-row>
 												<v-col cols="12">
@@ -73,12 +73,12 @@
 											</v-row>
 										</v-card-text>
 
-										<v-divider></v-divider>
+										<v-divider />
 
 										<v-card-actions class="grey lighten-3 pa-5">
 											<v-btn color="error" v-if="edit" @click="deleteText">Delete</v-btn>
 											<v-btn text @click="addTextDialog = false">Close</v-btn>
-											<v-spacer></v-spacer>
+											<v-spacer/>
 											<v-btn color="primary" :disabled="!addTextVal" @click="addText()">Add to invoice</v-btn>
 										</v-card-actions>
 									</v-card>
@@ -92,11 +92,11 @@
 							<!-- Start Modal Title -->
 							<v-card-title>
 								<h4>Add new row</h4>
-								<v-spacer></v-spacer>
+								<v-spacer/>
 								<v-icon class="font1" @click="resetModal">mdi mdi-close</v-icon>
 							</v-card-title>
 							<!-- End Modal Title -->
-							<v-divider></v-divider>
+							<v-divider />
 
 							<!-- Start Modal Body -->
 							<v-card-text>
@@ -130,7 +130,7 @@
 															<v-btn class="m-2 justify-start" large text block @click="createNewModalfn">
 																<span>+ Create new</span>
 															</v-btn>
-															<v-divider></v-divider>
+															<v-divider />
 														</template>
 														<!-- End The Create New Button in the autocomplete -->
 
@@ -364,7 +364,7 @@
 								</v-container>
 							</v-card-text>
 							<!-- End Modal Body -->
-							<v-divider></v-divider>
+							<v-divider />
 
 							<!-- Start Modal Footer -->
 							<v-card-actions class="grey lighten-3 pa-5">
@@ -378,11 +378,11 @@
 											:disabled="saveAsItemBtnState"
 										>Save as item</v-btn>
 									</v-col>
-									<v-spacer></v-spacer>
+									<v-spacer/>
 
 									<v-col  class="d-flex justify-md-end" cols="12" md="6">
 										<v-btn
-											
+
 											:disabled="!addToInvoiceBtnState"
 											@click="addToInvoice"
 											color="success"
@@ -468,10 +468,10 @@
 							<v-card>
 								<v-card-title class="headline">
 									<h4>Edit product</h4>
-									<v-spacer></v-spacer>
+									<v-spacer/>
 									<v-icon class="black--text" @click="editDraggableDialog = false">mdi mdi-close</v-icon>
 								</v-card-title>
-								<v-divider></v-divider>
+								<v-divider />
 								<!-- Start Modal Body -->
 								<v-card-text>
 									<v-container>
@@ -596,7 +596,7 @@
 										<!-- End Checkbox -->
 									</v-container>
 								</v-card-text>
-								<v-divider></v-divider>
+								<v-divider />
 
 								<!-- End Modal Body -->
 								<v-card-actions class="grey lighten-3 pa-5">
@@ -610,7 +610,7 @@
 											:disabled="saveAsItemBtnState"
 										>Save as item</v-btn>
 									</div>
-									<v-spacer></v-spacer>
+									<v-spacer/>
 
 									<div>
 										<v-btn class="mt-2" @click="update" color="success">Update</v-btn>
@@ -881,7 +881,7 @@ export default {
 					})
 					this.doCalculations(this.draggableItems);
 				});
-				
+
 			// this.selection_value = this.draft;
 		},
 		async deleteDraft() {
@@ -1064,11 +1064,11 @@ export default {
 			if (calcs.RoundedSumState)
 				calcs.totalSumToPay = Math.round(calcs.totalSumToPay);
 		},
-		/** do the Calculattions under the draggable 
+		/** do the Calculattions under the draggable
 		 * @param { Array } arr
 		 */
 		doCalculations(arr) {
-			
+
 			let calcs = this.calculations;
 			calcs.amountExVAT = 0;
 			calcs.vat6 = 0;
@@ -1082,7 +1082,7 @@ export default {
 					return;
 				}
 				console.log('x', x);
-				
+
 				/** Ex Vat Calc */
 				calcs.amountExVAT += Number(x.total);
 
