@@ -51,7 +51,7 @@ export default {
           file: 'en.js'
         },
         {
-          code: 'sw',
+          code: 'sv',
           file: 'sw.js'
         },
       ],

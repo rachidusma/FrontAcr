@@ -9,7 +9,10 @@
 			<v-col cols="12" sm="12">
 				<div class="d-flex justify-space-between align-center" style="width: 100%">
 					<p class="py-0 my-0 black--text headline">{{$t('invoice.title')}}</p>
-					<v-btn color="success" to="/newinvoice">{{$t('invoice.newinvoiceBtn')}}</v-btn>
+					<v-btn
+						color="success"
+						:to="$t('invoice.newinvoiceBtn.url')"
+					>{{$t('invoice.newinvoiceBtn.text')}}</v-btn>
 				</div>
 			</v-col>
 			<calculations :overdue="overdueSum" />
@@ -37,7 +40,7 @@ export default {
 		return {
 			invoices: [],
 			overdueSum: 0,
-			breadCampItems: this.$t('invoice.breadCampItems')
+			breadCampItems: this.$t("invoice.breadCampItems")
 		};
 	},
 	methods: {},
@@ -51,16 +54,20 @@ export default {
 						!inv.invoicepaid &&
 						new Date(inv.duedate) > Date.now()
 					)
-						inv.status = "Published";
+						inv.status = this.$t(
+							"invoice.table.filters.invoiceTypes.published"
+						);
 					else if (
 						inv.published &&
 						!inv.invoicepaid &&
 						new Date(inv.duedate) < Date.now()
 					) {
-						inv.status = "Overdue";
+						inv.status = this.$t("invoice.table.filters.invoiceTypes.overdue");
 						this.overdueSum += Number(inv.summa);
-					} else if (inv.published && inv.invoicepaid) inv.status = "Paid";
-					else if (!inv.published) inv.status = "Draft";
+					} else if (inv.published && inv.invoicepaid)
+						inv.status = this.$t("invoice.table.filters.invoiceTypes.paid");
+					else if (!inv.published)
+						inv.status = this.$t("invoice.table.filters.invoiceTypes.draft");
 
 					if (inv.duedate) {
 						inv.duedate = new Date(inv.duedate).toISOString().substring(0, 10);
@@ -73,9 +80,6 @@ export default {
 				});
 
 				this.invoices = res;
-
-				// this.activeinvoices();
-				console.log(res);
 			})
 			.catch(err => console.log(err));
 	}

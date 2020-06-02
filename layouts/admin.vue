@@ -13,12 +13,12 @@
 				<v-card-text>
 					<v-radio-group v-model="language">
 						<div class="d-flex mb-5 align-center">
-							<img src="/en.svg" width="30" class="mr-3" alt="en" />
+							<img src="/en.svg" width="30" class="mr-3" alt="English" />
 							<v-radio value="en" class="d-inline-block" label="English"></v-radio>
 						</div>
 						<div class="d-flex align-center">
-							<img src="/sw.svg" width="30" class="mr-3" alt="Uk" />
-							<v-radio value="sw" class="d-inline-block" label="Svenska"></v-radio>
+							<img src="/sv.svg" width="30" class="mr-3" alt="Svenska" />
+							<v-radio value="sv" class="d-inline-block" label="Svenska"></v-radio>
 						</div>
 					</v-radio-group>
 				</v-card-text>

@@ -84,9 +84,9 @@ export const routerOptions = {
     component: _2ca2afee,
     name: "statistics___en"
   }, {
-    path: "/sw",
+    path: "/sv",
     component: _bcd6a848,
-    name: "index___sw"
+    name: "index___sv"
   }, {
     path: "/uppaidsalary",
     component: _6f41f3cb,
@@ -112,85 +112,85 @@ export const routerOptions = {
     component: _0cea4497,
     name: "settings-personal-settings___en"
   }, {
-    path: "/sw/articles",
+    path: "/sv/articles",
     component: _73263f7f,
-    name: "articles___sw"
+    name: "articles___sv"
   }, {
-    path: "/sw/customer",
+    path: "/sv/customer",
     component: _657f1984,
-    name: "customer___sw"
+    name: "customer___sv"
   }, {
-    path: "/sw/invoices",
+    path: "/sv/invoices",
     component: _396dc994,
-    name: "invoices___sw"
+    name: "invoices___sv"
   }, {
-    path: "/sw/job",
+    path: "/sv/job",
     component: _26d965c7,
-    name: "job___sw"
+    name: "job___sv"
   }, {
-    path: "/sw/login",
+    path: "/sv/login",
     component: _6b3c4ef3,
-    name: "login___sw"
+    name: "login___sv"
   }, {
-    path: "/sw/newinvoice",
+    path: "/sv/newinvoice",
     component: _442e3773,
-    name: "newinvoice___sw"
+    name: "newinvoice___sv"
   }, {
-    path: "/sw/paidsalary",
+    path: "/sv/paidsalary",
     component: _47171806,
-    name: "paidsalary___sw"
+    name: "paidsalary___sv"
   }, {
-    path: "/sw/settings",
+    path: "/sv/settings",
     component: _5ae349d9,
-    name: "settings___sw"
+    name: "settings___sv"
   }, {
-    path: "/sw/Signup",
+    path: "/sv/Signup",
     component: _810d4ec4,
-    name: "Signup___sw"
+    name: "Signup___sv"
   }, {
-    path: "/sw/statistics",
+    path: "/sv/statistics",
     component: _2ca2afee,
-    name: "statistics___sw"
+    name: "statistics___sv"
   }, {
-    path: "/sw/uppaidsalary",
+    path: "/sv/uppaidsalary",
     component: _6f41f3cb,
-    name: "uppaidsalary___sw"
+    name: "uppaidsalary___sv"
   }, {
-    path: "/sw/user",
+    path: "/sv/user",
     component: _0fdb8a31,
-    name: "user___sw"
+    name: "user___sv"
   }, {
-    path: "/sw/settings/change-password",
+    path: "/sv/settings/change-password",
     component: _7c8dc142,
-    name: "settings-change-password___sw"
+    name: "settings-change-password___sv"
   }, {
-    path: "/sw/settings/forgetPassword",
+    path: "/sv/settings/forgetPassword",
     component: _29afb09e,
-    name: "settings-forgetPassword___sw"
+    name: "settings-forgetPassword___sv"
   }, {
-    path: "/sw/settings/invoice-settings",
+    path: "/sv/settings/invoice-settings",
     component: _d643f5e8,
-    name: "settings-invoice-settings___sw"
+    name: "settings-invoice-settings___sv"
   }, {
-    path: "/sw/settings/personal-settings",
+    path: "/sv/settings/personal-settings",
     component: _0cea4497,
-    name: "settings-personal-settings___sw"
+    name: "settings-personal-settings___sv"
   }, {
-    path: "/sw/invoices/draft/:id?",
+    path: "/sv/invoices/draft/:id?",
     component: _7273a3f6,
-    name: "invoices-draft-id___sw"
+    name: "invoices-draft-id___sv"
   }, {
-    path: "/sw/invoices/overdue/:id?",
+    path: "/sv/invoices/overdue/:id?",
     component: _0c35de34,
-    name: "invoices-overdue-id___sw"
+    name: "invoices-overdue-id___sv"
   }, {
-    path: "/sw/invoices/paid/:id?",
+    path: "/sv/invoices/paid/:id?",
     component: _49d37152,
-    name: "invoices-paid-id___sw"
+    name: "invoices-paid-id___sv"
   }, {
-    path: "/sw/invoices/published/:id?",
+    path: "/sv/invoices/published/:id?",
     component: _bafedb50,
-    name: "invoices-published-id___sw"
+    name: "invoices-published-id___sv"
   }, {
     path: "/invoices/draft/:id?",
     component: _7273a3f6,
@@ -208,13 +208,13 @@ export const routerOptions = {
     component: _bafedb50,
     name: "invoices-published-id___en"
   }, {
-    path: "/sw/articles/:id",
+    path: "/sv/articles/:id",
     component: _0dec15a7,
-    name: "articles-id___sw"
+    name: "articles-id___sv"
   }, {
-    path: "/sw/customer/:id",
+    path: "/sv/customer/:id",
     component: _1fa3a5b4,
-    name: "customer-id___sw"
+    name: "customer-id___sv"
   }, {
     path: "/articles/:id",
     component: _0dec15a7,

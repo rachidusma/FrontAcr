@@ -10,7 +10,7 @@
 				<v-col cols="12" sm="3">
 					<v-text-field
 						v-model="search"
-						label="Search"
+						:label="$t('invoice.table.filters.textPlaceholder')"
 						append-icon="mdi-magnify"
 						single-line
 						hide-details
@@ -71,13 +71,13 @@ export default {
 	data() {
 		return {
 			search: "",
-			state: [{ text: "All states", value: "All" }],
+			state: [{ text: this.$t('invoice.table.filters.invoiceTypes.all'), value: this.$t('invoice.table.filters.invoiceTypes.all') }],
 			States: [
-				{ text: "All states", value: "All" },
-				{ text: "Paid", value: "Paid" },
-				{ text: "Published", value: "Published" },
-				{ text: "Overdue", value: "Overdue" },
-				{ text: "Drafts", value: "Draft" }
+				{ text:  this.$t('invoice.table.filters.invoiceTypes.all'), value: this.$t('invoice.table.filters.invoiceTypes.all') },
+				{ text: this.$t('invoice.table.filters.invoiceTypes.draft'), value: this.$t('invoice.table.filters.invoiceTypes.draft') },
+				{ text: this.$t('invoice.table.filters.invoiceTypes.published'), value: this.$t('invoice.table.filters.invoiceTypes.published') },
+				{ text: this.$t('invoice.table.filters.invoiceTypes.paid'), value: this.$t('invoice.table.filters.invoiceTypes.paid') },
+				{ text: this.$t('invoice.table.filters.invoiceTypes.overdue'), value: this.$t('invoice.table.filters.invoiceTypes.overdue') }
 			],
 			types: [
 				{ text: "All types", value: "All" },
@@ -111,13 +111,13 @@ export default {
   },
 	methods: {
 		getColor(status) {
-			if (status == "Paid") return "green";
-			else if (status == "Overdue") return "red";
-			else if (status == "Draft") return "black";
-			else if (status == "Published") return "blue";
+			if (status == this.$t('invoice.table.filters.invoiceTypes.paid')) return "green";
+			else if (status == this.$t('invoice.table.filters.invoiceTypes.overdue')) return "red";
+			else if (status == this.$t('invoice.table.filters.invoiceTypes.draft')) return "black";
+			else if (status == this.$t('invoice.table.filters.invoiceTypes.published')) return "blue";
 		},
 		filterstate(a) {
-			if (a == "All") {
+			if (a == this.$t('invoice.table.filters.invoiceTypes.all')) {
 				this.displaiedInvoices = this.allItems;
 			} else {
 				this.displaiedInvoices = this.allItems.filter(
@@ -128,7 +128,7 @@ export default {
 		activeinvoices() {
 			// this.displaiedInvoices = this.allItems;
 			this.displaiedInvoices = this.allItems.filter(
-				invoice => invoice.status != "Paid"
+				invoice => invoice.status != this.$t('invoice.table.links.paid')
 			);
 			this.activeclass = "primary";
 			this.allclass = "normal";
@@ -136,20 +136,20 @@ export default {
 		allinvoices() {
 			// this.displaiedInvoices = this.allItems;
 			this.displaiedInvoices = this.allItems.filter(
-				invoice => invoice.status != "Draft"
+				invoice => invoice.status != this.$t('invoice.table.links.draft')
 			);
 			this.allclass = "primary";
 			this.activeclass = "normal";
 		},
 		handleClick(a) {
-			if (a.status == "Draft") {
-				this.$router.push("/invoices/draft/" + a._id);
-			} else if (a.status == "Overdue") {
-				this.$router.push("/invoices/overdue/" + a._id);
-			} else if (a.status == "Published") {
-				this.$router.push("/invoices/published/" + a._id);
+			if (a.status == this.$t('invoice.table.filters.invoiceTypes.draft')) {
+				this.$router.push(this.$t('invoice.table.links.draft') + a._id);
+			} else if (a.status == this.$t('invoice.table.filters.invoiceTypes.overdue')) {
+				this.$router.push(this.$t('invoice.table.links.overdue') + a._id);
+			} else if (a.status == this.$t('invoice.table.filters.invoiceTypes.published')) {
+				this.$router.push(this.$t('invoice.table.links.published') + a._id);
 			} else {
-				this.$router.push("/invoices/paid/" + a._id);
+				this.$router.push(this.$t('invoice.table.links.paid') + a._id);
 			}
 		}
 	},
