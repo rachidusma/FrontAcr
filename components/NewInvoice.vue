@@ -2,35 +2,31 @@
 	<v-layout>
 		<v-row>
 			<v-col cols="12">
-				<v-breadcrumbs
-					class="pa-0 ma-0"
-					:items="[
-						{ text: 'invoices', href: '/invoices' },
-						{ text: 'create new invoice', disabled: true }
-					]"
-				></v-breadcrumbs>
+				<v-breadcrumbs class="pa-0 ma-0" :items="$t('newInvoice.breadCampItems')"></v-breadcrumbs>
 			</v-col>
 
+			<!-- Start dropdown if draft -->
 			<v-col cols="12" class="d-flex">
-				<h1 class="d-inline-block">Skapa en faktura</h1>
-				<v-spacer/>
+				<h1 class="d-inline-block">{{ $t('newInvoice.title') }}</h1>
+				<v-spacer />
 				<v-menu offset-y v-if="this.draft && !this.draft.published">
 					<template v-slot:activator="{ on }">
 						<v-btn outlined class="ml-2" v-on="on">
-							More
+							{{ $t('more') }}
 							<v-icon class="font1">mdi mdi-chevron-down</v-icon>
 						</v-btn>
 					</template>
 					<v-list>
-						<v-list-item v-if="this.draft" @click="deleteDraft">Delete</v-list-item>
+						<v-list-item v-if="this.draft" @click="deleteDraft">{{ $t('delete') }}</v-list-item>
 					</v-list>
 				</v-menu>
 			</v-col>
+			<!-- End dropdown if draft -->
 
 			<!-- Start Customer -->
 			<v-col cols="12">
 				<v-card outlined class="pa-3">
-					<h3 class="text--primary pb-3">Customer:</h3>
+					<h3 class="text--primary pb-3">{{ $t('newInvoice.customer.title') }}</h3>
 					<customerSection
 						:customernameFromVuex="customer.customername"
 						:customername="customerNameForCustomerSection"
@@ -42,25 +38,25 @@
 			<!-- Start Product -->
 			<v-col cols="12">
 				<v-card outlined class="pa-5">
-					<h3 class="mb-3">Items/services:</h3>
+					<h3 class="mb-3">{{ $t('newInvoice.product.title') }}</h3>
 					<!-- Start Add row MODAL -->
 
 					<v-dialog v-model="dialog" persistent scrollable max-width="600px">
 						<!-- Start Open Dialog button -->
 						<template v-slot:activator="{ on }">
 							<div style="border: 1px dashed #aaa;" class="pa-3 mt-3">
-								<v-btn dark v-on="on">Add new row</v-btn>
+								<v-btn dark v-on="on">{{ $t('newInvoice.product.modal.newRow') }}</v-btn>
 
 								<!-- Start Add Text -->
 								<v-dialog v-model="addTextDialog" v-if="!hideAddText" width="500">
 									<template v-slot:activator="{ on }">
-										<v-btn color="red lighten-2" dark v-on="on">Add text</v-btn>
+										<v-btn color="red lighten-2" dark v-on="on">{{ $t('newInvoice.product.modal.addText') }}</v-btn>
 									</template>
 
 									<v-card>
 										<v-card-title>
-											<h4>Add new row</h4>
-											<v-spacer/>
+											<h4>{{ $t('newInvoice.product.modal.newRow') }}</h4>
+											<v-spacer />
 											<v-icon class="black--text" @click="addTextDialog = false">mdi mdi-close</v-icon>
 										</v-card-title>
 
@@ -76,10 +72,14 @@
 										<v-divider />
 
 										<v-card-actions class="grey lighten-3 pa-5">
-											<v-btn color="error" v-if="edit" @click="deleteText">Delete</v-btn>
+											<v-btn color="error" v-if="edit" @click="deleteText">{{ $t('delete') }}</v-btn>
 											<v-btn text @click="addTextDialog = false">Close</v-btn>
-											<v-spacer/>
-											<v-btn color="primary" :disabled="!addTextVal" @click="addText()">Add to invoice</v-btn>
+											<v-spacer />
+											<v-btn
+												color="primary"
+												:disabled="!addTextVal"
+												@click="addText()"
+											>{{ $t('newInvoice.product.modal.addToInvoice') }}</v-btn>
 										</v-card-actions>
 									</v-card>
 								</v-dialog>
@@ -91,8 +91,8 @@
 						<v-card>
 							<!-- Start Modal Title -->
 							<v-card-title>
-								<h4>Add new row</h4>
-								<v-spacer/>
+								<h4>{{ $t('newInvoice.product.modal.newRow') }}</h4>
+								<v-spacer />
 								<v-icon class="font1" @click="resetModal">mdi mdi-close</v-icon>
 							</v-card-title>
 							<!-- End Modal Title -->
@@ -111,11 +111,11 @@
 														v-model="selection_value"
 														:items="articles"
 														@change="setQuantity"
-														placeholder="Search For saved item"
+														:label="$t('newInvoice.product.modal.desc')"
+														:placeholder="$t('newInvoice.product.modal.placeholder')"
 														clearable
 														outlined
 														color="blue-grey lighten-2"
-														label="Description"
 														item-text="artikelnamn"
 														:return-object="true"
 													>
@@ -128,7 +128,7 @@
 														<!-- Start The Create New Button in the autocomplete -->
 														<template v-slot:prepend-item>
 															<v-btn class="m-2 justify-start" large text block @click="createNewModalfn">
-																<span>+ Create new</span>
+																<span>{{ $t('createNew') }}</span>
 															</v-btn>
 															<v-divider />
 														</template>
@@ -136,7 +136,7 @@
 
 														<!-- Start if No data -->
 														<template v-slot:no-data>
-															<p class="grey--text mx-2">No DATA</p>
+															<p class="grey--text mx-2">{{ $t('noData') }}</p>
 														</template>
 														<!-- End if No data -->
 
@@ -151,7 +151,7 @@
 																<div class="d-flex justify-space-between align-center pa-3" style="width: 100%">
 																	<p class="black--text">{{ data.item.artikelnamn }}</p>
 																	<small class="grey--text">
-																		<i>pris_enhet:</i>
+																		<i>{{ $t('articles.articleModal.form.price') }}:</i>
 																		{{ data.item.pris_enhet }}
 																	</small>
 																</div>
@@ -165,7 +165,7 @@
 
 												<!-- Start Edit more -->
 												<v-col v-if="selection_value != null" cols="12" md="3">
-													<v-btn @click="createNewModal = true">Edit more</v-btn>
+													<v-btn @click="createNewModal = true">{{ $t('newInvoice.product.modal.moreEdits') }}</v-btn>
 												</v-col>
 												<!-- End Edit more -->
 											</v-row>
@@ -180,10 +180,10 @@
 													v-model="selection_value.number"
 													:value="selection_value.number"
 													:suffix="selection_value.enhet"
-													label="Quantity"
+													:label="$t('newInvoice.product.modal.quantity')"
 													type="number"
 													dense
-												></v-text-field>
+												/>
 											</v-col>
 											<!-- End number -->
 
@@ -193,16 +193,16 @@
 													outlined
 													v-model="selection_value.pris_enhet"
 													:value="selection_value.pris_enhet"
-													label="Price / unit ex VAT"
+													:label="$t('articles.articleModal.form.price')"
 													type="number"
 													dense
-												></v-text-field>
+												/>
 											</v-col>
 											<!-- End Price / unit ex VAT -->
 
 											<!-- Strat Amount ex VAT -->
 											<v-col cols="12">
-												<p class="font-weight-black">Amount ex VAT</p>
+												<p class="font-weight-black">{{ $t('articles.articleModal.form.amountVAT') }}</p>
 												<p
 													class="font-weight-medium"
 												>{{ (Number(selection_value.number) * Number(selection_value.pris_enhet) ) || "0,00" }} Kr</p>
@@ -217,7 +217,7 @@
 											text
 											large
 											@click="createNewModalfn"
-										>+ Create new</v-btn>
+										>{{ $t('createNew') }}</v-btn>
 									</v-row>
 
 									<!-- Start Existing Modal -->
@@ -230,10 +230,10 @@
 													outlined
 													dense
 													required
+													:label="$t('articles.articleModal.form.name')"
 													:rules="[rules.required, rules.min]"
 													v-model="selection_value.artikelnamn"
-													label="artikelnamn"
-												></v-text-field>
+												/>
 											</v-col>
 											<!-- End Description -->
 
@@ -246,8 +246,8 @@
 													type="number"
 													dense
 													v-model="selection_value.number"
-													label="Quantity"
-												></v-text-field>
+													:label="$t('newInvoice.product.modal.quantity')"
+												/>
 											</v-col>
 											<!-- End number -->
 
@@ -258,7 +258,7 @@
 													:items="Unit"
 													item-text="slection"
 													item-value="slection"
-													label="Unit"
+													:label="$t('articles.articleModal.form.unit')"
 													outlined
 													dense
 												></v-select>
@@ -275,7 +275,7 @@
 													required
 													:rules="[rules.required]"
 													type="number"
-													label="Price / unit ex VAT"
+													:label="$t('articles.articleModal.form.price')"
 												></v-text-field>
 											</v-col>
 											<!-- End Price / unit ex VAT -->
@@ -287,7 +287,7 @@
 													:items="Vat"
 													dense
 													:item-text="` ${Vat} %`"
-													label="VAT"
+													:label="$t('articles.articleModal.form.vat')"
 													outlined
 												></v-select>
 											</v-col>
@@ -301,7 +301,7 @@
 													required
 													:rules="[rules.required]"
 													@change="changeCheckBoxLabel"
-													label="Kind"
+													:label="$t('articles.articleModal.form.type')"
 													outlined
 													dense
 												></v-select>
@@ -310,7 +310,7 @@
 
 											<!-- Strat Amount ex VAT -->
 											<v-col cols="12">
-												<p class="font-weight-black">Amount ex VAT</p>
+												<p class="font-weight-black">{{ $t('articles.articleModal.form.amountVAT') }}</p>
 												<p
 													class="font-weight-medium"
 												>{{ selection_value.pris_enhet * selection_value.number || "0,00" }} Kr</p>
@@ -327,7 +327,7 @@
 												<template v-slot:activator="{ on }">
 													<v-checkbox v-model="checkbox" v-on="on" :label="checkBoxLabel"></v-checkbox>
 												</template>
-												Rot/Rut will be accounted for if this box is checked AND if you have activated Rot/Rut on the invoice
+												{{ $t('articles.articleModal.form.checkBox.hint') }}
 											</v-tooltip>
 
 											<v-row v-if="selection_value!=null && checkbox">
@@ -342,18 +342,18 @@
 												<v-col class="d-flex" cols="12">
 													<v-select
 														dense
-														v-if="(selection_value.typ == 'Goods')"
+														v-if="(selection_value.typ == $t('articles.articleModal.kind[0]'))"
 														v-model="selection_value.materialType"
 														:items=" materialType"
-														label="Type of material"
+														:label="$t('newInvoice.product.modal.material.typMaterialLable')"
 													></v-select>
 
 													<v-select
 														dense
-														v-else-if="(selection_value.typ == 'services')"
+														v-else-if="(selection_value.typ == $t('articles.articleModal.kind[1]'))"
 														v-model="selection_value.materialType"
 														:items=" serviceType"
-														label="Type of service"
+														:label="$t('newInvoice.product.modal.material.typMaterialService')"
 													></v-select>
 												</v-col>
 												<!-- End material Type -->
@@ -371,25 +371,23 @@
 								<v-row>
 									<!-- Start For Add New Customar  -->
 									<v-col cols="12" md="6">
-										<v-btn text @click="resetModal">Cancel</v-btn>
+										<v-btn text @click="resetModal">{{ $t('cancle') }}</v-btn>
 										<v-btn
 											class="mt-2 d-block d-sm-inline"
 											@click="saveAsItem"
 											:disabled="saveAsItemBtnState"
-										>Save as item</v-btn>
+										>{{ $t('saveAsItem') }}</v-btn>
 									</v-col>
-									<v-spacer/>
+									<v-spacer />
 
-									<v-col  class="d-flex justify-md-end" cols="12" md="6">
+									<v-col class="d-flex justify-md-end" cols="12" md="6">
 										<v-btn
-
 											:disabled="!addToInvoiceBtnState"
 											@click="addToInvoice"
 											color="success"
-										>Add to invoice</v-btn>
+										>{{ $t('newInvoice.product.modal.addToInvoice') }}</v-btn>
 									</v-col>
 									<!-- End For Add New Customar  -->
-
 								</v-row>
 							</v-card-actions>
 							<!-- End Modal Footer -->
@@ -403,19 +401,19 @@
 						<v-col cols="12" v-if="draggableItems.length > 0">
 							<v-row>
 								<v-col cols="4" md="4">
-									<span class="item" style="padding-left: 15px">artikelnamn</span>
+									<span class="item" style="padding-left: 15px">{{ $t('newInvoice.draggable.name') }}</span>
 								</v-col>
 								<v-col cols="2" md="2">
-									<span class="item">moms</span>
+									<span class="item">{{ $t('newInvoice.draggable.vat') }}</span>
 								</v-col>
 								<v-col cols="2" md="2">
-									<span class="item">number</span>
+									<span class="item">{{ $t('newInvoice.draggable.amount') }}</span>
 								</v-col>
 								<v-col cols="2" md="2">
-									<span class="item">Unit price</span>
+									<span class="item">{{ $t('newInvoice.draggable.unit') }}</span>
 								</v-col>
 								<v-col cols="2" md="2">
-									<span class="item">Total (ex tax)</span>
+									<span class="item">{{ $t('newInvoice.draggable.total') }}</span>
 								</v-col>
 							</v-row>
 						</v-col>
@@ -468,14 +466,13 @@
 							<v-card>
 								<v-card-title class="headline">
 									<h4>Edit product</h4>
-									<v-spacer/>
+									<v-spacer />
 									<v-icon class="black--text" @click="editDraggableDialog = false">mdi mdi-close</v-icon>
 								</v-card-title>
 								<v-divider />
 								<!-- Start Modal Body -->
 								<v-card-text>
 									<v-container>
-
 										<!-- Start Create new item modal -->
 										<v-row v-if="selection_value">
 											<!-- Strat Description -->
@@ -610,7 +607,7 @@
 											:disabled="saveAsItemBtnState"
 										>Save as item</v-btn>
 									</div>
-									<v-spacer/>
+									<v-spacer />
 
 									<div>
 										<v-btn class="mt-2" @click="update" color="success">Update</v-btn>
@@ -720,52 +717,15 @@ export default {
 		hideAddText: false,
 		/** Selection Options */
 		Vat: [0, 6, 12, 25],
-		Unit: [
-			"hours",
-			"pound",
-			"pieces",
-			"hours",
-			"days",
-			"months",
-			"kilograms",
-			"grams",
-			"liters",
-			"meters",
-			"centimeters",
-			"millimeters",
-			"m²",
-			"m³",
-			"miles",
-			"kms"
-		],
-		Kind: ["Goods", "services"],
-		materialType: [
-			"Child Services",
-			"Data and IT services",
-			"Removal services",
-			"Clothing and textile care",
-			"Personal help and care",
-			"Repair of appliances",
-			"Snow shoveling",
-			"Cleaning",
-			"Gardening"
-		],
-		serviceType: [
-			"Child Services",
-			"Data and IT services",
-			"Removal services",
-			"Clothing and textile care",
-			"Personal help and care",
-			"Repair of appliances",
-			"Snow shoveling",
-			"Cleaning",
-			"Gardening"
-		],
+		Unit: vm.$t("articles.articleModal.units"),
+		Kind: vm.$t("articles.articleModal.kind"),
+		materialType: vm.$t("newInvoice.product.modal.material.materialType"),
+		serviceType: vm.$t("newInvoice.product.modal.material.serviceType"),
 		draggableItems: [],
 		editDraggableDialog: false,
 		rules: {
 			required: value => !!value || "Required.",
-			min: v => v && v.length >= 1 || "Min 1 characters",
+			min: v => (v && v.length >= 1) || "Min 1 characters",
 			passwordMatch: v => v == this.newPassword
 		},
 		valid: false,
@@ -814,8 +774,8 @@ export default {
 			};
 		},
 
-		addToInvoiceBtnState(){
-			return this.selection_value && this.valid
+		addToInvoiceBtnState() {
+			return this.selection_value && this.valid;
 		},
 		saveAsItemBtnState() {
 			if (this.selection_value && this.createNewModal == true)
@@ -876,9 +836,9 @@ export default {
 				.then(res => {
 					console.log("articles res => ", res);
 					this.draggableItems = res;
-					(this.draggableItems).map(x => {
-						x.total = x.number * x.pris_enhet
-					})
+					this.draggableItems.map(x => {
+						x.total = x.number * x.pris_enhet;
+					});
 					this.doCalculations(this.draggableItems);
 				});
 
@@ -928,7 +888,7 @@ export default {
 		setQuantity() {
 			if (this.selection_value) {
 				this.selection_value.number = 1;
-				this.valid= true
+				this.valid = true;
 			}
 		},
 		addToInvoice() {
@@ -971,7 +931,7 @@ export default {
 					enhet: this.selection_value.enhet,
 					produktkod: uuidv1(null, arr, -12).join(""),
 					pris_enhet: Number(this.selection_value.pris_enhet),
-					moms:  this.selection_value.moms,
+					moms: this.selection_value.moms,
 					number: this.selection_value.number,
 					typ: this.selection_value.typ
 				})
@@ -1068,7 +1028,6 @@ export default {
 		 * @param { Array } arr
 		 */
 		doCalculations(arr) {
-
 			let calcs = this.calculations;
 			calcs.amountExVAT = 0;
 			calcs.vat6 = 0;
@@ -1081,7 +1040,7 @@ export default {
 				if (x.text) {
 					return;
 				}
-				console.log('x', x);
+				console.log("x", x);
 
 				/** Ex Vat Calc */
 				calcs.amountExVAT += Number(x.total);

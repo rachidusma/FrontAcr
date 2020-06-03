@@ -7,6 +7,9 @@ export default {
   delete: "Radera",
   edit: "Redigera",
   noData: "INGEN DATA TILLGÄNGLIG",
+  more: "Mer",
+  createNew: "Skapa ny",
+  saveAsItem: "Spara som objekt",
 
   filter: "Filtrera",
   rowsForTable: "Rader per sida:",
@@ -135,6 +138,70 @@ export default {
       amount: "Fakturabelopp (inkl. Moms):"
     },
   },
+  newInvoice: {
+    breadCampItems: [
+      { text: 'fakturor', href: '/invoices' },
+      { text: 'skapa ny faktura', disabled: true }
+    ],
+    title: "skapa ny faktura", // Skapa en faktura
+    customer: {
+      title: "Kund:",
+      autoPlaceholder: "Sök efter kund",
+      customerNO: "Kundnummer:"
+    },
+    product: {
+      title: "Artiklar / tjänster:",
+      modal: {
+        newRow: "+ Lägg till en ny rad",
+        addText: "+ Lägg till text",
+        addToInvoice: "Lägg till på fakturan",
+        desc: "Beskrivning",
+        placeholder: "Sök efter sparat objekt",
+        moreEdits: "Redigera mer",
+
+        quantity: "Kvantitet",
+        amountVAT: "Belopp exkl. Moms",
+        checkBox: {
+          label: "",
+          hint: "Rot / Rut kommer att redovisas om denna ruta är markerad OCH om du har aktiverat Rot / Rut på fakturan",
+        },
+        material: {
+          typMaterialLable: "Typ av material",
+          typMaterialService: "Typ av service",
+
+          materialType: [
+            "Barntjänster",
+             "Data- och IT-tjänster",
+             "Borttagningstjänster",
+             "Kläder och textilvård",
+             "Personlig hjälp och vård",
+             "Reparation av apparater",
+             "Snöskakning",
+             "Rengöring",
+             "Trädgårdsarbete"
+          ],
+          serviceType: [
+            "Barntjänster",
+             "Data- och IT-tjänster",
+             "Borttagningstjänster",
+             "Kläder och textilvård",
+             "Personlig hjälp och vård",
+             "Reparation av apparater",
+             "Snöskakning",
+             "Rengöring",
+             "Trädgårdsarbete"
+          ]
+        }
+      }
+    },
+    draggable: {
+      name: "artikelnamn",
+      vat: "moms",
+      amount: "siffra",
+      unit: "Enhetspris",
+      total: "Totalt (exkl. Skatt)"
+    },
+  },
   customer: {
     userModal: {
       title: {
@@ -221,7 +288,7 @@ export default {
     customerInfo: {
       type: "Kundtyp",
       orgNumber: "Org-nummer",
-      address: "Adress",
+      address: "postadress",
       vat: "Momsregistreringsnummer"
     },
   },
@@ -269,5 +336,6 @@ export default {
       label: "Radera objekt",
       text: "Är du säker på att du vill ta bort det här objektet?"
     }
-  }
+  },
+
 }

@@ -7,6 +7,9 @@ export default {
   delete: "delete",
   edit: "edit",
   noData: "NO DATA AVAILABLE",
+  more: "More",
+  createNew: "+ Create new",
+  saveAsItem: "Save as item",
 
   filter: "Filter",
   rowsForTable: "Rows per page:",
@@ -134,6 +137,70 @@ export default {
       dop: "Invoice was published:",
       amount: "Invoice amount (inc VAT):"
     }
+  },
+  newInvoice: {
+    breadCampItems: [
+      { text: 'invoices', href: '/en/invoices' },
+      { text: 'create new invoice', disabled: true }
+    ],
+    title: "Create new invoice", // Skapa en faktura
+    customer: {
+      title: "Customer:",
+      autoPlaceholder: "Search for customer",
+      customerNO: "Customer number:"
+    },
+    product: {
+      title: "Items/services:",
+      modal: {
+        newRow: "Add new row",
+        addText: "Add text",
+        addToInvoice: "Add to invoice",
+        desc: "Description",
+        placeholder: "Search For saved item",
+        moreEdits: "Edit more",
+
+        quantity: "Quantity",
+        amountVAT: "Amount ex VAT",
+        checkBox: {
+          label: "",
+          hint: "Rot/Rut will be accounted for if this box is checked AND if you have activated Rot/Rut on the invoice",
+        },
+        material: {
+          typMaterialLable: "Type of material",
+          typMaterialService: "Type of service",
+
+          materialType: [
+            "Child Services",
+            "Data and IT services",
+            "Removal services",
+            "Clothing and textile care",
+            "Personal help and care",
+            "Repair of appliances",
+            "Snow shoveling",
+            "Cleaning",
+            "Gardening"
+          ],
+          serviceType: [
+            "Child Services",
+            "Data and IT services",
+            "Removal services",
+            "Clothing and textile care",
+            "Personal help and care",
+            "Repair of appliances",
+            "Snow shoveling",
+            "Cleaning",
+            "Gardening"
+          ]
+        }
+      }
+    },
+    draggable: {
+      name: "article name",
+      vat: "Vat",
+      amount: "Number",
+      unit: "Unit price",
+      total: "Total (ex tax)"
+    },
   },
   customer: {
     userModal: {

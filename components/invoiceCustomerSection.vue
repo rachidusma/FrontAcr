@@ -5,8 +5,8 @@
 				<!-- Start AutoComplete -->
 				<v-col cols="12" sm="6">
 					<v-autocomplete
-						label="Search Customer"
-						placeholder="Search for customer"
+						:label="$t('newInvoice.customer.autoPlaceholder')"
+
 						v-model="customer"
 						clearable
 						outlined
@@ -25,7 +25,7 @@
 						</template>
 
 						<template v-slot:no-data>
-							<p class="grey--text mx-2">No DATA</p>
+							<p class="grey--text mx-2">{{ $t('noData') }}</p>
 						</template>
 						<template v-slot:item="data">
 							<template v-if="typeof data.item !== 'object'">
@@ -39,9 +39,8 @@
 										{{ data.item.orgnummer }}
 									</small>
 									<small v-else class="grey--text">
-										<i>Customer number:</i>
-										{{ data.item.postnummer }}
-										<!-- TODO: Add Personal Number HERE -->
+										<i>{{ $t('newinvoice.customer.customerNO') }}</i>
+										{{ data.item.kundnummer }}
 									</small>
 								</div>
 							</template>
@@ -50,14 +49,14 @@
 				</v-col>
 				<!-- End AutoComplete -->
 
-				<v-btn class="mx-2" color="primary" v-if="!editUserModal" @click="dialog = true">create new</v-btn>
+				<v-btn class="mx-2" color="primary" v-if="!editUserModal" @click="dialog = true"> {{ $t('createNew') }} </v-btn>
 
 				<v-btn
 					class="mx-2"
 					color="success"
 					v-else
 					@click="IndividualsOrCorporations = (customer.orgnummer != '') ?  '2' : '1'; dialog = true"
-				>Edit</v-btn>
+				>{{ $t('edit') }}</v-btn>
 
 				<userModal
 					@close="dialog = false"
@@ -76,25 +75,25 @@
 			<v-row>
 				<v-col cols="12" sm="3" class="align-center d-flex px-8" v-if="customer.orgnummer != ''">
 					<div class="d-inline-block">
-						<p class="my-0 py-0 caption">Org-number</p>
+						<p class="my-0 py-0 caption">{{ $t('oneCustomer.customerInfo.orgNumber') }}</p>
 						<b>{{customer.orgnummer || '-'}}</b>
 					</div>
 				</v-col>
 				<v-col cols="12" sm="3" class="align-center d-flex px-8" v-if="customer.vatnummer != ''">
 					<div class="d-inline-block">
-						<p class="my-0 py-0 caption">VAT number</p>
+						<p class="my-0 py-0 caption">{{ $t('oneCustomer.customerInfo.vat') }}</p>
 						<b>{{customer.vatnummer || '-'}}</b>
 					</div>
 				</v-col>
 				<v-col cols="12" sm="3" class="align-center d-flex px-8" v-if="customer.epost != ''">
 					<div class="d-inline-block">
-						<p class="my-0 py-0 caption">Email</p>
+						<p class="my-0 py-0 caption">{{ $t('email') }}</p>
 						<b>{{customer.epost || '-'}}</b>
 					</div>
 				</v-col>
 				<v-col cols="12" sm="3" class="align-center d-flex px-8" v-if="customer.postadress != ''">
 					<div class="d-inline-block">
-						<p class="my-0 py-0 caption">Address</p>
+						<p class="my-0 py-0 caption">{{ $t('oneCustomer.customerInfo.address') }}</p>
 						<b>{{customer.postadress || '-'}}</b>
 					</div>
 				</v-col>
@@ -143,7 +142,7 @@ export default {
 			this.getUsers();
 		},
 		customer(val) {
-			if (val != "undefined" && !!val.dagar && !!val.epost) {				
+			if (val != "undefined" && !!val.dagar && !!val.epost) {
 				this.$store.commit("setCustomer", val);
 				this.$store.commit("setDagar", val.dagar);
 				this.$store.commit("setOverduePayment", val.overdueinterest);
@@ -173,7 +172,7 @@ export default {
 					this.items = res;
 					if (!!this.customername || this.customer.customername) {
 						let m = res.filter(x => x.customername == this.customername);
-						
+
 						this.$store.commit("setCustomer", m[0]);
 						this.editUserModal = true;
 
@@ -187,7 +186,7 @@ export default {
 						console.log(das,m);
 
 						this.$store.commit("setCustomer", m[0]);
-						
+
 
 						Object.assign(this.customer, m[0]);
 					}
