@@ -24,6 +24,38 @@ export default {
     settings: { text: "Settings", url: '/en/settings' },
     statistics: { text: "Statistics", url: '/en/statistics' }
   },
+  loginForm: {
+    signIn: "Sign in",
+    signUp: "Sign Up",
+    signUpOverlay: {
+      label: "Welcome Back!",
+      text: "To keep connected with us please login with your personal info"
+    },
+    signInOverlay: {
+      label: "Hello, Friend!",
+      text: "Enter your personal details and start journey with us"
+    },
+    email: "email",
+    password: "password",
+    forgot: "Forgot your password?",
+    noAcc: "Don't have account?",
+
+    signUpForm: {
+      label: "Create Account",
+      fname: "First name",
+      lname: "Last name",
+      number: "Number",
+      confirmPassword: "Confirm password",
+      checkBox1: "By creating an account I approve ACREDIT  General  Terms and ConditionsGenom att skapa ett konto godkänner jag ACREDIT Allmänna villkor",
+      checkBox2: "I consent to the processing of my personal data in accordance with  ACREDIT Privacy Policy",
+      haveAcc: "Already have account?",
+    },
+
+    card: {
+      text1: "Thank you for registration with us , your account have been created",
+      text2: "into your account"
+    }
+  },
   invoice: {
     breadCampItems: [
       { text: "Invoices", href: "/en/invoices" },

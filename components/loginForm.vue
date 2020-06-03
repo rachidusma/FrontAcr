@@ -5,58 +5,65 @@
 				<v-form class="justify-start justify-md-center" v-model="signUpValid" ref="form">
 					<v-row align-content="center" v-if="!signedUp">
 						<v-col cols="12">
-							<h1>Create Account</h1>
+
+              <div class="toggleLang">
+                <nuxt-link class="mr-3" :to="localePath('Signup', 'en')">
+                  <img src="/en.svg" width="30" alt="en">
+                </nuxt-link>
+
+                <nuxt-link :to="localePath('Signup', 'sv')">
+                  <img src="/sv.svg" width="30" alt="sv">
+                </nuxt-link>
+              </div>
+
+							<h1>{{ $t('loginForm.signUpForm.label') }}</h1>
 						</v-col>
 						<v-col cols="12" md="6">
 							<v-text-field
 								outlined
 								:rules="[rules.required]"
-								label="First Name"
-								placeholder="First Name"
+								:label="$t('loginForm.signUpForm.fname')"
 								v-model="signUpUserInfo.name"
 								type="text"
 								dense
-							></v-text-field>
+							/>
 						</v-col>
 						<v-col cols="12" md="6">
 							<v-text-field
 								outlined
 								:rules="[rules.required]"
-								label="Last Name"
-								placeholder="Last Name"
+								:label="$t('loginForm.signUpForm.lname')"
 								v-model="signUpUserInfo.lastname"
 								type="text"
 								dense
-							></v-text-field>
+							/>
 						</v-col>
 						<v-col cols="12" md="6">
 							<v-text-field
 								outlined
-								label="Email"
+								:label="$t('loginForm.email')"
 								:rules="[rules.emailRules, rules.required]"
 								v-model="signUpUserInfo.email"
 								type="email"
 								dense
-								placeholder="Email"
-							></v-text-field>
+							/>
 						</v-col>
 						<v-col cols="12" md="6">
 							<v-text-field
 								outlined
-								label="Numebr"
+								:label="$t('loginForm.signUpForm.number')"
 								v-model="signUpUserInfo.telnumber"
 								:rules="[rules.required]"
 								type="number"
 								dense
-								placeholder="Numebr"
-							></v-text-field>
+							/>
 						</v-col>
 						<v-col cols="12" md="6">
 							<v-text-field
 								v-model="signUpUserInfo.password"
 								autocomplete="current-password"
 								:value="signUpUserInfo.password"
-								label="Password"
+								:label="$t('loginForm.password')"
 								dense
 								outlined
 								:append-icon="!showPass ? 'mdi-eye' : 'mdi-eye-off'"
@@ -64,7 +71,7 @@
 								:type="!showPass ? 'password' : 'text'"
 								@input="_=>userPassword=_"
 								:rules="[rules.passRules]"
-							></v-text-field>
+							/>
 						</v-col>
 
 						<v-col cols="12" md="6">
@@ -72,7 +79,7 @@
 								v-model="signUpUserInfo.confirmPass"
 								autocomplete="confirm-password"
 								:value="signUpUserInfo.confirmPass"
-								label="Confirm Password"
+								:label="$t('loginForm.signUpForm.confirmPassword')"
 								dense
 								outlined
 								:rules="[rules.confirmPasswordRules]"
@@ -80,51 +87,65 @@
 								@click:append="showConfirm = !showConfirm"
 								:type="!showConfirm ? 'password' : 'text'"
 								@input="checkValid"
-							></v-text-field>
+							/>
 						</v-col>
 
 						<v-col cols="12">
 							<v-checkbox
 								v-model="permession1"
-								label="By creating an account I approve ACREDIT  General  Terms and Conditions "
+								:label="$t('loginForm.signUpForm.checkBox1')"
 								color="#336882"
 								hide-details
-							></v-checkbox>
+							/>
 						</v-col>
 
 						<v-col cols="12">
 							<v-checkbox
 								v-model="permession2"
-								label="I consent to the processing of my personal data in accordance with  ACREDIT Privacy Policy"
+								:label="$t('loginForm.signUpForm.checkBox2')"
 								color="#336882"
 								hide-details
-							></v-checkbox>
+							/>
 						</v-col>
 
 						<v-col cols="12">
 							<v-btn
 								color="primary"
 								@click="userRegister"
+                class="mb-2"
 								:disabled="!(permession1 && permession2 && signUpValid && checkValid)"
-							>Sign Up</v-btn>
+							>{{ $t('loginForm.signUp') }}</v-btn>
 							<br />
-							<a id="signIn2">Already have account?</a>
+							<a id="signIn2">{{ $t('loginForm.signUpForm.haveAcc') }}</a>
 						</v-col>
 					</v-row>
 					<v-card outlinde tile class="ma-auto" v-else>
 						<v-card-text>
-							Thank you for registration with us , your account have been created
-							<a id="signIn3">Signin</a> into your account
+							{{ $t('loginForm.card.text1') }}
+							<a id="signIn3">{{ $t('loginForm.signIn') }}</a>
+							{{ $t('loginForm.card.text2') }}
 						</v-card-text>
 					</v-card>
 				</v-form>
 			</div>
 
+			<!-- Start login -->
 			<div class="form-container sign-in-container">
 				<v-form v-model="valid" ref="form">
 					<v-row align-content="center">
 						<v-col cols="12">
-							<h1>Sign in</h1>
+
+              <div class="toggleLang">
+                <nuxt-link class="mr-3" :to="localePath('index', 'en')">
+                  <img src="/en.svg" width="30" alt="en">
+                </nuxt-link>
+
+                <nuxt-link :to="localePath('index', 'sv')">
+                  <img src="/sv.svg" width="30" alt="sv">
+                </nuxt-link>
+              </div>
+
+							<h1>{{ $t('loginForm.signIn') }}</h1>
 						</v-col>
 						<v-col cols="12">
 							<v-text-field
@@ -133,8 +154,7 @@
 								:rules="rules.emailRules"
 								type="email"
 								v-model="userInfo.email"
-								label="Email"
-								placeholder="Email"
+								:label="$t('loginForm.email')"
 							/>
 							<v-text-field
 								dense
@@ -142,37 +162,45 @@
 								type="password"
 								:rules="rules.passRules"
 								v-model="userInfo.password"
-								label="Password"
-								placeholder="Password"
+								:label="$t('loginForm.password')"
 							/>
 						</v-col>
 						<v-col cols="12">
-							<a href="#">Forgot your password?</a>
+							<a href="#">{{ $t('loginForm.forgot') }}</a>
 						</v-col>
 						<v-col cols="12">
-							<v-btn color="primary" :disabled="!valid" class="mb-2" @click="userLogin">Sign In</v-btn>
+							<v-btn
+								color="primary"
+								:disabled="!valid"
+								class="mb-2"
+								@click="userLogin"
+							>{{ $t('loginForm.signIn') }}</v-btn>
 							<br />
-							<a id="signUp2">Don't have account?</a>
+							<a id="signUp2">{{ $t('loginForm.noAcc') }}</a>
 						</v-col>
 					</v-row>
 				</v-form>
 			</div>
+			<!-- End login -->
+
+			<!-- Start overlay -->
 			<div class="overlay-container">
 				<div class="overlay">
 					<img src="@/assets/loginImage.jpg" alt="login" />
 					<div class="overlay-panel overlay-left">
-						<h1>Welcome Back!</h1>
-						<p>To keep connected with us please login with your personal info</p>
-						<button class="ghost" id="signIn">Sign In</button>
+						<h1>{{ $t('loginForm.signUpOverlay.label') }}</h1>
+						<p>{{ $t('loginForm.signUpOverlay.text') }}</p>
+						<button class="ghost" id="signIn">{{ $t('loginForm.signIn') }}</button>
 					</div>
 					<div class="overlay-panel overlay-right">
-						<h1>Hello, Friend!</h1>
-						<p>Enter your personal details and start journey with us</p>
-						<button class="ghost" id="signUp">Sign Up</button>
+						<h1>{{ $t('loginForm.signInOverlay.label') }}</h1>
+						<p>{{ $t('loginForm.signInOverlay.text') }}</p>
+						<button class="ghost" id="signUp">{{ $t('loginForm.signUp') }}</button>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- End overlay -->
 
 		<v-snackbar v-model="snackbar" :color="color">
 			{{ text }}
@@ -227,21 +255,20 @@ export default {
 			return () =>
 				this.userInfo.password === this.userInfo.confirmPass ||
 				"Password must match";
-		},
-		checkValid() {
-			return this.signUpUserInfo.confirmPass == this.signUpUserInfo.password;
 		}
 	},
 	methods: {
 		validate() {
 			this.$refs.form.validate();
+    },
+		checkValid() {
+			return this.signUpUserInfo.confirmPass == this.signUpUserInfo.password;
 		},
 		async userRegister() {
 			try {
 				await this.$axios
 					.post("users", this.signUpUserInfo)
 					.then(res => {
-
 						this.text = "Registration success";
 						this.color = "success";
 						this.snackbar = true;
@@ -302,9 +329,12 @@ export default {
 			signUp2 = document.getElementById("signUp2"),
 			container = document.getElementById("container");
 
-		console.log(this.$route.name);
-		
-		if (this.$route.name == "index___en" || this.$route.name == "index___sw" || this.$route.name == "login___en" || this.$route.name == "login___sw")
+		if (
+			this.$route.name == "index___en" ||
+			this.$route.name == "index___sv" ||
+			this.$route.name == "login___en" ||
+			this.$route.name == "login___sv"
+		)
 			container.classList.remove("right-panel-active");
 		else container.classList.add("right-panel-active");
 
@@ -338,21 +368,11 @@ export default {
 
 <style scoped>
 .body {
-	background-image: linear-gradient(
-		to right top,
-		#d16ba5,
-		#c777b9,
-		#ba83ca,
-		#aa8fd8,
-		#9a9ae1,
-		#989de5,
-		#959fe9,
-		#92a2ed,
-		#9f9def,
-		#ad96ef,
-		#bd8fec,
-		#ce86e7
-	);
+	background-image: url('~assets/loginImage.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
