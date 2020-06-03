@@ -6,6 +6,7 @@ export default {
   cancle: "Cancle",
   filter: "Filter",
   rowsForTable: "Rows per page:",
+  email: "email",
   appBar: {
     personalSettings: { text: "Personal Settings", url: '/en/settings/personal-settings' },
     changeLang: "Change Language",
@@ -196,6 +197,29 @@ export default {
         interset: "Overdue interest (%)"
       }
     }
+  },
+  oneCustomer: {
+    breadCampItems: [
+      { text: "Customers", href: "/en/customer" },
+      { text: "customer: " }
+    ],
+    newInvoice: "+ New invocie",
+    dropDown: {
+      edit: "Edit User",
+      delete: "Delete Customer",
+      download: "Download Data"
+    },
+    deleteModal: {
+      header: "Deleting customer",
+      text: "Are you sure you want to remove customer Marika Bengtsson? This cannot be undone!",
+      deleteBtn: "Yes, delete",
+    },
+    customerInfo: {
+      type: "Customer type",
+      orgNumber: "Org-number",
+      address: "Address",
+      vat: "VAT number"
+    },
   },
 }
 

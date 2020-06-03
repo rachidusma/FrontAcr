@@ -29,21 +29,21 @@
 					<v-dialog v-model="deleteDialog" width="500">
 						<v-card>
 							<v-card-title>
-								<h4>Deleting customer {{ customer.customername }}</h4>
-								<v-spacer/>
+								<h4>{{ $t('oneCustomer.deleteModal.header') }} {{ customer.customername }}</h4>
+								<v-spacer />
 								<v-icon class="black--text" @click="deleteDialog = false">mdi mdi-close</v-icon>
 							</v-card-title>
 							<v-divider />
 							<v-card-text
 								class="py-3"
-							>Are you sure you want to remove customer Marika Bengtsson? This cannot be undone!</v-card-text>
+							>{{ $t('oneCustomer.deleteModal.text') }}</v-card-text>
 
 							<v-divider />
 
 							<v-card-actions class="grey lighten-3 pa-5">
-								<v-btn text @click="deleteDialog = false">close</v-btn>
-								<v-spacer/>
-								<v-btn color="error" depressed @click="deleteCustomer">Yes, delete</v-btn>
+								<v-btn text @click="deleteDialog = false">{{ $t('cancel') }}</v-btn>
+								<v-spacer />
+								<v-btn color="error" depressed @click="deleteCustomer">{{ $t('oneCustomer.deleteModal.deleteBtn') }}</v-btn>
 							</v-card-actions>
 						</v-card>
 					</v-dialog>
@@ -51,7 +51,7 @@
 
 					<!-- Start buttons -->
 					<v-col cols="12" md="8" class="justify-end d-flex">
-						<v-btn @click="addInvoiceWithCustomer" color="success">New Invoice</v-btn>
+						<v-btn @click="addInvoiceWithCustomer" color="success">{{ $t('oneCustomer.newInvoice') }}</v-btn>
 
 						<!-- Start Dropdown -->
 						<v-menu offset-y>
@@ -64,19 +64,19 @@
 							<v-list>
 								<!-- Start edit user -->
 								<v-list-item>
-									<v-list-item-title @click="editUserDialog = true">Edit User</v-list-item-title>
+									<v-list-item-title @click="editUserDialog = true">{{ $t('oneCustomer.dropDown.edit') }}</v-list-item-title>
 								</v-list-item>
 								<!-- End edit user-->
 
 								<!-- Start Delete customer -->
 								<v-list-item>
-									<v-list-item-title @click="deleteDialog= true">Delete Customer</v-list-item-title>
+									<v-list-item-title @click="deleteDialog= true">{{ $t('oneCustomer.dropDown.delete') }}</v-list-item-title>
 								</v-list-item>
 								<!-- End Delete customer -->
 
 								<!-- Start Download  -->
 								<v-list-item>
-									<v-list-item-title @click="downloadData">Download Data</v-list-item-title>
+									<v-list-item-title @click="downloadData">{{ $t('oneCustomer.dropDown.download') }}</v-list-item-title>
 								</v-list-item>
 								<!-- End Download  -->
 							</v-list>
@@ -91,24 +91,26 @@
 		<!-- Start User info -->
 		<v-card class="pa-3" outlined>
 			<v-row>
-				<v-col cols="12" md="2">
-					<p class="text--secondary pa-0 ma-0">Customer type</p>
-					<p class="text--primary pa-0 ma-0">{{ (!!customer.orgnummer) ? 'Company' : "Individuals" || '-' }}</p>
+				<v-col cols="12" md="auto">
+					<p class="text--secondary pa-0 ma-0">{{ $t('oneCustomer.customerInfo.type') }}</p>
+					<p
+						class="text--primary pa-0 ma-0"
+					>{{ (!!customer.orgnummer) ? $t('customer.userModal.form.radio.company') : $t('customer.userModal.form.radio.person')  || '-' }}</p>
 				</v-col>
-				<v-col cols="12" md="2">
-					<p class="text--secondary pa-0 ma-0" v-if="!!customer.orgnummer">Org-number</p>
+				<v-col cols="12" md="auto">
+					<p class="text--secondary pa-0 ma-0" v-if="!!customer.orgnummer">{{ $t('oneCustomer.customerInfo.orgNumber') }}</p>
 					<p class="text--primary pa-0 ma-0">{{ customer.orgnummer || '-' }}</p>
 				</v-col>
-				<v-col cols="12" md="2">
-					<p class="text--secondary pa-0 ma-0" v-if="!!customer.epost">Email</p>
+				<v-col cols="12" md="auto">
+					<p class="text--secondary pa-0 ma-0" v-if="!!customer.epost">{{ $t('email') }}</p>
 					<p class="text--primary pa-0 ma-0">{{ customer.epost || '-' }}</p>
 				</v-col>
-				<v-col cols="12" md="3">
-					<p class="text--secondary pa-0 ma-0" v-if="!!customer.postadress">Address</p>
+				<v-col cols="12" md="auto">
+					<p class="text--secondary pa-0 ma-0" v-if="!!customer.postadress">{{ $t('oneCustomer.customerInfo.address') }}</p>
 					<p class="text--primary pa-0 ma-0">{{ customer.postadress || '-' }}</p>
 				</v-col>
-				<v-col cols="12" md="2" v-if="!!customer.vatnummer">
-					<p class="text--secondary pa-0 ma-0" >VAT number</p>
+				<v-col cols="12" md="auto" v-if="!!customer.vatnummer">
+					<p class="text--secondary pa-0 ma-0">{{ $t('oneCustomer.customerInfo.vat') }}</p>
 					<p class="text--primary pa-0 ma-0">{{ customer.vatnummer || '-' }}</p>
 				</v-col>
 			</v-row>
@@ -149,11 +151,10 @@ export default {
 		},
 		items() {
 			return [
-				{ text: "customers", href: "/customer" },
+        this.$t('oneCustomer.breadCampItems[0]'),
 				{
-					text: this.customer.customername,
+					text: this.$t('oneCustomer.breadCampItems[1].text') + this.customer.customername,
 					disabled: true,
-					href: "breadcrumbs_link_1"
 				}
 			];
 		}
@@ -204,21 +205,28 @@ export default {
 						!inv.invoicepaid &&
 						new Date(inv.duedate) > Date.now()
 					)
-						inv.status = "Published";
+						inv.status = this.$t(
+							"invoice.table.filters.invoiceTypes.published"
+						);
 					else if (
 						inv.published &&
 						!inv.invoicepaid &&
 						new Date(inv.duedate) < Date.now()
 					) {
-						inv.status = "Overdue";
-						this.overdueSum += inv.summa;
-					} else if (inv.published && inv.invoicepaid) inv.status = "Paid";
-					else if (!inv.published) inv.status = "Draft";
+						inv.status = this.$t("invoice.table.filters.invoiceTypes.overdue");
+						this.overdueSum += Number(inv.summa);
+					} else if (inv.published && inv.invoicepaid)
+						inv.status = this.$t("invoice.table.filters.invoiceTypes.paid");
+					else if (!inv.published)
+						inv.status = this.$t("invoice.table.filters.invoiceTypes.draft");
 
 					if (inv.duedate) {
 						inv.duedate = new Date(inv.duedate).toISOString().substring(0, 10);
+						inv.createdate = new Date(inv.createdate)
+							.toISOString()
+							.substring(0, 10);
 					}
-					inv.fromDate = "-";
+					inv.fromDate = inv.createdate || "-";
 					inv.deliveryDate = "-";
 				});
 

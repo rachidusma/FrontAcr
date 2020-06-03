@@ -6,6 +6,7 @@ export default {
   cancle: "Avbryt",
   filter: "Filtrera",
   rowsForTable: "Rader per sida:",
+  email: "E-post",
   appBar: {
     personalSettings: { text: "Personliga inställningar", url: '/settings/personal-settings' },
     changeLang: "Byt språk",
@@ -196,5 +197,28 @@ export default {
         interset: "försenat intresse (%)"
       }
     }
+  },
+  oneCustomer: {
+    breadCampItems: [
+      { text: "kunder", href: "/customer" },
+      { text: "kund: " }
+    ],
+    newInvoice: "+ ny faktura",
+    dropDown: {
+      edit: "Redigera användare",
+      delete: "Radera kund",
+      download: "Ladda ner data"
+    },
+    deleteModal: {
+      header: "Ta bort kund",
+      text: "Är du säker på att du vill ta bort kunden Marika Bengtsson? Detta kan inte göras ogjort!",
+      deleteBtn: "Ja, radera",
+    },
+    customerInfo: {
+      type: "Kundtyp",
+      orgNumber: "Org-nummer",
+      address: "Adress",
+      vat: "Momsregistreringsnummer"
+    },
   }
 }

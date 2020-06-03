@@ -5,16 +5,15 @@
 				<v-form class="justify-start justify-md-center" v-model="signUpValid" ref="form">
 					<v-row align-content="center" v-if="!signedUp">
 						<v-col cols="12">
+							<div class="toggleLang">
+								<nuxt-link class="mr-3" :to="localePath('Signup', 'en')">
+									<img src="/en.svg" width="30" alt="en" />
+								</nuxt-link>
 
-              <div class="toggleLang">
-                <nuxt-link class="mr-3" :to="localePath('Signup', 'en')">
-                  <img src="/en.svg" width="30" alt="en">
-                </nuxt-link>
-
-                <nuxt-link :to="localePath('Signup', 'sv')">
-                  <img src="/sv.svg" width="30" alt="sv">
-                </nuxt-link>
-              </div>
+								<nuxt-link :to="localePath('Signup', 'sv')">
+									<img src="/sv.svg" width="30" alt="sv" />
+								</nuxt-link>
+							</div>
 
 							<h1>{{ $t('loginForm.signUpForm.label') }}</h1>
 						</v-col>
@@ -112,7 +111,7 @@
 							<v-btn
 								color="primary"
 								@click="userRegister"
-                class="mb-2"
+								class="mb-2"
 								:disabled="!(permession1 && permession2 && signUpValid && checkValid)"
 							>{{ $t('loginForm.signUp') }}</v-btn>
 							<br />
@@ -134,16 +133,15 @@
 				<v-form v-model="valid" ref="form">
 					<v-row align-content="center">
 						<v-col cols="12">
+							<div class="toggleLang">
+								<nuxt-link class="mr-3" :to="localePath('index', 'en')">
+									<img src="/en.svg" width="30" alt="en" />
+								</nuxt-link>
 
-              <div class="toggleLang">
-                <nuxt-link class="mr-3" :to="localePath('index', 'en')">
-                  <img src="/en.svg" width="30" alt="en">
-                </nuxt-link>
-
-                <nuxt-link :to="localePath('index', 'sv')">
-                  <img src="/sv.svg" width="30" alt="sv">
-                </nuxt-link>
-              </div>
+								<nuxt-link :to="localePath('index', 'sv')">
+									<img src="/sv.svg" width="30" alt="sv" />
+								</nuxt-link>
+							</div>
 
 							<h1>{{ $t('loginForm.signIn') }}</h1>
 						</v-col>
@@ -260,7 +258,7 @@ export default {
 	methods: {
 		validate() {
 			this.$refs.form.validate();
-    },
+		},
 		checkValid() {
 			return this.signUpUserInfo.confirmPass == this.signUpUserInfo.password;
 		},
@@ -368,10 +366,10 @@ export default {
 
 <style scoped>
 .body {
-	background-image: url('~assets/loginImage.jpg');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+	background-image: url("~assets/loginImage.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
 
 	display: flex;
 	justify-content: center;

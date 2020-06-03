@@ -21,7 +21,7 @@
 						hide-details
 						solo
 						dense
-					></v-text-field>
+					/>
 				</v-col>
 				<!-- End Search input -->
 
@@ -36,7 +36,7 @@
 						solo
 						dense
 						v-on:change="filterstate"
-					></v-select>
+					/>
 				</v-col>
 				<!-- End state input -->
 
@@ -166,7 +166,7 @@ export default {
 		activeinvoices() {
 			// this.displaiedInvoices = this.allItems;
 			this.displaiedInvoices = this.allItems.filter(
-				invoice => invoice.status != this.$t("invoice.table.links.paid")
+				invoice => invoice.status != this.$t("invoice.table.filters.invoiceTypes.paid")
 			);
 			this.activeclass = "primary";
 			this.allclass = "normal";
@@ -174,7 +174,7 @@ export default {
 		allinvoices() {
 			// this.displaiedInvoices = this.allItems;
 			this.displaiedInvoices = this.allItems.filter(
-				invoice => invoice.status != this.$t("invoice.table.links.draft")
+				invoice => invoice.status != this.$t("invoice.table.filters.invoiceTypes.draft")
 			);
 			this.allclass = "primary";
 			this.activeclass = "normal";
