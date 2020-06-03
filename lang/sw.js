@@ -2,8 +2,12 @@
 export default {
   continue: "Fortsätta",
   save: "spara",
-  upadte: "uppdatering",
+  update: "uppdatering",
   cancle: "Avbryt",
+  delete: "Radera",
+  edit: "Redigera",
+  noData: "INGEN DATA TILLGÄNGLIG",
+
   filter: "Filtrera",
   rowsForTable: "Rader per sida:",
   email: "E-post",
@@ -220,5 +224,50 @@ export default {
       address: "Adress",
       vat: "Momsregistreringsnummer"
     },
+  },
+  articles: {
+    breadCampItems: [
+      { text: "Fakturering", href: "/invoices" },
+      { text: "Artiklar", disabled: true }
+    ],
+    header: "Artiklar",
+    articleModal: {
+      title: {
+        btn: "+ Lägg till ny",
+        add: "Lägg till artikel",
+        edit: "Redigera artikeln"
+      },
+      form: {
+        name: "Artikelnamn",
+        code: "Produktkod",
+        price: "Pris enhet",
+        unit: "Enhet",
+        vat: "Moms",
+        type: "typ"
+      },
+      units: [
+        "-",
+				"timmar",
+				"pund",
+				"bitar",
+				"dagar",
+				"månader",
+				"kilogram",
+				"gram",
+				"liter",
+				"meter",
+				"centimeter",
+				"millimeter",
+				"m²",
+				"m³",
+				"miles",
+				"kms"
+      ],
+      kind: ["gods", "tjänster"]
+    },
+    deleteModal: {
+      label: "Radera objekt",
+      text: "Är du säker på att du vill ta bort det här objektet?"
+    }
   }
 }

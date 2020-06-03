@@ -2,8 +2,12 @@
 export default {
   continue: "Continue",
   save: "Save",
-  upadte: "Upadte",
+  update: "Upadte",
   cancle: "Cancle",
+  delete: "delete",
+  edit: "edit",
+  noData: "NO DATA AVAILABLE",
+
   filter: "Filter",
   rowsForTable: "Rows per page:",
   email: "email",
@@ -184,7 +188,7 @@ export default {
     },
 
     breadCampItems: [
-      { text: "Invoices", href: "/invoices" },
+      { text: "Invoices", href: "/en/invoices" },
       { text: "Customers", disabled: true }
     ],
     title: "Customers",
@@ -221,5 +225,51 @@ export default {
       vat: "VAT number"
     },
   },
+  articles: {
+    breadCampItems: [
+      { text: "Invoices", href: "/en/invoices" },
+      { text: "Items", disabled: true }
+    ],
+    header: "Articles",
+    articleModal: {
+      title: {
+        btn: "+ Add new",
+        add: "Add article",
+        edit: "Edit article"
+      },
+      form: {
+        code: "Product Code",
+        name: "Article Name",
+        vat: "Vat",
+        type: "Type",
+        unit: "Unit",
+        price: "Price / unit ex VAT",
+
+      },
+      units: [
+        "-",
+				"hours",
+				"pound",
+				"pieces",
+				"days",
+				"months",
+				"kilograms",
+				"grams",
+				"liters",
+				"meters",
+				"centimeters",
+				"millimeters",
+				"m²",
+				"m³",
+				"miles",
+				"kms"
+      ],
+      kind: ["Goods", "services"]
+    },
+    deleteModal: {
+      label: "Delete Items",
+      text: "Are you sure you want to delete this item?"
+    }
+  }
 }
 

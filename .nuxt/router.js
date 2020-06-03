@@ -24,7 +24,6 @@ const _7273a3f6 = () => interopDefault(import('..\\pages\\invoices\\draft\\_id.v
 const _0c35de34 = () => interopDefault(import('..\\pages\\invoices\\overdue\\_id.vue' /* webpackChunkName: "pages_invoices_overdue__id" */))
 const _49d37152 = () => interopDefault(import('..\\pages\\invoices\\paid\\_id.vue' /* webpackChunkName: "pages_invoices_paid__id" */))
 const _bafedb50 = () => interopDefault(import('..\\pages\\invoices\\published\\_id.vue' /* webpackChunkName: "pages_invoices_published__id" */))
-const _0dec15a7 = () => interopDefault(import('..\\pages\\articles\\_id.vue' /* webpackChunkName: "pages_articles__id" */))
 const _1fa3a5b4 = () => interopDefault(import('..\\pages\\customer\\_id.vue' /* webpackChunkName: "pages_customer__id" */))
 
 // TODO: remove in Nuxt 3
@@ -192,10 +191,6 @@ export const routerOptions = {
     component: _bafedb50,
     name: "invoices-published-id___en"
   }, {
-    path: "/en/articles/:id",
-    component: _0dec15a7,
-    name: "articles-id___en"
-  }, {
     path: "/en/customer/:id",
     component: _1fa3a5b4,
     name: "customer-id___en"
@@ -215,10 +210,6 @@ export const routerOptions = {
     path: "/invoices/published/:id?",
     component: _bafedb50,
     name: "invoices-published-id___sv"
-  }, {
-    path: "/articles/:id",
-    component: _0dec15a7,
-    name: "articles-id___sv"
   }, {
     path: "/customer/:id",
     component: _1fa3a5b4,
