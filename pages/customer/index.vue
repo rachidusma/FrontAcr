@@ -36,7 +36,7 @@
 								dense
 								class="pa-4 pb-1"
 								color="#336882"
-							></v-text-field>
+							/>
 						</v-col>
 					</v-row>
 

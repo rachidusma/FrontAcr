@@ -10,6 +10,8 @@ export default {
   more: "More",
   createNew: "+ Create new",
   saveAsItem: "Save as item",
+  loading: "Loading... Please wait",
+  required: "*indicates required field",
 
   filter: "Filter",
   rowsForTable: "Rows per page:",
@@ -401,6 +403,47 @@ export default {
       label: "Delete Items",
       text: "Are you sure you want to delete this item?"
     }
+  },
+  user: {
+    title: "Users",
+    breadCampItems: [
+      { text: "Users /", href: '/en/user' }
+    ],
+    tableHeaders: {
+      id: "User ID",
+      name: "Name",
+      email: "Email",
+      tel: "Telephone",
+      dor: "Register Date",
+      admin: "Admin Role",
+      block: "Block User",
+      actions: "Actions"
+    },
+    adminModal: {
+      title: "Admin Role for this account ?"
+    },
+    deleteUser: {
+      title: "Are you sure ?"
+    },
+    block: {
+      title: "Block this user?"
+    },
+    editModal: {
+      title: "Edit user",
+      subtitle: "User informations",
+      switches: {
+        userRole: "User Role",
+        userBlock: "User Block"
+      },
+      fname: "First name",
+      lname: "last name",
+      tel: "User Phone"
+    }
+
+
+  },
+  settings: {
+
   }
 }
 

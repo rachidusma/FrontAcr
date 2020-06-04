@@ -10,6 +10,8 @@ export default {
   more: "Mer",
   createNew: "+ Skapa ny",
   saveAsItem: "Spara som objekt",
+  loading: "Loading... Please wait",
+  required: "*indikerar obligatoriska fält",
 
   filter: "Filtrera",
   rowsForTable: "Rader per sida:",
@@ -400,5 +402,40 @@ export default {
       text: "Är du säker på att du vill ta bort det här objektet?"
     }
   },
-
+  user: {
+    title: "användare",
+    breadCampItems: [
+      { text: "användare /", href: '/user' }
+    ],
+    tableHeaders: {
+      id: "användar ID",
+      name: "namn",
+      email: "E-post",
+      tel: "Telefon",
+      dor: "Registrera datum",
+      admin: "Adminroll",
+      block: "Blockera användare",
+      actions: "Åtgärder"
+    },
+    adminModal: {
+      title: "Adminroll för det här kontot?"
+    },
+    deleteUser: {
+      title: "Är du säker ?"
+    },
+    block: {
+      title: "Blockera den här användaren?"
+    },
+    editModal: {
+      title: "Redigera användare",
+      subtitle:"Användarinformation",
+      switches: {
+        userRole: "Användarroll",
+        userBlock: "Användarblock"
+      },
+      fname: "Förnamn",
+      lname: "efternamn",
+      tel: "Användartelefon"
+    }
+  },
 }
