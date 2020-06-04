@@ -64,7 +64,8 @@ if (process.client) {
             doc.rect(start, 200, 170, 35, "f");
 
             doc.setFontStyle("bold");
-            doc.setTextColor('white');
+        doc.setTextColor(255,255,255);
+
             doc.setFontSize(10);
 
             let startY = 207;
@@ -90,11 +91,13 @@ if (process.client) {
                 x += 6;
             }
 
+
             doc.text("ÖRESAVRUNDNING", mid, x + 6);
             doc.text(`${String(vm.calculations.RoundedSum.toFixed(2))} kr`, mid + 60, x + 6);
 
             doc.setFillColor(54, 64, 107);
             doc.rect(start, startY + 25, 170, 6, "f");
+            doc.setTextColor(0,0,0);
 
             doc.setFontSize(12);
             doc.text("ANGE REFERENS", start, startY + 36);
@@ -122,9 +125,11 @@ if (process.client) {
             doc.setFontSize(10);
             doc.setFontStyle("bold");
             doc.text(`${vm.invoice.dagar} Dagar`, 177, startY + 56);
+
         }
 
         pays();
+
         if (vm.draggableItems.length > 13) {
             doc.text("Se fakturaspecifikation på följande sidor", start, 90);
 

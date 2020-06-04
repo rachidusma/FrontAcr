@@ -4,35 +4,37 @@
 		<v-card outlined class="pa-3">
 			<v-card-title>
 				<h3 class="pa-0 ma-0">
-					Term
+					{{ $t('newInvoice.termSection.title') }}
 					<v-tooltip bottom color="rgba(0, 0, 0, 1)" max-width="250">
 						<template v-slot:activator="{ on }">
 							<v-icon class="font1" v-on="on">mdi mdi-information</v-icon>
 						</template>
 						<span>
-							<b>Days</b>
-							<br />Number of days before the payment is due.
+							<b>{{ $t('newInvoice.termSection.hint.days') }}</b>
+							{{ $t('newInvoice.termSection.hint.daysText') }}
 							<br />
 							<br />
-							<b>Interest on overdue payments</b>
-							<br />This is where you define the interest rate added when a payment is overdue. Remember that you must create a new invoice with the added interest rate and send it to your customer. Invoices with interest rates also have to be recorded manually.
+
+							<b>{{ $t('newInvoice.termSection.hint.interest') }}</b>
+
+							{{ $t('newInvoice.termSection.hint.interestText') }}
 							<br />
 							<br />
-							<b>Delivery</b>
-							<br />Define how the goods are delivered. Warehouse means that the risk is taken over by the customer as soon as the goods leave the warehouse.
+							<b>{{ $t('newInvoice.termSection.delivery') }}</b>
+							{{ $t('newInvoice.termSection.hint.deliveryText') }}
 						</span>
 					</v-tooltip>
 				</h3>
-				<v-spacer/>
+				<v-spacer />
 				<v-dialog v-model="dialog" width="500">
 					<template v-slot:activator="{ on }">
 						<!-- <v-spacer/> -->
-						<v-btn color="success" dark right v-on="on">Edit</v-btn>
+						<v-btn color="success" dark right v-on="on">{{ $t('edit') }}</v-btn>
 					</template>
 					<v-card>
 						<v-card-title>
-							<h4>Terms</h4>
-							<v-spacer/>
+							<h4>{{ $t('newInvoice.termSection.title') }}</h4>
+							<v-spacer />
 							<v-icon class="black--text" @click="dialog = false">mdi mdi-close</v-icon>
 						</v-card-title>
 						<v-divider />
@@ -42,21 +44,21 @@
 								<v-text-field
 									v-model="overduePayment"
 									type="number"
-									hint="will show like 13%"
-									label="Interest on overdue payment"
-								></v-text-field>
+									:label="$t('newInvoice.termSection.interset')"
+									:hint="$t('newInvoice.termSection.modal.overdue.hint')"
+								 />
 							</v-col>
 							<v-col cols="12">
-								<v-text-field v-model="delivery" label="Delivery"></v-text-field>
+								<v-text-field v-model="delivery" :label="$t('newInvoice.termSection.delivery')" />
 							</v-col>
 						</v-card-text>
 
 						<v-divider />
 
 						<v-card-actions class="grey lighten-3 pa-5">
-							<v-btn text @click="dialog = false">Close</v-btn>
-							<v-spacer/>
-							<v-btn color="success" @click="dialog = false">Save</v-btn>
+							<v-btn text @click="dialog = false">{{ $t('cancle') }}</v-btn>
+							<v-spacer />
+							<v-btn color="success" @click="dialog = false">{{ $t('save') }}</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-dialog>
@@ -76,7 +78,7 @@
 							<template v-slot:activator="{ on }">
 								<v-text-field
 									v-model="date"
-									label="From Date"
+									:label="$t('newInvoice.termSection.fromDateText')"
 									hint="YYYY-MM-DD format"
 									persistent-hint
 									readonly
@@ -101,7 +103,7 @@
 							<template v-slot:activator="{ on }">
 								<v-text-field
 									v-model="toDate"
-									label="To Date"
+									:label="$t('newInvoice.termSection.toDateText')"
 									hint="YYYY-MM-DD format"
 									persistent-hint
 									readonly
@@ -115,19 +117,21 @@
 					</v-col>
 
 					<v-col cols="12" lg="2">
-						<p class="py-0 my-0">Days</p>
-						{{ (invoice.dagar > 0 ) ? invoice.dagar :  "-"}}
+						<p class="py-0 my-0">{{ $t('newInvoice.termSection.days') }}</p>
+						{{ (invoice.dagar > 0 ) ? invoice.dagar : "-"}}
 					</v-col>
 				</v-row>
 
 				<v-row>
 					<v-col cols="12" sm="auto">
-						<p class="text--secondary">Delivery</p>
+						<p class="text--secondary">{{ $t('newInvoice.termSection.delivery') }}</p>
 						<span class="text--primary">{{ invoice.Delivery || "-" }}</span>
 					</v-col>
 					<v-col cols="12" sm="auto">
-						<p class="text--secondary">Interest on overdue payment</p>
-						<span class="text--primary">{{ (invoice.OverduePayment) ?  `${invoice.OverduePayment} %` :  "-" }}</span>
+						<p class="text--secondary">{{ $t('newInvoice.termSection.interset') }}</p>
+						<span
+							class="text--primary"
+						>{{ (invoice.OverduePayment) ? `${invoice.OverduePayment} %` : "-" }}</span>
 					</v-col>
 				</v-row>
 			</v-card-text>
@@ -164,30 +168,28 @@ export default {
 			return 0;
 		},
 		overduePayment: {
-			get: function () {
-				return this.$store.state.invoice.OverduePayment
+			get: function() {
+				return this.$store.state.invoice.OverduePayment;
 			},
 			set: function(val) {
-				this.$store.commit('setOverduePayment',val)
+				this.$store.commit("setOverduePayment", val);
 			}
 		},
 		delivery: {
-			get: function () {
-				return this.$store.state.invoice.Delivery
+			get: function() {
+				return this.$store.state.invoice.Delivery;
 			},
 			set: function(val) {
-				this.$store.commit('setDelivery',val)
+				this.$store.commit("setDelivery", val);
 			}
 		},
-		dagar(){
-
+		dagar() {
 			return this.invoice.dagar;
 		},
 		...mapState(["invoice"])
 	},
 
 	mounted() {
-
 		if (!!this.fromDraft) this.assignDates(this.fromDraft);
 	},
 	watch: {
@@ -207,17 +209,15 @@ export default {
 			this.$store.commit("dateFrom", val);
 		},
 		dagar(val) {
-
-			console.log("val",val);
+			console.log("val", val);
 			console.log(this.toDate);
-			this.toDate = this.invoice.dateTo
-
+			this.toDate = this.invoice.dateTo;
 		}
 	},
 
 	methods: {
 		toDateChanged(val) {
-			console.log("dsaasd",val);
+			console.log("dsaasd", val);
 
 			let dagar = (new Date(this.toDate) - new Date(this.date)) / 86400000;
 			console.log("dagar", dagar);

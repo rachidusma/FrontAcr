@@ -202,7 +202,7 @@
 
 											<!-- Strat Amount ex VAT -->
 											<v-col cols="12">
-												<p class="font-weight-black">{{ $t('articles.articleModal.form.amountVAT') }}</p>
+												<p class="font-weight-black">{{ $t('newInvoice.product.modal.amountVAT') }}</p>
 												<p
 													class="font-weight-medium"
 												>{{ (Number(selection_value.number) * Number(selection_value.pris_enhet) ) || "0,00" }} Kr</p>
@@ -327,7 +327,7 @@
 												<template v-slot:activator="{ on }">
 													<v-checkbox v-model="checkbox" v-on="on" :label="checkBoxLabel"></v-checkbox>
 												</template>
-												{{ $t('articles.articleModal.form.checkBox.hint') }}
+												{{ $t('newInvoice.product.modal.checkBox.hint') }}
 											</v-tooltip>
 
 											<v-row v-if="selection_value!=null && checkbox">
@@ -465,7 +465,7 @@
 						<v-dialog v-model="editDraggableDialog" scrollable max-width="600px">
 							<v-card>
 								<v-card-title class="headline">
-									<h4>Edit product</h4>
+									<h4>{{ $t('newInvoice.draggable.editModal.title') }}</h4>
 									<v-spacer />
 									<v-icon class="black--text" @click="editDraggableDialog = false">mdi mdi-close</v-icon>
 								</v-card-title>
@@ -477,13 +477,15 @@
 										<v-row v-if="selection_value">
 											<!-- Strat Description -->
 											<v-col cols="12">
-												<v-text-field dense v-model="selection_value.artikelnamn" label="artikelnamn"></v-text-field>
+												<v-text-field dense v-model="selection_value.artikelnamn"
+                          :label="$t('articles.articleModal.form.name')"></v-text-field>
 											</v-col>
 											<!-- End Description -->
 
 											<!-- Strat number -->
 											<v-col cols="12" sm="6">
-												<v-text-field type="number" dense v-model="selection_value.number" label="Quantity"></v-text-field>
+												<v-text-field type="number" dense v-model="selection_value.number"
+                          :label="$t('newInvoice.product.modal.quantity')"></v-text-field>
 											</v-col>
 											<!-- End number -->
 
@@ -494,10 +496,10 @@
 													:items="Unit"
 													item-text="slection"
 													item-value="slection"
-													label="Unit"
+													:label="$t('articles.articleModal.form.unit')"
 													outlined
 													dense
-												></v-select>
+												/>
 											</v-col>
 											<!-- Strat Unit -->
 
@@ -508,8 +510,8 @@
 													dense
 													value="1"
 													type="number"
-													label="Price / unit ex VAT"
-												></v-text-field>
+													:label="$t('articles.articleModal.form.price')"
+												/>
 											</v-col>
 											<!-- End Price / unit ex VAT -->
 
@@ -520,9 +522,9 @@
 													:items="Vat"
 													dense
 													:item-text="` ${Vat} %`"
-													label="VAT"
+													:label="$t('articles.articleModal.form.vat')"
 													outlined
-												></v-select>
+												/>
 											</v-col>
 											<!-- End VAT -->
 
@@ -532,16 +534,16 @@
 													v-model="selection_value.typ"
 													:items="Kind"
 													@change="changeCheckBoxLabel"
-													label="Kind"
+													:label="$t('articles.articleModal.form.type')"
 													outlined
 													dense
-												></v-select>
+												/>
 											</v-col>
 											<!-- End Kind -->
 
 											<!-- Strat Amount ex VAT -->
 											<v-col cols="12">
-												<p class="font-weight-black">Amount ex VAT</p>
+												<p class="font-weight-black">{{ $t('newInvoice.product.modal.amountVAT') }}</p>
 												<p
 													class="font-weight-medium"
 												>{{ selection_value.pris_enhet * selection_value.number || "0,00" }} Kr</p>
@@ -555,16 +557,16 @@
 											<v-col v-if="selection_value!=null" cols="12">
 												<v-tooltip bottom max-width="200px">
 													<template v-slot:activator="{ on }">
-														<v-checkbox v-model="checkbox" v-on="on" :label="checkBoxLabel"></v-checkbox>
+														<v-checkbox v-model="checkbox" v-on="on" :label="checkBoxLabel"/>
 													</template>
-													Rot/Rut will be accounted for if this box is checked AND if you have activated Rot/Rut on the invoice
+													{{ $t('newInvoice.product.modal.checkBox.hint') }}
 												</v-tooltip>
 
 												<v-row v-if="selection_value!=null && checkbox">
 													<v-col>
-														<p class="header">Select type</p>
+														<p class="header">{{ $t('newInvoice.draggable.editModal.selectType') }}</p>
 														<v-radio-group v-model="selection_value.rotRutType" row>
-															<v-radio v-for="n in ['Rot', 'Rut']" :key="n" :label="n" :value="n"></v-radio>
+															<v-radio v-for="n in ['Rot', 'Rut']" :key="n" :label="n" :value="n" />
 														</v-radio-group>
 													</v-col>
 
@@ -575,16 +577,16 @@
 															v-if="(selection_value.typ == 'Goods')"
 															v-model="selection_value.materialType"
 															:items=" materialType"
-															label="Type of material"
-														></v-select>
+															:label="$t('newInvoice.product.modal.material.typMaterialLable')"
+														/>
 
 														<v-select
 															dense
 															v-else-if="(selection_value.typ == 'services')"
 															v-model="selection_value.materialType"
 															:items=" serviceType"
-															label="Type of service"
-														></v-select>
+															:label="$t('newInvoice.product.modal.material.typMaterialService')"
+														/>
 													</v-col>
 													<!-- End material Type -->
 												</v-row>
@@ -599,18 +601,18 @@
 								<v-card-actions class="grey lighten-3 pa-5">
 									<!-- Start For Edit Customar  -->
 									<div>
-										<v-btn class="mt-2" color="error" @click="Delete">Delete</v-btn>
-										<v-btn class="mt-2" text @click="resetDraggableModal">Cancel</v-btn>
+										<v-btn class="mt-2" color="error" @click="Delete">{{ $t('delete') }}</v-btn>
+										<v-btn class="mt-2" text @click="resetDraggableModal">{{ $t('cancle') }}</v-btn>
 										<v-btn
 											class="mt-2 d-block d-sm-inline"
 											@click="saveAsItem"
 											:disabled="saveAsItemBtnState"
-										>Save as item</v-btn>
+										>{{ $t('saveAsItem') }}</v-btn>
 									</div>
 									<v-spacer />
 
 									<div>
-										<v-btn class="mt-2" @click="update" color="success">Update</v-btn>
+										<v-btn class="mt-2" @click="update" color="success">{{ $t('update') }}</v-btn>
 									</div>
 									<!-- End For Edit Customar  -->
 								</v-card-actions>
@@ -622,7 +624,7 @@
 							<v-row>
 								<v-col class="align-center d-flex">
 									<div class="d-inline-block">
-										<p class="my-0 py-0 caption">Total sum to pay</p>
+										<p class="my-0 py-0 caption">{{ $t('newInvoice.draggable.footer.totalSum') }}</p>
 										<b>{{ calculations.RoundedSumState ? Math.round(calculations.totalSumToPay.toFixed(2)) : calculations.totalSumToPay.toFixed(2) }} kr</b>
 									</div>
 									<v-divider class="mx-4" vertical></v-divider>
@@ -630,7 +632,7 @@
 
 								<v-col class="align-center d-flex">
 									<div class="d-inline-block">
-										<p class="my-0 py-0 caption">Amount ex VAT</p>
+										<p class="my-0 py-0 caption">{{ $t('newInvoice.draggable.footer.amountVAT') }}</p>
 										<b>{{ calculations.amountExVAT.toFixed(2) }} kr</b>
 									</div>
 								</v-col>
@@ -638,21 +640,21 @@
 								<!-- Add VAT Calculation here -->
 								<v-col class="align-center d-flex" v-if="calculations.vat6 != 0">
 									<div class="d-inline-block">
-										<p class="my-0 py-0 caption">VAT 6%</p>
+										<p class="my-0 py-0 caption">{{ $t('newInvoice.draggable.footer.vat') }} 6%</p>
 										<b>{{ calculations.vat6.toFixed(2) }} Kr</b>
 									</div>
 								</v-col>
 
 								<v-col class="align-center d-flex" v-if="calculations.vat12 != 0">
 									<div class="d-inline-block">
-										<p class="my-0 py-0 caption">VAT 12%</p>
+										<p class="my-0 py-0 caption">{{ $t('newInvoice.draggable.footer.vat') }} 12%</p>
 										<b>{{ calculations.vat12.toFixed(2) }} Kr</b>
 									</div>
 								</v-col>
 
 								<v-col class="align-center d-flex" v-if="calculations.vat25 != 0">
 									<div class="d-inline-block">
-										<p class="my-0 py-0 caption">VAT 25%</p>
+										<p class="my-0 py-0 caption">{{ $t('newInvoice.draggable.footer.vat') }} 25%</p>
 										<b>{{ calculations.vat25.toFixed(2) }} Kr</b>
 									</div>
 								</v-col>
@@ -660,14 +662,14 @@
 
 								<v-col class="align-center d-flex">
 									<div class>
-										<p class="my-0 py-0 caption">Enable rounded sum</p>
+										<p class="my-0 py-0 caption">{{ $t('newInvoice.draggable.footer.enableRounded') }}</p>
 										<v-switch class="ma-0 pa-0" v-model="calculations.RoundedSumState" inset></v-switch>
 									</div>
 								</v-col>
 
 								<v-col v-if="calculations.RoundedSumState" class="align-center d-flex">
 									<div class="d-inline-block">
-										<p class="my-0 py-0 caption">Rounded sum</p>
+										<p class="my-0 py-0 caption">{{ $t('newInvoice.draggable.footer.rounded') }}</p>
 										<b>{{ calculations.RoundedSum.toFixed(2) }} kr</b>
 									</div>
 								</v-col>
@@ -679,6 +681,7 @@
 				</v-card>
 			</v-col>
 			<!-- End Product -->
+
 			<termSection :todatefromDraft="todatefromDraft" :datefromDraft="datesForTermSection" />
 
 			<dividerySection

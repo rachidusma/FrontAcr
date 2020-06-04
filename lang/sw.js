@@ -8,7 +8,7 @@ export default {
   edit: "Redigera",
   noData: "INGEN DATA TILLGÄNGLIG",
   more: "Mer",
-  createNew: "Skapa ny",
+  createNew: "+ Skapa ny",
   saveAsItem: "Spara som objekt",
 
   filter: "Filtrera",
@@ -139,6 +139,7 @@ export default {
     },
   },
   newInvoice: {
+    linkToInvoice: "/invoices",
     breadCampItems: [
       { text: 'fakturor', href: '/invoices' },
       { text: 'skapa ny faktura', disabled: true }
@@ -170,27 +171,27 @@ export default {
           typMaterialService: "Typ av service",
 
           materialType: [
-            "Barntjänster",
-             "Data- och IT-tjänster",
-             "Borttagningstjänster",
-             "Kläder och textilvård",
-             "Personlig hjälp och vård",
-             "Reparation av apparater",
-             "Snöskakning",
-             "Rengöring",
-             "Trädgårdsarbete"
+            "Child Services",
+            "Data and IT services",
+            "Removal services",
+            "Clothing and textile care",
+            "Personal help and care",
+            "Repair of appliances",
+            "Snow shoveling",
+            "Cleaning",
+            "Gardening"
           ],
           serviceType: [
-            "Barntjänster",
-             "Data- och IT-tjänster",
-             "Borttagningstjänster",
-             "Kläder och textilvård",
-             "Personlig hjälp och vård",
-             "Reparation av apparater",
-             "Snöskakning",
-             "Rengöring",
-             "Trädgårdsarbete"
-          ]
+            "Child Services",
+            "Data and IT services",
+            "Removal services",
+            "Clothing and textile care",
+            "Personal help and care",
+            "Repair of appliances",
+            "Snow shoveling",
+            "Cleaning",
+            "Gardening"
+          ],
         }
       }
     },
@@ -199,8 +200,70 @@ export default {
       vat: "moms",
       amount: "siffra",
       unit: "Enhetspris",
-      total: "Totalt (exkl. Skatt)"
+      total: "Totalt (exkl. Skatt)",
+      editModal: {
+        title: "Redigera produkten",
+        selectType: "Välj typ"
+      },
+      footer: {
+        totalSum: "Total summa att betala",
+        amountVAT: "Belopp exkl. Moms",
+        vat: "moms",
+        enableRounded: "Aktivera avrundad summa",
+        rounded: "Avrundad summa"
+      }
     },
+    termSection: {
+      title: "Termin",
+      interset: "Ränta på försenad betalning",
+      delivery: "Leverans",
+
+      hint: {
+        days: "dagar",
+        daysText: "Antal dagar innan betalningen förfaller.",
+        interest: "Ränta på förfallna betalningar",
+        interestText: "Det är här du definierar räntan som läggs till när en betalning är försenad. Kom ihåg att du måste skapa en ny faktura med den tillagda räntan och skicka den till din kund. Fakturor med räntor måste också registreras manuellt.",
+        deliveryText: "Definiera hur varorna levereras. Lager innebär att kunden tar över risken så snart varorna lämnar lagret."
+      },
+      modal: {
+        overdue: {
+          hint: "kommer att visa 13%"
+        },
+      },
+      fromDateText: "Från datum",
+      toDateText: "Hittills",
+      days: "dagar",
+    },
+    deliverySection: {
+      title: "Leverans metod",
+      email: {
+        title: "E-post till kund",
+        subtitle: "Skicka fakturan via e-post.",
+        cusEmail: "Skriv kundens e-postadress",
+        options: {
+          header: "Leveransalternativ för fakturor",
+          pdfLink: "Skicka fakturan med en länk till PDF",
+          pdfFile: "Skicka fakturan och bifoga PDF-fil"
+        },
+        sendBtn: "Skicka",
+      },
+      pdf: {
+        title: "Ladda ner PDF",
+        subtitle: "Du kan förhandsgranska din faktura innan du publicerar den.",
+        btnText: "Förhandsgranska PDF"
+      },
+      actions: {
+        draft: "Spara som utkast",
+        publish: "Publicera",
+        dAndPublish: "Ladda ner och publicera",
+      },
+      doneModal: {
+        title: "Skapad framgångsrikt",
+        text: "Fakturan sparades.",
+        visitBtn: "Besök den",
+        createBtn: "+ Skapa en ny"
+      }
+    }
   },
   customer: {
     userModal: {
@@ -314,23 +377,23 @@ export default {
       },
       units: [
         "-",
-				"timmar",
-				"pund",
-				"bitar",
-				"dagar",
-				"månader",
-				"kilogram",
-				"gram",
-				"liter",
-				"meter",
-				"centimeter",
-				"millimeter",
-				"m²",
-				"m³",
-				"miles",
-				"kms"
+        "hours",
+        "pound",
+        "pieces",
+        "days",
+        "months",
+        "kilograms",
+        "grams",
+        "liters",
+        "meters",
+        "centimeters",
+        "millimeters",
+        "m²",
+        "m³",
+        "miles",
+        "kms"
       ],
-      kind: ["gods", "tjänster"]
+      kind: ["Goods", "services"]
     },
     deleteModal: {
       label: "Radera objekt",

@@ -139,6 +139,7 @@ export default {
     }
   },
   newInvoice: {
+    linkToInvoice: "/en/invoices",
     breadCampItems: [
       { text: 'invoices', href: '/en/invoices' },
       { text: 'create new invoice', disabled: true }
@@ -152,8 +153,8 @@ export default {
     product: {
       title: "Items/services:",
       modal: {
-        newRow: "Add new row",
-        addText: "Add text",
+        newRow: "+ Add new row",
+        addText: "+ Add text",
         addToInvoice: "Add to invoice",
         desc: "Description",
         placeholder: "Search For saved item",
@@ -199,8 +200,71 @@ export default {
       vat: "Vat",
       amount: "Number",
       unit: "Unit price",
-      total: "Total (ex tax)"
+      total: "Total (ex tax)",
+      editModal: {
+        title: "Edit product",
+        selectType: "Select type"
+      },
+      footer: {
+        totalSum: "Total sum to pay",
+        amountVAT: "Amount ex VAT",
+        vat: "Vat",
+        enableRounded: "Enable rounded sum",
+        rounded: "Rounded sum"
+      }
     },
+    termSection: {
+      title: "Term",
+      interset: "Interest on overdue payment",
+      delivery: "Delivery",
+
+      hint: {
+        days: "Days",
+        daysText: "Number of days before the payment is due.",
+        interest: "Interest on overdue payments",
+        interestText: "This is where you define the interest rate added when a payment is overdue. Remember that you must create a new invoice with the added interest rate and send it to your customer. Invoices with interest rates also have to be recorded manually.",
+        deliveryText: "Define how the goods are delivered. Warehouse means that the risk is taken over by the customer as soon as the goods leave the warehouse."
+      },
+      modal: {
+        overdue: {
+          hint: "will show like 13%"
+        }
+      },
+      fromDateText: "From Date",
+      toDateText: "To Date",
+      days: "Days",
+
+    },
+    deliverySection: {
+      title: "Delivery method",
+      email: {
+        title: "Email to customer",
+        subtitle: "Send the invoice via Email.",
+        cusEmail: "Type email of the customer",
+        options: {
+          header: "Invoice Delivery options",
+          pdfLink: "Send the invoice with a link to PDF",
+          pdfFile: "Send the invoice and attach PDF File"
+        },
+        sendBtn: "Send",
+      },
+      pdf: {
+        title: "Download PDF",
+        subtitle: "You can preview your invoice before publishing it.",
+        btnText: "Preview PDF"
+      },
+      actions: {
+        draft: "Save as draft",
+        publish: "Publish",
+        dAndPublish: "Download and Publish",
+      },
+      doneModal: {
+        title: "Created Successfully",
+        text: "The invoice saved.",
+        visitBtn: "Visit it",
+        createBtn: "+ Create new one"
+      }
+    }
   },
   customer: {
     userModal: {
@@ -315,21 +379,21 @@ export default {
       },
       units: [
         "-",
-				"hours",
-				"pound",
-				"pieces",
-				"days",
-				"months",
-				"kilograms",
-				"grams",
-				"liters",
-				"meters",
-				"centimeters",
-				"millimeters",
-				"m²",
-				"m³",
-				"miles",
-				"kms"
+        "hours",
+        "pound",
+        "pieces",
+        "days",
+        "months",
+        "kilograms",
+        "grams",
+        "liters",
+        "meters",
+        "centimeters",
+        "millimeters",
+        "m²",
+        "m³",
+        "miles",
+        "kms"
       ],
       kind: ["Goods", "services"]
     },

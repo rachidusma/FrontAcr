@@ -1,79 +1,89 @@
 <template>
 	<v-col cols="12">
+		<!-- Start Tables for the invoice -->
+		<table id="basic-table" style="display: none">
+			<thead></thead>
+			<tbody>
+				<tr>
+					<td>FAKTURA NR</td>
+					<td>Sätts automatiskt</td>
+					<td>KUND</td>
+					<td>{{ customer.customername }}</td>
+				</tr>
+				<tr>
+					<td>FAKTURADATUM</td>
+					<td>{{ invoice.dateFrom }}</td>
+					<td>KUNDNR</td>
+					<td>{{ customer.kundnummer }}</td>
+				</tr>
+				<tr>
+					<td>RFALLODATUM</td>
+					<td>{{ invoice.dateTo }}</td>
+					<td>ERT VAT NR</td>
+					<td>{{ customer.vatnummer || '' }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table id="products-table" style="display: none">
+			<thead>
+				<tr>
+					<td>BESKRIVNING</td>
+					<td>MOMS</td>
+					<td>ANTAL</td>
+					<td>À-PRIS</td>
+					<td>SUMMA</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(prod,index) in draggableItems" :key="index">
+					<td>{{ prod.artikelnamn }}</td>
+					<td>{{ prod.moms }}%</td>
+					<td>{{ prod.number }} {{ prod.enhet }}</td>
+					<td>{{ prod.pris_enhet }} Kr</td>
+					<td v-if="!prod.text">{{ prod.total }} Kr</td>
+					<td v-else></td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- End Tables for the invoice -->
+
+		<!-- Start Done modal -->
 		<v-dialog v-model="dialog" max-width="500px">
 			<v-card>
 				<v-card-title class="headline">
-					<h6>Created Successfuly</h6>
-					<v-spacer/>
+					<h6>{{ $t('newInvoice.deliverySection.doneModal.title') }}</h6>
+					<v-spacer />
 					<v-icon class="font1" @click="dialog = false">mdi mdi-close</v-icon>
 				</v-card-title>
 				<v-divider />
 
-				<v-card-text class="pa-5 text-center">The invoice saved.</v-card-text>
+				<v-card-text class="pa-5 text-center">{{ $t('newInvoice.deliverySection.doneModal.text') }}</v-card-text>
 
 				<v-card-actions class="grey lighten-3 pa-5">
-					<v-spacer/>
+					<v-spacer />
 
-					<v-btn color="success" :to="invoiceLink">Visit it</v-btn>
+					<v-btn
+						color="success"
+						:to="invoiceLink"
+					>{{ $t('newInvoice.deliverySection.doneModal.visitBtn') }}</v-btn>
 
-					<v-btn color="primary" @click="reload">Create new one</v-btn>
+					<v-btn
+						color="primary"
+						@click="reload"
+					>{{ $t('newInvoice.deliverySection.doneModal.createBtn') }}</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
+		<!-- End Done modal -->
 
 		<v-card outlined class="pa-3">
 			<v-card-title>
-				<h3>Delivery method</h3>
+				<h3>{{ $t('newInvoice.deliverySection.title') }}</h3>
 			</v-card-title>
 
 			<v-card-text>
 				<v-col cols="12" md="12">
-					<table id="basic-table" style="display: none">
-						<thead></thead>
-						<tbody>
-							<tr>
-								<td>FAKTURA NR</td>
-								<td>Sätts automatiskt</td>
-								<td>KUND</td>
-								<td>{{ customer.customername }}</td>
-							</tr>
-							<tr>
-								<td>FAKTURADATUM</td>
-								<td>{{ invoice.dateFrom }}</td>
-								<td>KUNDNR</td>
-								<td>{{ customer.kundnummer }}</td>
-							</tr>
-							<tr>
-								<td>RFALLODATUM</td>
-								<td>{{ invoice.dateTo }}</td>
-								<td>ERT VAT NR</td>
-								<td>{{ customer.vatnummer || '' }}</td>
-							</tr>
-						</tbody>
-					</table>
-
-					<table id="products-table" style="display: none">
-						<thead>
-							<tr>
-								<td>BESKRIVNING</td>
-								<td>MOMS</td>
-								<td>ANTAL</td>
-								<td>À-PRIS</td>
-								<td>SUMMA</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="(prod,index) in draggableItems" :key="index">
-								<td>{{ prod.artikelnamn }}</td>
-								<td>{{ prod.moms }}%</td>
-								<td>{{ prod.number }} {{ prod.enhet }}</td>
-								<td>{{ prod.pris_enhet }} Kr</td>
-								<td v-if="!prod.text">{{ prod.total }} Kr</td>
-								<td v-else></td>
-							</tr>
-						</tbody>
-					</table>
-
 					<v-row>
 						<v-col cols="12" md="12">
 							<v-expansion-panels accordion hover v-model="deliveryMethod">
@@ -82,10 +92,10 @@
 									<v-expansion-panel-header>
 										<v-row no-gutters>
 											<v-col cols="12">
-												<h3 class="text--primary pb-3">Email to customer</h3>
+												<h3 class="text--primary pb-3"> {{ $t('newInvoice.deliverySection.email.title') }}</h3>
 											</v-col>
 											<v-col cols="12">
-												<p class="pa-0 ma-0 text--secondary">Send the invoice via Email.</p>
+												<p class="pa-0 ma-0 text--secondary">{{ $t('newInvoice.deliverySection.email.subtitle') }}</p>
 											</v-col>
 										</v-row>
 									</v-expansion-panel-header>
@@ -95,17 +105,14 @@
 										<v-container>
 											<v-row>
 												<v-col cols="12" md="5" sm="12">
-													<p class="overline">Type email of the customer</p>
+													<p class="overline">{{ $t('newInvoice.deliverySection.email.cusEmail') }}</p>
 													<v-text-field label="Email" v-model="customerEmail" outlined color="#336882" dense></v-text-field>
-													<p class="overline">Invoice Delivery options</p>
+													<p class="overline">{{ $t('newInvoice.deliverySection.options.header') }}</p>
 													<v-radio-group v-model="radioGroup">
-														<v-radio label="Send the invoice with a link to PDF" value="v" color="#336882"></v-radio>
-														<v-radio label="Send the invoice and attatch PDF File" value="f" color="#336882"></v-radio>
+														<v-radio :label="$t('newInvoice.deliverySection.email.options.pdfLink')" value="v" color="#336882"></v-radio>
+														<v-radio :label="$t('newInvoice.deliverySection.email.options.pdfFile')" value="f" color="#336882"></v-radio>
 													</v-radio-group>
-													<v-btn outlined color="#336882">Send</v-btn>
-												</v-col>
-												<v-col cols="12" md="5" sm="12">
-													<p class="overline">Send Your invoice as an Email</p>
+													<v-btn outlined color="#336882">{{ $t('newInvoice.deliverySection.email.sendBtn') }}</v-btn>
 												</v-col>
 											</v-row>
 										</v-container>
@@ -118,10 +125,10 @@
 									<v-expansion-panel-header>
 										<v-row no-gutters>
 											<v-col cols="12">
-												<h3 class="text--primary pb-3">Download PDF</h3>
+												<h3 class="text--primary pb-3">{{ $t('newInvoice.deliverySection.pdf.title') }}</h3>
 											</v-col>
 											<v-col cols="12">
-												<p class="pa-0 ma-0 text--secondary">You can preview your invoice before publishing it.</p>
+												<p class="pa-0 ma-0 text--secondary">{{ $t('newInvoice.deliverySection.pdf.subtitle') }}</p>
 											</v-col>
 										</v-row>
 									</v-expansion-panel-header>
@@ -130,8 +137,8 @@
 									<v-expansion-panel-content class="gray pa-5">
 										<v-row>
 											<v-col cols="6" class="text--secondary">
-												<p>You can preview your invoice before publishing it.</p>
-												<v-btn @click="downloedPDF('dsa')">Preview PDF</v-btn>
+												<p>{{ $t('newInvoice.deliverySection.pdf.subtitle') }}</p>
+												<v-btn @click="downloedPDF('dsa')">{{ $t('newInvoice.deliverySection.pdf.btnText') }}</v-btn>
 											</v-col>
 											<v-col cols="3">
 												<img src="@/assets/invoice_img.png" alt="invoice" />
@@ -150,7 +157,7 @@
 								:disabled="saveInvoiceBtnloading"
 								color="secondary"
 								@click="saveInvoice('')"
-							>Save as draft</v-btn>
+							>{{ $t('newInvoice.deliverySection.actions.draft') }}</v-btn>
 
 							<v-btn
 								class="ma-2"
@@ -158,7 +165,7 @@
 								:disabled="saveInvoiceBtnDisabled"
 								color="primary"
 								@click="saveInvoice"
-							>{{ deliveryMethod == 1 ? "Download and Publish" : "Publish" }}</v-btn>
+							>{{ deliveryMethod == 1 ? $t('newInvoice.deliverySection.actions.dAndPublish')  :  $t('newInvoice.deliverySection.actions.publish') }}</v-btn>
 						</v-col>
 						<!-- End Buttons -->
 					</v-row>
@@ -324,10 +331,10 @@ export default {
 
 							await vm.sendArticles(invoce_number);
 							if (res.published && res.createdate >= res.duedate)
-								this.invoiceLink = `/invoices/overdue/${res._id}`;
+								this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/overdue/${res._id}`;
 							else if (res.published && res.createdate <= res.duedate)
-								this.invoiceLink = `/invoices/published/${res._id}`;
-							else this.invoiceLink = `/invoices/draft/${res._id}`;
+								this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/published/${res._id}`;
+							else this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/draft/${res._id}`;
 						})
 						.catch(err => console.log(err));
 				} else {
@@ -342,10 +349,10 @@ export default {
 							await vm.sendArticles(invoce_number);
 
 							if (res.published && res.createdate >= res.duedate)
-								this.invoiceLink = `/invoices/overdue/${res._id}`;
+								this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/overdue/${res._id}`;
 							else if (res.published && res.createdate <= res.duedate)
-								this.invoiceLink = `/invoices/published/${res._id}`;
-							else this.invoiceLink = `/invoices/draft/${res._id}`;
+								this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/published/${res._id}`;
+							else this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/draft/${res._id}`;
 						})
 						.catch(err => console.log(err));
 				}
