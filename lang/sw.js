@@ -16,6 +16,15 @@ export default {
   filter: "Filtrera",
   rowsForTable: "Rader per sida:",
   email: "E-post",
+  hints: {
+    required: "Nödvändig",
+    min: "Minst åtta tecken",
+    again: "Ange ditt nya lösenord igen",
+    short: "För kort",
+    good: "Accepterad",
+    perfect: "Perfekt"
+  },
+
   appBar: {
     personalSettings: { text: "Personliga inställningar", url: '/settings/personal-settings' },
     changeLang: "Byt språk",
@@ -482,6 +491,64 @@ export default {
       salary: "Lön",
       bank: "Bank",
       action: "Verkan"
+    }
+  },
+  settings: {
+    title: "inställningar",
+    cardOne: {
+      title: "fakturor",
+      link: "/settings/invoice-settings",
+      text: "Ställ in standardvärden för fakturavillkor (dagar, ränta på förfallna betalningar, leveransvillkor), valutavrundning, kund- och fakturanummer.",
+    },
+    cardTwo: {
+      title: "Ditt konto",
+      items: [
+        { text: "Personliga inställningar", link: "/settings/personal-settings" },
+        { text: "ändra lösenord", link: "/settings/change-password" },
+      ]
+    }
+  },
+  invoiceSettings: {
+    breadcrumbItems: [
+      { text: "inställningar", href: "/settings" },
+      { text: "Fakturainställningar", disabled: true }
+    ],
+    title: "Fakturainställningar",
+    card: {
+      title: "Fakturavillkor",
+      subtitle: "Ställ in standardfakturevillkor så att du inte behöver ändra det individuellt för varje ny kund.",
+      daysLabel: "dagar",
+      daysHint: "Antal dagar innan betalningen förfaller.",
+      intersetLabel: "Ränta på försenad betalning",
+      intersetHint: "Det är här du definierar räntan som läggs till när en betalning är försenad. Kom ihåg att du måste skapa en ny faktura med den tillagda räntan och skicka den till din kund. Fakturor med räntor måste också registreras manuellt.",
+      deliveryLabel: "Leverans",
+      deliveryHint: "Definiera hur varorna levereras. Ex-lager betyder att risken tas över av kunden så snart varorna lämnar lagret.",
+    }
+  },
+  personalSettings: {
+    breadcrumbItems: [
+      { text: "inställningar", href: "/settings" },
+      { text: "Personliga inställningar", disabled: true }
+    ],
+    title: "Personliga inställningar",
+    card: {
+      fname: "Förnamn",
+      lname: "Efternamn",
+      tel: "telefon"
+    },
+    link: "/invoices"
+  },
+  changePassword: {
+    forgetTitle: "Ställ in nytt lösenord",
+    breadcrumbItems: [
+      { text: "inställningar", href: "/settings" },
+      { text: "ändra lösenord", disabled: true }
+    ],
+    title: "ändra lösenord",
+    card: {
+      curPass: "Nuvarande lösenord",
+      newPass: "Välj nytt lösenord",
+      confNew: "Bekräfta lösenord",
     }
   },
 }

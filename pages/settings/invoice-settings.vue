@@ -1,6 +1,7 @@
 <template>
 	<v-container>
 		<v-row>
+      <!-- Start header -->
 			<v-col cols="12">
 				<v-breadcrumbs :items="breadcrumbItems">
 					<template v-slot:divider>
@@ -8,12 +9,13 @@
 					</template>
 				</v-breadcrumbs>
 			</v-col>
+      <!-- End header -->
 
 			<v-col cols="12">
 				<nuxt-link to="/settings">
 					<v-icon>mdi mdi-chevron-left</v-icon>
 				</nuxt-link>
-				<h2 class="d-inline-block">Invoice settings</h2>
+				<h2 class="d-inline-block">{{ $t('invoiceSettings.title') }}</h2>
 			</v-col>
 
 			<!-- Start invoice -->
@@ -21,8 +23,8 @@
 				<v-card class="mx-auto py-4 d-block" tile outlined>
 					<v-row>
 						<v-col cols="12" md="8">
-							<v-card-title>Invoice terms</v-card-title>
-							<v-card-subtitle>Set default invoice terms so that you don't have to change it individually for each new customer.</v-card-subtitle>
+							<v-card-title>{{ $t('invoiceSettings.title') }}</v-card-title>
+							<v-card-subtitle>{{ $t('invoiceSettings.subtitle') }}</v-card-subtitle>
 
 							<v-form ref="form" v-model="invoiceValid" lazy-validation>
 								<v-container>
@@ -33,15 +35,15 @@
 											:rules="reiquiredRules"
 											outlined
 											dense
-											label="Days"
+											:label="$t('invoiceSettings.card.daysLabel')"
 											required
-										></v-text-field>
+										/>
 
 										<v-tooltip max-width="300" bottom>
 											<template v-slot:activator="{ on }">
 												<v-icon class="ma-2" v-on="on">mdi mdi-alert-circle</v-icon>
 											</template>
-											Number of days before the payment is due.
+											{{ $t('invoiceSettings.card.daysHint') }}
 										</v-tooltip>
 									</div>
 									<!-- End Days input -->
@@ -53,14 +55,14 @@
 											outlined
 											dense
 											:rules="reiquiredRules"
-											label="Interest on overdue payment"
+											:label="$t('invoiceSettings.card.intersetLabel')"
 											required
-										></v-text-field>
+										/>
 										<v-tooltip max-width="300" bottom>
 											<template v-slot:activator="{ on }">
 												<v-icon class="ma-2" v-on="on">mdi mdi-alert-circle</v-icon>
 											</template>
-											This is where you define the interest rate added when a payment is overdue. Remember that you must create a new invoice with the added interest rate and send it to your customer. Invoices with interest rates also have to be recorded manually.
+											{{ $t('invoiceSettings.card.intersetHint') }}
 										</v-tooltip>
 									</div>
 									<!-- End Interest input -->
@@ -72,19 +74,19 @@
 											:rules="reiquiredRules"
 											outlined
 											dense
-											label="Delivery"
+										  :label="$t('invoiceSettings.card.deliveryLabel')"
 											required
-										></v-text-field>
+										/>
 										<v-tooltip max-width="300" bottom>
 											<template v-slot:activator="{ on }">
 												<v-icon class="ma-2" v-on="on">mdi mdi-alert-circle</v-icon>
 											</template>
-											Define how the goods are delivered. Ex warehouse means that the risk is taken over by the customer as soon as the goods leave the warehouse.
+											{{ $t('invoiceSettings.card.deliveryHint') }}
 										</v-tooltip>
 									</div>
 									<!-- End Delivery input -->
 
-									<v-btn color="success" :disabled="!invoiceValid" @click="editUser">save</v-btn>
+									<v-btn color="success" :disabled="!invoiceValid" @click="editUser">{{ $t('save') }}</v-btn>
 								</v-container>
 							</v-form>
 						</v-col>
@@ -112,10 +114,7 @@ export default {
 				Interest: "",
 				delivery: ""
 			},
-			breadcrumbItems: [
-				{ text: "Settings", disabled: false, href: "/settings" },
-				{ text: "Invoice settings", disabled: true }
-			]
+			breadcrumbItems: this.$t('invoiceSettings.breadcrumbItems')
 		};
 	},
 	methods: {

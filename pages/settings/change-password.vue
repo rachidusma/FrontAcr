@@ -13,7 +13,7 @@
 				<nuxt-link to="/settings">
 					<v-icon>mdi mdi-chevron-left</v-icon>
 				</nuxt-link>
-				<h2 class="d-inline-block">Change password</h2>
+				<h2 class="d-inline-block">{{ $t('changePassword.title') }}</h2>
 			</v-col>
 
 			<v-col cols="12">
@@ -27,14 +27,14 @@
 										:append-outer-icon="showCurrentPassword ? 'mdi-eye' : 'mdi-eye-off'"
 										:rules="[rules.required]"
 										:type="showCurrentPassword ? 'text' : 'password'"
-										label="Current password"
+										:label="$t('changePassword.card.curPass')"
 										outlined
 										dense
 										required
-										hint="At least 8 characters"
-										@input="saveEnable" 
-                                        @click:append-outer="showCurrentPassword = !showCurrentPassword"
-									></v-text-field>
+										:hint="$t('hints.min')"
+										@input="saveEnable"
+										@click:append-outer="showCurrentPassword = !showCurrentPassword"
+									/>
 
 									<div class="new-password">
 										<v-text-field
@@ -42,7 +42,7 @@
 											:append-outer-icon="showNewPassword ? 'mdi-eye' : 'mdi-eye-off'"
 											:rules="[rules.required, rules.min]"
 											:type="showNewPassword ? 'text' : 'password'"
-											label="Choose new password"
+											:label="$t('changePassword.card.newPass')"
 											outlined
 											dense
 											:hint="newPasswordHint"
@@ -50,7 +50,7 @@
 											@input="checkValid"
 											required
 											@click:append-outer="showNewPassword = !showNewPassword"
-										></v-text-field>
+										/>
 
 										<v-list-item-avatar
 											:key="index"
@@ -59,7 +59,7 @@
 											width="22%"
 											height="10"
 											:color="color"
-										></v-list-item-avatar>
+										/>
 									</div>
 
 									<v-text-field
@@ -67,17 +67,17 @@
 										:append-outer-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
 										:rules="[rules.passwordMatch, rules.min]"
 										:type="showConfirmPassword ? 'text' : 'password'"
-										label="Confirm password"
+										:label="$t('changePassword.card.confNew')"
 										outlined
 										dense
 										:hint="ConfirmPasswordHint"
 										counter
 										required
-                                        class="mt-3"
+										class="mt-3"
 										@click:append-outer="showConfirmPassword = !showConfirmPassword"
-									></v-text-field>
+									/>
 
-									<v-btn color="success" @click="changePassword" :disabled="!valid">save</v-btn>
+									<v-btn color="success" @click="changePassword" :disabled="!valid">{{ $t('save') }}</v-btn>
 								</v-container>
 							</v-form>
 						</v-col>
@@ -96,25 +96,22 @@ export default {
 
 	data() {
 		return {
-			breadcrumbItems: [
-				{ text: "Settings", disabled: false, href: "/settings" },
-				{ text: "Change password", disabled: true }
-			],
+			breadcrumbItems: this.$t("changePassword.breadcrumbItems"),
 			valid: false,
 			rules: {
-				required: value => !!value || "Required.",
-				min: v => v.length >= 8 || "Min 8 characters",
-				passwordMatch: (v) => v == this.newPassword
+				required: value => !!value || this.$t('hints.required'),
+				min: v => v.length >= 8 || this.$t('hints.min'),
+				passwordMatch: v => v == this.newPassword
 			},
-            color: "grey",
+			color: "grey",
 
 			currentPassword: "",
 			newPassword: "",
-            confirmPassword: '',
-			newPasswordHint: "At least 8 characters",
-            ConfirmPasswordHint: 'write your new password again',
+			confirmPassword: "",
+			newPasswordHint: this.$t('hints.min'),
+			ConfirmPasswordHint: this.$t('hints.again'),
 
-            showConfirmPassword: false,
+			showConfirmPassword: false,
 			showCurrentPassword: false,
 			showNewPassword: false
 		};
@@ -128,36 +125,39 @@ export default {
 			if (length >= 1 && length < 4) {
 				this.color = "#e63948";
 				this.valid = false;
-				this.newPasswordHint = "Too short";
+				this.newPasswordHint = this.$t('hints.short');
 			} else if (length >= 4 && length < 8) {
 				this.color = "#f7c223";
 				this.valid = false;
-				this.newPasswordHint = "Too short";
+				this.newPasswordHint = this.$t('hints.short');
 			} else if (length >= 8 && length < 12) {
 				this.color = "#28cdaa";
 				this.valid = false;
-				this.newPasswordHint = "Accepted";
+				this.newPasswordHint = this.$t('hints.good');
 			} else if (length >= 12) {
 				this.color = "#28cdaa";
 				this.valid = false;
-				this.newPasswordHint = "Perfect";
+				this.newPasswordHint = this.$t('hints.perfect');
 			}
-        },
-        saveEnable() {
-            if (this.newPassword == '' || this.confirmPassword == '') {
-                this.valid = false
-            }
-        },
+		},
+		saveEnable() {
+			if (this.newPassword == "" || this.confirmPassword == "") {
+				this.valid = false;
+			}
+		},
 		async changePassword() {
-			await this.$axios.$post('/users/pass', {
-				email: this.$auth.user.email,
-				password: this.currentPassword,
-				newpassword: this.newPassword	
-			}).then(res => {
-				console.log(res)
-			}).catch(err => {
-				console.log(err)
-			})
+			await this.$axios
+				.$post("/users/pass", {
+					email: this.$auth.user.email,
+					password: this.currentPassword,
+					newpassword: this.newPassword
+				})
+				.then(res => {
+					console.log(res);
+				})
+				.catch(err => {
+					console.log(err);
+				});
 		}
 	}
 };

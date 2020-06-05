@@ -16,6 +16,15 @@ export default {
   filter: "Filter",
   rowsForTable: "Rows per page:",
   email: "email",
+  hints: {
+    required: "Required",
+    min: "At least 8 characters",
+    again: "Enter your new password again",
+    short: "Too short",
+    good: "Accepted",
+    perfect: "Perfect"
+  },
+
   appBar: {
     personalSettings: { text: "Personal Settings", url: '/en/settings/personal-settings' },
     changeLang: "Change Language",
@@ -489,7 +498,63 @@ export default {
     }
   },
   settings: {
+    title: "Settings",
+    cardOne: {
+      title: "Invoices",
+      link: "/en/settings/invoice-settings",
+      text: "Set default values for invoice terms (days, interest on overdue payments, delivery terms), currency rounding, customer and invoice numbers.",
+    },
+    cardTwo: {
+      title: "Your account",
+      items: [
+        { text: "Personal settings", link: "/en/settings/personal-settings" },
+        { text: "Change password", link: "/en/settings/change-password" },
+      ]
+    }
+  },
+  invoiceSettings: {
+    breadcrumbItems: [
+      { text: "Settings", href: "/en/settings" },
+      { text: "Invoice settings", disabled: true }
+    ],
+    title: "Invoice settings",
+    card: {
+      title: "Invoice terms",
+      subtitle: "Set default invoice terms so that you don't have to change it individually for each new customer.",
+      daysLabel: "Days",
+      daysHint: "Number of days before the payment is due.",
+      intersetLabel: "Interest on overdue payment",
+      intersetHint: "This is where you define the interest rate added when a payment is overdue. Remember that you must create a new invoice with the added interest rate and send it to your customer. Invoices with interest rates also have to be recorded manually.",
+      deliveryLabel: "Delivery",
+      deliveryHint: "Define how the goods are delivered. Ex warehouse means that the risk is taken over by the customer as soon as the goods leave the warehouse.",
+    }
+  },
+  personalSettings: {
+    breadcrumbItems: [
+      { text: "Settings", href: "/en/settings" },
+      { text: "Personal settings", disabled: true }
+    ],
+    title: "Personal settings",
+    card: {
+      fname: "First name",
+      lname: "Last name",
+      tel: "phone"
+    },
+    link: "/en/invoices"
+  },
+  changePassword: {
+    forgetTitle: "Set New Password",
 
+    breadcrumbItems: [
+      { text: "Settings", href: "/en/settings" },
+      { text: "Change password", disabled: true }
+    ],
+    title: "Change password",
+    card: {
+      curPass: "Current password",
+      newPass: "Choose new password",
+      confNew: "Confirm password",
+    }
   }
 }
 

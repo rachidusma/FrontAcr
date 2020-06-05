@@ -2,10 +2,7 @@
 	<v-container>
 		<v-row>
 			<v-col cols="12">
-				<nuxt-link to="/settings">
-					<v-icon>mdi mdi-chevron-left</v-icon>
-				</nuxt-link>
-				<h2 class="d-inline-block">Set New Password</h2>
+				<h2 class="d-inline-block">{{$t('changePassword.forgetTitle')}}</h2>
 			</v-col>
 
 			<v-col cols="12">
@@ -20,7 +17,7 @@
 											:append-outer-icon="showNewPassword ? 'mdi-eye' : 'mdi-eye-off'"
 											:rules="[rules.required, rules.min]"
 											:type="showNewPassword ? 'text' : 'password'"
-											label="Choose new password"
+											:label="$t('changePassword.card.newPass')"
 											outlined
 											dense
 											:hint="newPasswordHint"
@@ -28,7 +25,7 @@
 											@input="checkValid"
 											required
 											@click:append-outer="showNewPassword = !showNewPassword"
-										></v-text-field>
+										/>
 
 										<v-list-item-avatar
 											:key="index"
@@ -44,7 +41,7 @@
 										:append-outer-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
 										:rules="[rules.passwordMatch, rules.min]"
 										:type="showConfirmPassword ? 'text' : 'password'"
-										label="Confirm password"
+										:label="$t('changePassword.card.confNew')"
 										outlined
 										dense
 										:hint="ConfirmPasswordHint"
@@ -52,8 +49,8 @@
 										required
 										class="mt-3"
 										@click:append-outer="showConfirmPassword = !showConfirmPassword"
-									></v-text-field>
-									<v-btn color="success" @click="changePassword" :disabled="!valid">save</v-btn>
+									/>
+									<v-btn color="success" @click="changePassword" :disabled="!valid">{{ $t('save') }}</v-btn>
 								</v-container>
 							</v-form>
 						</v-col>
@@ -74,16 +71,16 @@ export default {
 		return {
 			valid: false,
 			rules: {
-				required: value => !!value || "Required.",
-				min: v => v.length >= 8 || "Min 8 characters",
+				required: value => !!value || this.$t('hints.required'),
+				min: v => v.length >= 8 || this.$t('hints.min'),
 				passwordMatch: v => v == this.newPassword
 			},
 			color: "grey",
 
 			newPassword: "",
 			confirmPassword: "",
-			newPasswordHint: "At least 8 characters",
-			ConfirmPasswordHint: "write your new password again",
+			newPasswordHint: this.$t('hints.min'),
+			ConfirmPasswordHint: this.$t('hints.again'),
 
 			showConfirmPassword: false,
 			showNewPassword: false
@@ -104,19 +101,19 @@ export default {
 			if (length >= 1 && length < 4) {
 				this.color = "#e63948";
 				this.valid = false;
-				this.newPasswordHint = "Too short";
+				this.newPasswordHint = this.$t('hints.short');
 			} else if (length >= 4 && length < 8) {
 				this.color = "#f7c223";
 				this.valid = false;
-				this.newPasswordHint = "Too short";
+				this.newPasswordHint = this.$t('hints.short');
 			} else if (length >= 8 && length < 12) {
 				this.color = "#28cdaa";
 				this.valid = false;
-				this.newPasswordHint = "Accepted";
+				this.newPasswordHint = this.$t('hints.good');
 			} else if (length >= 12) {
 				this.color = "#28cdaa";
 				this.valid = false;
-				this.newPasswordHint = "Perfect";
+				this.newPasswordHint = this.$t('hints.perfect');
 			}
 		},
 		async changePassword() {
