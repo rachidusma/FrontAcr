@@ -28,7 +28,7 @@ export default {
     article: { text: "Articles", url: '/en/articles' },
     salary: {
       main: { text: "Salaries" },
-      unpaid: { text: "Unpaid salaries", url: '/en/uppaidsalary' },
+      unpaid: { text: "Unpaid salaries", url: '/en/unpaidsalary' },
       paid: { text: "Paid salaries", url: '/en/paidsalary' }
     },
     settings: { text: "Settings", url: '/en/settings' },
@@ -407,7 +407,7 @@ export default {
   user: {
     title: "Users",
     breadCampItems: [
-      { text: "Users /", href: '/en/user' }
+      { text: "Users /", href: '/en/user' },
     ],
     tableHeaders: {
       id: "User ID",
@@ -441,6 +441,52 @@ export default {
     }
 
 
+  },
+  unpaid: {
+    title: "Unpaid salary",
+    link: "/en/invoices",
+
+    breadCampItems: [
+      { text: "Salary", disabled: true },
+      { text: "Unpaid salary", href: '/en/unpaidsalary' }
+    ],
+    blueSection: {
+      title: "Statistic (last 3 months)",
+      paidNo: "Unpaid Number",
+      total: "unpaid Sum",
+    },
+    tableHeaders: {
+      state: "State",
+      name: "Name",
+      no: "Person Number",
+      ocr: "Ocr Number",
+      salary: "Salary",
+      bank: "Bank",
+      action: "Action"
+    }
+  },
+  paid: {
+    title: "Paid salary",
+    link: "/en/invoices",
+
+    breadCampItems: [
+      { text: "Salary", disabled: true },
+      { text: "paid salary", href: '/en/paidsalary' }
+    ],
+    blueSection: {
+      title: "Statistic (last 3 months)",
+      paidNo: "Paid Number",
+      total: "Paid Sum",
+    },
+    tableHeaders: {
+      date: "Date",
+      name: "Name",
+      no: "Person Number",
+      ocr: "Ocr Number",
+      salary: "Salary",
+      bank: "Bank",
+      action: "Action"
+    }
   },
   settings: {
 

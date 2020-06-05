@@ -1,41 +1,43 @@
 <template>
-  <v-layout>
+  <v-layout column>
     <v-row>
-      <v-col cols="12" md="12">
-        <v-row class="pa-4">
-          <h1 class="title">Salary</h1>
-          <v-spacer/>
-          <UserModal />
-        </v-row>
-      </v-col>
+			<!-- Strart page Header -->
+			<v-col cols="12">
+				<v-breadcrumbs class="pa-0 ma-0" :items="$t('paid.breadCampItems')"></v-breadcrumbs>
+			</v-col>
+
+			<v-col cols="12" md="12">
+				<v-row class="pa-4">
+					<h1 class="title">{{ $t('paid.title') }}</h1>
+				</v-row>
+			</v-col>
+			<!-- End page Header -->
 
       <v-col cols="12" sm="12">
         <div class="display_section">
-          <h6 class="display-1 text-center pt-5"> Statistic  (last 3 months) </h6>
+          <h6 class="display-1 text-center pt-5">{{ $t('paid.blueSection.title') }}</h6>
           <v-row class="center pb-5" style="width:100%;height:100%">
             <v-col cols="12" sm="6">
-              <h6 class="grey--text text-center subtitle-1 my-4">Unpaid Number</h6>
+              <h6 class="grey--text text-center subtitle-1 my-4">{{ $t('paid.blueSection.paidNo') }}</h6>
               <h6 class="display-1 text-center">{{ this.totalpaid_num }}</h6>
             </v-col>
 
             <v-col cols="12" sm="6">
-              <h6 class="grey--text text-center subtitle-1 my-4">Unpadi Summa</h6>
+              <h6 class="grey--text text-center subtitle-1 my-4">{{ $t('paid.blueSection.total') }}</h6>
               <h6 class="display-1 text-center">{{ this.totalpaid_summa }} kr</h6>
             </v-col>
           </v-row>
         </div>
       </v-col>
 
-      <v-col cols="12" md="12">
-        <p class="overline">All Salary</p>
-        <v-card tile width="100%" class="pa-8">
+      <v-col cols="12">
+        <v-card tile outlined width="100%" class="pa-8">
           <v-row>
             <v-spacer/>
             <v-text-field
               v-model="search"
               append-icon="mdi-magnify"
-              label="Search"
-              single-line
+              :label="$t('filter')"
               hide-details
               solo
               dense
@@ -50,6 +52,9 @@
             class="elevation-1"
             :search="search"
             @click:row="handleClick"
+            :footer-props="{
+              itemsPerPageText: $t('rowsForTable')
+            }"
           >
             <template v-slot:item.action="{ item }">
               <v-btn fab dark small color="cyan" >
@@ -76,13 +81,13 @@ export default {
     return {
       search: "",
       headers: [
-        { text: "Name", value: "name" },
-        { text: "Person Number", value: "personummer" },
-        { text: "Ocr Number", value: "invoiceid" },
-        { text: "Salary", value: "salary" },
-        { text: "Bank", value: "bankaccount" },
-        { text: "Date", value: "create_date" },
-        { text: "Action", value: "action"}
+        { text: this.$t("paid.tableHeaders.date"), value: "create_date" },
+        { text: this.$t("paid.tableHeaders.name"), value: "name" },
+        { text: this.$t("paid.tableHeaders.no"), value: "personummer" },
+        { text: this.$t("paid.tableHeaders.ocr"), value: "invoiceid" },
+        { text: this.$t("paid.tableHeaders.salary"), value: "salary" },
+        { text: this.$t("paid.tableHeaders.bank"), value: "bankaccount" },
+        { text: this.$t("paid.tableHeaders.action"), value: "action"}
       ],
       paidsalary: [],
       totalpaid_num: 0,

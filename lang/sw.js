@@ -28,7 +28,7 @@ export default {
     article: { text: "Artiklar", url: "/articles" },
     salary: {
       main: { text: "löner" },
-      unpaid: { text: "Obetalda löner", url: "/uppaidsalary" },
+      unpaid: { text: "Obetalda löner", url: "/unpaidsalary" },
       paid: { text: "Betalade löner", url: "/paidsalary" }
     },
     settings: { text: "Inställningar", url: "/settings" },
@@ -405,7 +405,8 @@ export default {
   user: {
     title: "användare",
     breadCampItems: [
-      { text: "användare /", href: '/user' }
+      { text: "användare", href: '/user' },
+      { text: "/" ,  disabled: true }
     ],
     tableHeaders: {
       id: "användar ID",
@@ -436,6 +437,51 @@ export default {
       fname: "Förnamn",
       lname: "efternamn",
       tel: "Användartelefon"
+    }
+  },
+  unpaid: {
+    title: "Obetald lön",
+    link: "/invoices",
+    breadCampItems: [
+      { text: "Lön", disabled: true },
+      { text: "obetald lön", href: '/unpaidsalary'  }
+    ],
+    blueSection: {
+      title: "Statistik (senaste 3 månaderna)",
+      paidNo: "Obetalt nummer",
+      total: "Obetalt summa",
+    },
+    tableHeaders: {
+      state: "stat",
+      name: "namn",
+      no: "Personnummer",
+      ocr: "Ocr-nummer",
+      salary: "Lön",
+      bank: "Bank",
+      action: "Verkan"
+    }
+  },
+  paid: {
+    title: "Betald lön",
+    link: "/invoices",
+
+    breadCampItems: [
+      { text: "Lön", disabled: true },
+      { text: "Betald lön", href: '/paidsalary' }
+    ],
+    blueSection: {
+      title: "Statistik (senaste 3 månaderna)",
+      paidNo: "Obetalt nummer",
+      total: "Obetalt summa",
+    },
+    tableHeaders: {
+      date: "datum",
+      name: "namn",
+      no: "Personnummer",
+      ocr: "Ocr-nummer",
+      salary: "Lön",
+      bank: "Bank",
+      action: "Verkan"
     }
   },
 }
