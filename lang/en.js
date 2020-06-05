@@ -555,6 +555,53 @@ export default {
       newPass: "Choose new password",
       confNew: "Confirm password",
     }
+  },
+  statistics: {
+    header: {
+      title: "Income and expenses",
+      income: "Total income",
+      expenses: "Total expenses"
+    },
+    income: "income",
+    total5: {
+      items: {
+        title: {
+          text: "Top 5 Items",
+          url: "/en/articles",
+          urlText: "View Items"
+        },
+      },
+      customers: {
+        title: {
+          text: "Top 5 customers",
+          url: "/en/customer",
+          urlText: "View Customers"
+        },
+      }
+    },
+    card: {
+      title: "Invoices owed to you",
+      infos: {
+        overdue: "Overdue",
+        due: "Due today",
+        to_7: "1 -7 days",
+        to_14: "8-14 days",
+        to_21: "15-21 days",
+        plus21: "> 21 days",
+      },
+      actions: {
+        btn: { text: "Create Invoice", url: "/en/newinvoice" },
+        text: { text: "View all active invoices", url: "/en/invoices" }
+      }
+    },
+    bottomCards: {
+      yearProfit: "This year profit",
+      balance: "Account balances",
+      texas: "This year texes",
+      profit: "profit",
+      textable: "Textable result adjustment",
+      localTax: "Local tax rate"
+    }
   }
 }
 

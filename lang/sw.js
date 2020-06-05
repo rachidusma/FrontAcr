@@ -551,4 +551,51 @@ export default {
       confNew: "Bekräfta lösenord",
     }
   },
+  statistics: {
+    header: {
+      title: "Intäkter och kostnader",
+      income: "Total inkomst",
+      expenses: "Totala utgifter"
+    },
+    income: "inkomst",
+    total5: {
+      items: {
+        title: {
+          text: "Topp 5 artiklar",
+          url: "/articles",
+          urlText: "Visa artiklar"
+        },
+      },
+      customers: {
+        title: {
+          text: "Topp 5 kunder",
+          url: "/customer",
+          urlText: "Visa kunder"
+        },
+      }
+    },
+    card: {
+      title: "Fakturor som är skyldiga dig",
+      infos: {
+        overdue: "Försenad",
+        due: "På grund av idag",
+        to_7: "1 -7 dagar",
+        to_14: "8-14 dagar",
+        to_21: "15-21 dagar",
+        plus21: "> 21 dagar",
+      },
+      actions: {
+        btn: { text: "Skapa faktura", url: "/newinvoice" },
+        text: { text: "Visa alla aktiva fakturor", url: "/invoices" }
+      }
+    },
+    bottomCards: {
+      yearProfit: "I år vinst",
+      balance: "Kontosaldo",
+      texas: "I år skatter",
+      profit: "vinst",
+      textable: "Textbar resultatjustering",
+      localTax: "Lokal skattesats"
+    }
+  }
 }

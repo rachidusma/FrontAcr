@@ -4,12 +4,12 @@
 		<v-row>
 			<v-col cols="12">
 				<v-card class="mx-auto" tile outlined>
-					<v-card-title>Income and expenses</v-card-title>
+					<v-card-title>{{ $t('statistics.header.title') }}</v-card-title>
 					<v-card-text>
 						<v-row>
 							<v-col cols="12" md="5">
 								<div class="text-center flex-grow-1">
-									<p>Total income</p>
+									<p>{{ $t('statistics.header.income') }}</p>
 									<h3>32 800 Kr</h3>
 								</div>
 							</v-col>
@@ -20,7 +20,7 @@
 
 							<v-col cols="12" md="6">
 								<div class="text-center flex-grow-1">
-									<p>Total expenses</p>
+									<p>{{ $t('statistics.header.expenses') }}</p>
 									<h3>-</h3>
 								</div>
 							</v-col>
@@ -36,11 +36,11 @@
 			<v-col cols="12">
 				<v-card class="mx-auto" tile outlined>
 					<v-card-title>
-						<h4>Income and expenses</h4>
+						<h4>{{ $t('statistics.header.title') }}</h4>
 						<v-spacer/>
 						<div class="mx-2">
 							<v-list-item-avatar tile class="ma-0" size="10" color="blue"></v-list-item-avatar>
-							<small>Income</small>
+							<small>{{ $t('statistics.income') }}</small>
 						</div>
 					</v-card-title>
 
@@ -72,28 +72,6 @@
 									:labels="chart.chartLabel"
 								/>
 							</v-col>
-
-							<!-- <v-col cols="12" md="6" class="d-flex align-center justify-center">
-								<div>
-									<div class="my-2">
-										<div class="d-flex justify-between align-center">
-											<v-list-item-avatar tile class="ma-0 mx-2" size="10" color="green"></v-list-item-avatar>
-											<p class="d-inline pa-0 ma-0">Income</p>
-											<v-spacer/>
-											<p class="d-inline pa-0 ma-0">31 000 kr</p>
-										</div>
-									</div>
-
-									<div class="my-2">
-										<div class="d-flex justify-between align-center">
-											<v-list-item-avatar tile class="ma-0 mx-2" size="10" color="blue"></v-list-item-avatar>
-											<p class="d-inline pa-0 ma-0">Income</p>
-											<v-spacer/>
-											<p class="d-inline pa-0 ma-0">31 000 kr</p>
-										</div>
-									</div>
-								</div>
-							</v-col>-->
 						</v-row>
 					</v-card-text>
 				</v-card>
@@ -128,7 +106,7 @@
 					<v-card-actions>
 						<v-btn color="success" :to="card.actions.btn.url">{{ card.actions.btn.text }}</v-btn>
 						<v-spacer/>
-						<nuxt-link :to="card.actions.text.text">{{card.actions.text.text}}</nuxt-link>
+						<nuxt-link :to="card.actions.text.url">{{card.actions.text.text}}</nuxt-link>
 					</v-card-actions>
 				</v-card>
 			</v-col>
@@ -139,7 +117,7 @@
 		<v-row>
 			<v-col cols="12">
 				<v-card class="pa-5 d-flex align-center justify-space-between">
-					<p>This year profit</p>
+					<p>{{ $t('statistics.bottomCards.yearProfit') }}</p>
 					<p class="green--text">0,00 Kr</p>
 				</v-card>
 			</v-col>
@@ -148,7 +126,7 @@
 				<v-card>
 					<v-card-title class="pa-5 d-flex align-center justify-space-between">
 						<p>
-							<v-icon>mdi mdi-bank</v-icon>Account balances
+							<v-icon>mdi mdi-bank</v-icon>{{ $t('statistics.bottomCards.balance') }}
 						</p>
 						<p class="green--text">31 564.00 Kr</p>
 					</v-card-title>
@@ -168,7 +146,7 @@
 				<v-card>
 					<v-card-title class="pa-5 d-flex align-center justify-space-between">
 						<p>
-							<v-icon>mdi mdi-currency-usd</v-icon>This year texes
+							<v-icon>mdi mdi-currency-usd</v-icon>{{ $t('statistics.bottomCards.texas') }}
 						</p>
 						<p class="red--text">0,00 Kr</p>
 					</v-card-title>
@@ -177,15 +155,15 @@
 
 					<v-card-text>
 						<div class="d-flex py-2 align-center justify-space-between">
-							<p>profit</p>
+							<p>{{ $t('statistics.bottomCards.profit') }}</p>
 							<p class="green--text">0.00 Kr</p>
 						</div>
 						<div class="d-flex py-2 align-center justify-space-between">
-							<p>Textable result adjustment</p>
+							<p>{{ $t('statistics.bottomCards.textable') }}</p>
 							<p class="green--text">0.00 Kr</p>
 						</div>
 						<div class="d-flex py-2 align-center justify-space-between">
-							<p>Local tax rate</p>
+							<p>{{ $t('statistics.bottomCards.localTax') }}</p>
 							<p class="red--text">21.4 %</p>
 						</div>
 					</v-card-text>
@@ -219,21 +197,13 @@ export default {
 			cards: [],
 			charts: [
 				{
-					title: {
-						text: "Top 5 Items",
-						url: "/articles",
-						urlText: "View Items"
-					},
+					title: this.$t('statistics.total5.items.title'),
 					chartColors: ["#2d2d3b", "#ffccc7", "#b66d60", "#ecb278", "#983e3e "],
 					chartData: null,
 					chartLabel: null
 				},
 				{
-					title: {
-						text: "Top 5 customers",
-						url: "/customer",
-						urlText: "View Customers"
-					},
+					title: this.$t('statistics.total5.customers.title'),
 					chartColors: ["#2d2d3b", "#ffccc7", "#b66d60", "#ecb278", "#983e3e "],
 					chartData: null,
 					chartLabel: null
@@ -334,19 +304,16 @@ export default {
 			});
 
 			this.cards.unshift({
-				title: { text: "Invoices owed to you", money: summation },
+				title: { text: this.$t('statistics.card.title'), money: summation },
 				infos: [
-					{ label: "Overdue", money: Overdue },
-					{ label: "Due today", money: "0" },
-					{ label: "1 -7 days", money: to_7 },
-					{ label: "8-14 days", money: to_14 },
-					{ label: "15-21 days", money: to_21 },
-					{ label: "> 21 days", money: plus21 }
+					{ label: this.$t('statistics.card.infos.overdue'), money: Overdue },
+					{ label: this.$t('statistics.card.infos.due'), money: "0" },
+					{ label: this.$t('statistics.card.infos.to_7'), money: to_7 },
+					{ label: this.$t('statistics.card.infos.to_14'), money: to_14 },
+					{ label: this.$t('statistics.card.infos.to_21'), money: to_21 },
+					{ label: this.$t('statistics.card.infos.plus21'), money: plus21 }
 				],
-				actions: {
-					btn: { text: "Create Invoice", url: "/newinvoice" },
-					text: { text: "View all active invoices", url: "/invoices" }
-				}
+				actions: this.$t('statistics.card.actions')
 			});
 		},
 		getMostRepeatedItem(patterns, allItems) {
