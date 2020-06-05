@@ -837,7 +837,6 @@ export default {
 			await this.$axios
 				.$get(`articles/invoice/${this.draft.ocrid}`)
 				.then(res => {
-					console.log("articles res => ", res);
 					this.draggableItems = res;
 					this.draggableItems.map(x => {
 						x.total = x.number * x.pris_enhet;
@@ -850,7 +849,7 @@ export default {
 		async deleteDraft() {
 			await this.$axios
 				.$delete(`/invoices/${this.$route.params.id}`)
-				.then(res => this.$router.push("/invoices"))
+				.then(res => this.$router.push(this.$t('loginForm.link')))
 				.catch(err => console.log(err));
 		},
 		sort() {
@@ -1043,8 +1042,6 @@ export default {
 				if (x.text) {
 					return;
 				}
-				console.log("x", x);
-
 				/** Ex Vat Calc */
 				calcs.amountExVAT += Number(x.total);
 

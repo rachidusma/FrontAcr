@@ -95,7 +95,7 @@ export default {
 	},
 	methods: {
 		handleClick(a) {
-			this.$router.push("/customer/" + a._id);
+			this.$router.push(this.$t('link') + "customer/" + a._id);
 		},
 		async getCustomers() {
 			await this.$axios.get("/customers/").then(res => {

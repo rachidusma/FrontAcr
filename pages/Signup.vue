@@ -10,7 +10,7 @@ export default {
 		Form,
 	},
 	beforeMount() {
-		if (this.$auth.loggedIn) this.$router.push("/invoices");
+		if (this.$auth.loggedIn) this.$router.push(this.$t('loginForm.link'));
 	}
 };
 </script>

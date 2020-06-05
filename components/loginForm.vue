@@ -300,7 +300,7 @@ export default {
 				await this.$auth
 					.loginWith("local", { data: this.userInfo })
 					.then(res => {
-						this.$router.push("/invoices");
+						this.$router.push(this.$t('loginForm.link'));
 					})
 					.catch(err => {
 						console.log(err);
@@ -318,7 +318,7 @@ export default {
 		}
 	},
 	beforeCreate() {
-		if (this.$auth.loggedIn) this.$router.push("/invoices");
+		if (this.$auth.loggedIn) this.$router.push(this.$t('loginForm.link'));
 	},
 	mounted() {
 		const signUpButton = document.getElementById("signUp"),

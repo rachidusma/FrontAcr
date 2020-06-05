@@ -12,6 +12,7 @@ export default {
   saveAsItem: "Save as item",
   loading: "Loading... Please wait",
   required: "*indicates required field",
+  link: "/en/",
 
   filter: "Filter",
   rowsForTable: "Rows per page:",
@@ -46,6 +47,8 @@ export default {
   loginForm: {
     signIn: "Sign in",
     signUp: "Sign Up",
+    link: "/en/invoices",
+
     signUpOverlay: {
       label: "Welcome Back!",
       text: "To keep connected with us please login with your personal info"

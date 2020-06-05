@@ -107,7 +107,7 @@
 												<v-col cols="12" md="5" sm="12">
 													<p class="overline">{{ $t('newInvoice.deliverySection.email.cusEmail') }}</p>
 													<v-text-field label="Email" v-model="customerEmail" outlined color="#336882" dense></v-text-field>
-													<p class="overline">{{ $t('newInvoice.deliverySection.options.header') }}</p>
+													<p class="overline">{{ $t('newInvoice.deliverySection.email.options.header') }}</p>
 													<v-radio-group v-model="radioGroup">
 														<v-radio :label="$t('newInvoice.deliverySection.email.options.pdfLink')" value="v" color="#336882"></v-radio>
 														<v-radio :label="$t('newInvoice.deliverySection.email.options.pdfFile')" value="f" color="#336882"></v-radio>
@@ -228,7 +228,7 @@ export default {
 	},
 	methods: {
 		reload() {
-			window.location.reload(true);
+			this.$router.push(`${this.$t('link')}newinvoice`);
 		},
 		async downloedPDF(preview, invId) {
 			let location,
@@ -331,10 +331,12 @@ export default {
 
 							await vm.sendArticles(invoce_number);
 							if (res.published && res.createdate >= res.duedate)
-								this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/overdue/${res._id}`;
+								this.invoiceLink = `${this.$t('link')}invoices/overdue/${res.data._id}`;
 							else if (res.published && res.createdate <= res.duedate)
-								this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/published/${res._id}`;
-							else this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/draft/${res._id}`;
+								this.invoiceLink = `${this.$t('link')}invoices/published/${res.data._id}`;
+							else if(!res.published){ console.log('dsa');
+
+                this.invoiceLink = `${this.$t('link')}invoices/draft/${res.data._id}`;}
 						})
 						.catch(err => console.log(err));
 				} else {
@@ -349,10 +351,12 @@ export default {
 							await vm.sendArticles(invoce_number);
 
 							if (res.published && res.createdate >= res.duedate)
-								this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/overdue/${res._id}`;
+								this.invoiceLink = `${this.$t('link')}invoices/overdue/${res.data._id}`;
 							else if (res.published && res.createdate <= res.duedate)
-								this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/published/${res._id}`;
-							else this.invoiceLink = `${this.$t('newInvoice.linkToInvoice')}/draft/${res._id}`;
+								this.invoiceLink = `${this.$t('link')}invoices/published/${res.data._id}`;
+              else if(!res.published)
+
+                this.invoiceLink = `${this.$t('link')}invoices/draft/${res.data._id}`
 						})
 						.catch(err => console.log(err));
 				}

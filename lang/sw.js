@@ -12,6 +12,7 @@ export default {
   saveAsItem: "Spara som objekt",
   loading: "Loading... Please wait",
   required: "*indikerar obligatoriska fält",
+  link: "/",
 
   filter: "Filtrera",
   rowsForTable: "Rader per sida:",
@@ -46,6 +47,7 @@ export default {
   loginForm: {
     signIn: "Logga in",
     signUp: "Bli Medlem",
+    link: "/invoices",
     signInOverlay: {
       label: "Hej kompis!",
       text: "Ange dina personuppgifter och börja resa med oss"

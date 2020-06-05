@@ -100,7 +100,7 @@ export default {
 			Unit: this.$t('articles.articleModal.units'),
 			Kind: this.$t('articles.articleModal.kind'),
 			valid: false,
-			nameRules: [v => !!v || "artikelnamn is required"]
+			nameRules: [v => !!v || this.$t('hints.required')]
 		};
 	},
 	mounted() {
@@ -129,8 +129,8 @@ export default {
 			this.$refs.form.validate();
 		},
 		close() {
-			this.dialog = false;
 			this.editItem = {};
+			this.dialog = false;
 			this.valid = false;
 			this.$emit("closed");
 		},

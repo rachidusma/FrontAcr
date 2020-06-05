@@ -1,0 +1,35 @@
+- Edit Invoice:
+  - Change Customer. ✅
+  - Change items. ✅
+  - Change Dates. ✅
+  - Change days. ✅
+
+- Invoices:
+  1- Edit Draft.✅
+  2- Edit Overdue.✅
+  3- Edit Published.✅
+  4- Delete Invoice. ✅
+  5- publish Invoice.
+  6- save as draft. ✅
+  7- undo inovice.✅
+
+- customer:
+  1- Add Customer.
+    1.1: Add from 'newInvoices'.✅
+    1.2: Add from 'customers'. ✅
+  2- Edit Customer.
+    2.1: Edit from 'newInvoices'. ✅
+      2.1.1: check for date to. ✅
+      2.1.2: check for date from. ✅
+      2.1.3: check for date dagar. ✅
+      2.1.4: check for date Interest. ✅
+    2.2: Edit from 'customers'.
+  3- Delete Customer.✅
+
+- Item:
+  1- Add Item. ✅
+    1.1: Add from 'newInvoices'. ✅
+      1.1.1: check for moms. ✅
+    1.2: Add from 'articles'. ✅
+  2- Edit Item. ✅
+  3- Delete item. ✅

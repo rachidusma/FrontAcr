@@ -168,12 +168,12 @@ export default {
 		async deleteCustomer() {
 			await this.$axios
 				.$delete(`/customers/${this.$route.params.id}`)
-				.then(res => this.$router.push("/customer"))
+				.then(res => this.$router.push(this.$t('link') +"customer"))
 				.catch(err => console.log(err));
 		},
 		addInvoiceWithCustomer() {
 			this.$store.commit("setCustomer", this.customer);
-			this.$router.push("/newinvoice");
+			this.$router.push(this.$t('link') + "newinvoice");
 		},
 		async downloadData() {
 			var element = document.createElement("a");
