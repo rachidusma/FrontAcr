@@ -300,7 +300,9 @@ export default {
 				await this.$auth
 					.loginWith("local", { data: this.userInfo })
 					.then(res => {
-						this.$router.push(this.$t('loginForm.link'));
+						this.$i18n.setLocale(this.$auth.user.lang).then(_ => {
+							this.$router.push(this.$t("loginForm.link"));
+						});
 					})
 					.catch(err => {
 						console.log(err);
@@ -318,7 +320,7 @@ export default {
 		}
 	},
 	beforeCreate() {
-		if (this.$auth.loggedIn) this.$router.push(this.$t('loginForm.link'));
+		if (this.$auth.loggedIn) this.$router.push(this.$t("loginForm.link"));
 	},
 	mounted() {
 		const signUpButton = document.getElementById("signUp"),

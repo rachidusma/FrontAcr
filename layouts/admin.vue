@@ -5,7 +5,7 @@
 			<v-card>
 				<v-card-title class="headline">
 					<h4>{{ $t('appBar.changeLang') }}</h4>
-					<v-spacer/>
+					<v-spacer />
 					<v-icon class="black--text" @click="langDialog = false">mdi mdi-close</v-icon>
 				</v-card-title>
 				<v-divider />
@@ -24,7 +24,7 @@
 				</v-card-text>
 
 				<v-card-actions class="grey lighten-3 pa-5">
-					<v-spacer/>
+					<v-spacer />
 
 					<v-btn color="success" depressed @click="changeLang">{{ $t('appBar.changeLang') }}</v-btn>
 				</v-card-actions>
@@ -175,7 +175,7 @@
 				<nuxt-link to="/" class="white--text link">Acredit</nuxt-link>
 			</v-toolbar-title>
 			<v-spacer />
-			<v-spacer/>
+			<v-spacer />
 
 			<!-- Start user dropdown -->
 			<div class="text-center mx-2">
@@ -203,14 +203,22 @@
 							</v-list-item-title>
 						</v-list-item>
 
-						<v-list-item class="py-2" exact :to="$t('appBar.personalSettings.url')">{{ $t('appBar.personalSettings.text') }}</v-list-item>
+						<v-list-item
+							class="py-2"
+							exact
+							:to="$t('appBar.personalSettings.url')"
+						>{{ $t('appBar.personalSettings.text') }}</v-list-item>
 						<v-divider />
 
 						<v-list-item class="py-2" @click="langDialog = true">
 							<span>{{ $t('appBar.changeLang') }}</span>
-							<v-spacer/>
-							<img :src="require(`static/${$i18n.locale}.svg`)" width="30" class="mr-3" :alt="$i18n.locale" />
-
+							<v-spacer />
+							<img
+								:src="require(`static/${$i18n.locale}.svg`)"
+								width="30"
+								class="mr-3"
+								:alt="$i18n.locale"
+							/>
 						</v-list-item>
 
 						<v-list-item @click="$auth.logout()" class="grey lighten-4" style="color: red !important">
@@ -239,6 +247,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  name: "admin",
 	data() {
 		return {
 			clipped: true,
@@ -257,13 +266,23 @@ export default {
 		async logOut() {
 			await this.$auth.logout();
 		},
-		changeLang() {
-			this.langDialog = false;
-			this.$i18n.setLocale(this.language);
+		async changeLang() {
+      await this.$axios
+				.$patch(`/users/lang/${this.$auth.user._id}`, { lang: this.language })
+				.then(res => {
+					console.log(res);
+					this.langDialog = false;
+          this.$auth.setUser(res)
+
+          this.$i18n.setLocale(this.$auth.user.lang);
+				})
+				.catch(err => console.log(err));
 		}
 	},
 	mounted() {
-		this.language = this.$i18n.locale;
+    this.$i18n.setLocale(this.$auth.user.lang).then(_ => {
+      this.language = this.$i18n.locale;
+    });
 	}
 };
 </script>

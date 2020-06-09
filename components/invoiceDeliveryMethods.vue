@@ -331,12 +331,12 @@ export default {
 
 							await vm.sendArticles(invoce_number);
 							if (res.published && res.createdate >= res.duedate)
-								this.invoiceLink = `${this.$t('link')}invoices/overdue/${res.data._id}`;
-							else if (res.published && res.createdate <= res.duedate)
-								this.invoiceLink = `${this.$t('link')}invoices/published/${res.data._id}`;
+								this.invoiceLink = `${this.$t('link')}invoices/overdue/${res._id}`;
+							else if (res.published && res.createdate < res.duedate)
+								this.invoiceLink = `${this.$t('link')}invoices/published/${res._id}`;
 							else if(!res.published){ console.log('dsa');
 
-                this.invoiceLink = `${this.$t('link')}invoices/draft/${res.data._id}`;}
+                this.invoiceLink = `${this.$t('link')}invoices/draft/${res._id}`;}
 						})
 						.catch(err => console.log(err));
 				} else {
@@ -351,12 +351,12 @@ export default {
 							await vm.sendArticles(invoce_number);
 
 							if (res.published && res.createdate >= res.duedate)
-								this.invoiceLink = `${this.$t('link')}invoices/overdue/${res.data._id}`;
+								this.invoiceLink = `${this.$t('link')}invoices/overdue/${res._id}`;
 							else if (res.published && res.createdate <= res.duedate)
-								this.invoiceLink = `${this.$t('link')}invoices/published/${res.data._id}`;
+								this.invoiceLink = `${this.$t('link')}invoices/published/${res._id}`;
               else if(!res.published)
 
-                this.invoiceLink = `${this.$t('link')}invoices/draft/${res.data._id}`
+                this.invoiceLink = `${this.$t('link')}invoices/draft/${res._id}`
 						})
 						.catch(err => console.log(err));
 				}

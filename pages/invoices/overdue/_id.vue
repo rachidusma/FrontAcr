@@ -36,7 +36,9 @@ export default {
 	},
 	async mounted() {
 		await this.$axios.$get(`/invoices/${this.$route.params.id}`).then(res => {
-			res[0].createdate = new Date(res[0].createdate)
+      console.log(res);
+
+      res[0].createdate = new Date(res[0].createdate)
 				.toISOString()
 				.substring(0, 10);
       this.invoice = res[0];

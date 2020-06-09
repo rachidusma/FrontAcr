@@ -67,6 +67,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    /** http://app.acredit.se/api */
+    /** http://localhost:5000/api */
     baseURL: 'http://app.acredit.se/api'
   },
   /*
